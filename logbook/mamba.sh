@@ -10,34 +10,61 @@
 #
 ###
 
-### Preparação Inicial:
+#### Preparação Inicial:
 
-## Aumentar tamanho de partição, metodo 1
-# CloudAtCost, reduz swap padrão e aumenta /boot (permite atualizar kernel)
-# @see http://tabletuser.blogspot.com/2017/12/ubuntu-1604-resize-boot-partition-for.html
-fdisk -l /dev/sda*; blkid /dev/sd* && swapoff -a && umount /boot && tune2fs -O ^has_journal /dev/sda1 && echo -e "d\n2\nn\np\n2\n2181119\n\nt\n2\n82\nd\n1\nn\np\n1\n\n\np\nw" | fdisk /dev/sda && e2fsck -f /dev/sda1
+### Swap + /boot, inicio
+## CloudAtCost, reduz swap padrão para aumentar /boot (permite atualizar kernel)
+## @see http://www2.fugitol.com/2012/04/linux-resizing-boot-partition.html
+## @see http://tabletuser.blogspot.com/2017/12/ubuntu-1604-resize-boot-partition-for.html (alternativa)
 
-# reboot
+# Requisito previo: setar label na swap (por padrão vem sem label)
+swaplabel -L SWAP-sda2 /dev/sda2
+
+# Então seguir com os passos de http://www2.fugitol.com/2012/04/linux-resizing-boot-partition.html
+fdisk -l
+blkid /dev/sda1 /dev/sda2
+swapoff -a
+umount /boot
+tune2fs -O ^has_journal /dev/sda1
+# ***Siga os passos 6 até 13*** do site
+# Nota: no passo 8, em vez de "42" escolha "2181119" (sem aspas)
+
+# Nota: ao final do passo 12, deve ter algo como
+#   Device     Boot    Start      End  Sectors  Size Id Type
+#   /dev/sda1           2048  2181118  2179071    1G 83 Linux
+#   /dev/sda2        2181119  4362239  2181121    1G 82 Linux swap / Solaris
+#   /dev/sda3        4362240 20969471 16607232  7.9G 8e Linux LVM
+#   /dev/sda4       20969472 40959999 19990528  9.5G 8e Linux LVM
+
+# Nota: é ok aparecer o erro em vermelho "Re-reading the partition table failed.: Device or resource busy"
+
+# Checa se o disco esta ok
+e2fsck -f /dev/sda1
+
+# Reinicar
 reboot
 
-# Login (pode demorar uns 2 minutos)
-ssh root@mamba.kayen.ga
+# SSH no servidor...
 
-## Depois de reiniciar, executar
-swapoff -a && mkswap -L swap /dev/sda2 &&  umount /boot && e2fsck -f /dev/sda1 && resize2fs /dev/sda1 && tune2fs -j /dev/sda1 && mount /boot
+# Reabilitar swap e terminar o processo
+swapoff -a
+mkswap -L SWAP-sda2 /dev/sda2
+# swapon -a
+swapon /dev/sda2 # Alterado para deixar explicito o lugar
+umount /boot
+e2fsck -f /dev/sda1 # Comando extra em relação a documentação 
+resize2fs /dev/sda1
+tune2fs -j /dev/sda1
+mount /boot
 
-## Aumentar tamanho de partição, metodo 1, fim
-
-## Aumentar tamanho de partição, metodo 2, fim
-# Seguir passos descritos na fonte original usada pelo tabletuser (passo 1)
-# @see http://tabletuser.blogspot.com/2017/12/ubuntu-1604-resize-boot-partition-for.html
+## Caso swap falhe no reboot teste editar /etc/fstab e trocar linhas deixando UUUID=... explicito a /dev/sda2 Ex.:
+## UUID=c9f61b59-95aa-45ab-ae18-ee968312edc4 none            swap    sw              0       0
+# /dev/sda2       none            swap    sw              0       0
 
 #
-# Caso metodo 1 tenha falhado, siga o passo a passo manualmente, conforme 
-# http://tabletuser.blogspot.com/2017/12/ubuntu-1604-resize-boot-partition-for.html
+##
+### Swap + /boot, fim
 
-
-#
 ## Atualiza sistema operacional
 sudo apt update
 sudo apt upgrade -y
