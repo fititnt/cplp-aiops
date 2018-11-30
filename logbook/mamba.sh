@@ -148,6 +148,9 @@ sudo adduser kissabi
 ### fititnt
 sudo adduser fititnt
 
+### fititnt
+sudo adduser pyladies
+
 ### usuariodeteste
 # Este usuário é usado para testar restrições a usuários
 sudo adduser usuariodeteste
@@ -172,10 +175,32 @@ sudo ufw allow 'Nginx Full'
 ###
 #### Acesso HTTP e HTTPS, início
 
-##### Gerenciamento do dia a dia
+##### Configuração de websites, inicio
+### @see https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04
+
+### kissabi
+sudo mkdir /home/kissabi/public_html
+echo "kissabi" > /home/kissabi/public_html/index.html
+sudo chown kissabi:kissabi -R /home/kissabi/public_html
+
+### pyladies
+sudo mkdir /home/pyladies/public_html
+echo "pyladies" > /home/pyladies/public_html/index.html
+sudo chown pyladies:pyladies -R /home/pyladies/public_html
+
+#
+##
+####
+##### Configuração de websites, fim
+
+##### Gerenciamento do dia a dia, inicio
 #### Iniciar, reiniciar, parar serviços, e status (ver se estão ativos)
 ### vsftpd (serviço de SFTP)
 sudo systemctl start vsftpd
 sudo systemctl restart vsftpd
 sudo systemctl stop vsftpd
 sudo systemctl status vsftpd
+#
+##
+###
+##### Gerenciamento do dia a dia, fim
