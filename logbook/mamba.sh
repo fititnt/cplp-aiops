@@ -7,7 +7,11 @@
 ### Atalhos Rápidos
 ## Acesso remoto
 # ssh root@mamba.kayen.ga
-#
+# ssh kissabi@mamba.kayen.ga
+# ssh fititnt@mamba.kayen.ga
+## Para fazer acesso com chave privada (sem precisar redigitar senhas sempre)
+# ssh-copy-id NOMEDOUSUARIO@mamba.kayen.ga
+##
 ###
 
 #### Preparação Inicial:
@@ -99,16 +103,8 @@ write_enable=YES
 ### kissabi
 sudo adduser kissabi
 
-sudo mkdir /home/kissabi/ftp
-sudo chown nobody:nogroup /home/kissabi/ftp
-sudo chmod a-w /home/kissabi/ftp
-sudo ls -la /home/kissabi/ftp
-
-sudo mkdir /home/kissabi/ftp/files
-sudo chown kissabi:kissabi /home/kissabi/ftp/files
-sudo ls -la /home/kissabi/ftp
-
-echo "vsftpd test file" | sudo tee /home/kissabi/ftp/files/test.txt
+### fititnt
+sudo adduser fititnt
 
 #### Usuários, fim
 
