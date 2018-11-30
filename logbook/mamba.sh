@@ -179,14 +179,19 @@ sudo ufw allow 'Nginx Full'
 ### @see https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04
 
 ### kissabi
+sudo usermod -a -G www-data kissabi
 sudo mkdir /home/kissabi/public_html
 echo "kissabi" > /home/kissabi/public_html/index.html
-sudo chown kissabi:kissabi -R /home/kissabi/public_html
+sudo chown kissabi:www-data -R /home/kissabi/public_html
+sudo chmod g+s /home/kissabi/public_html
+sudo chmod 755 -R /home/kissabi/public_html
 
 ### pyladies
+sudo usermod -a -G www-data pyladies
 sudo mkdir /home/pyladies/public_html
 echo "pyladies" > /home/pyladies/public_html/index.html
-sudo chown pyladies:pyladies -R /home/pyladies/public_html
+sudo chmod g+s /home/pyladies/public_html
+sudo chmod 775 -R /home/pyladies/public_html
 
 #
 ##
@@ -200,6 +205,23 @@ sudo systemctl start vsftpd
 sudo systemctl restart vsftpd
 sudo systemctl stop vsftpd
 sudo systemctl status vsftpd
+
+
+### NGinx (serviço web)
+sudo systemctl start nginx
+sudo systemctl restart nginx
+sudo systemctl stop nginx
+sudo systemctl status nginx
+
+# comando especial reload: recarrega configurações SEM reiniciar serviço!
+sudo systemctl reload nginx
+
+# Acompanhar acessos
+tail -f /var/log/nginx/access.log
+
+# Acompanhar erros
+tail -f /var/log/nginx/error.log
+
 #
 ##
 ###
