@@ -2,7 +2,7 @@
 # 2 vCPUs, 1GB RAM, 20GB SSD (CloudAtCost)
 # Ubuntu 16.04.2 LTS 64bit
 # mamba.kayen.ga (45.62.226.140)
-###############################################################################
+################################################################################
 
 ### Atalhos Rápidos
 ## Acesso remoto
@@ -84,7 +84,6 @@ sudo ufw allow ftp
 ### FTP
 ## @see https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-a-user-s-directory-on-ubuntu-16-04
 sudo apt install vsftpd
-sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.orig
 
 sudo ufw allow 20/tcp
 sudo ufw allow 21/tcp
@@ -92,19 +91,66 @@ sudo ufw allow 990/tcp
 sudo ufw allow 40000:50000/tcp
 sudo ufw status
 
+## Permitir e forçar conecções com criptografia forte via FTP
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
+# Country Name (2 letter code) [AU]:AO
+# State or Province Name (full name) [Some-State]:Cuanza Sul
+# Locality Name (eg, city) []:Sumbe
+# Organization Name (eg, company) [Internet Widgits Pty Ltd]:kayen.ga
+# Organizational Unit Name (eg, section) []:
+# Common Name (e.g. server FQDN or YOUR name) []:kayen.ga
+# Email Address []:kissabiamigo@gmail.com
+
+
+# Aviso: o arquivo /logbook/mamba/etc/vsftpd.conf contém alterações mais
+#        detalhadas
+
+# TODO: revisar no futuro se o aviso de segurança abaixo poderá ser removido
+#       ao simplesmente revisar com calma as configurações
+#       (fititnt, 2018-11-30 03:37 BRST)
+
+## AVISO DE SEGURANÇA SOBRE CONFIGURAÇÕES FTP, inicio
+# A documentação de referência da digital ocean (bem como outros locais)
+# tendem a sugerir que o usuário FTP não tenha permissão até mesmo de alterar
+# arquivos do seu próprio diretório /home/NomeDoUsuario pois, em situações
+# muito específicas, seria possível que uma conta FTP comum poderia comprometer
+# segurança de servidor inteiro. Sugestões de melhoria são bem vindas, porém
+# note que, ao menos inicialmente, prefere-se dar flexibilidade aos usuários
+# e restringir numero de pessoas e recomendar boas práticas de segurança a elas
+# para mitigar incidentes com contas comprometidas.
+## AVISO DE SEGURANÇA SOBRE CONFIGURAÇÕES FTP, fim
+
 ## Arquivo /etc/vsftpd.conf
 # Garanta que as seguintes linhas existam dessa forma e estejam descomendadas
 write_enable=YES
+chroot_local_user=YES
+chroot_list_enable=YES
+chroot_list_file=/etc/vsftpd.chroot_list
+rsa_cert_file=/etc/ssl/private/vsftpd.pem
+rsa_private_key_file=/etc/ssl/private/vsftpd.pem
+ssl_enable=YES
+ssl_tlsv1=YES
+ssl_sslv2=NO
+ssl_sslv3=NO
+pasv_min_port=40000
+pasv_max_port=50000
+
+
 
 #### Preparação Inicial, fim
 
 #### Usuários, inicio
+# Nota: o servidor real pode ter mais usuários do que os listados aqui
 
 ### kissabi
 sudo adduser kissabi
 
 ### fititnt
 sudo adduser fititnt
+
+### usuariodeteste
+# Este usuário é usado para testar restrições a usuários
+sudo adduser usuariodeteste
 
 #### Usuários, fim
 
@@ -125,3 +171,11 @@ sudo ufw allow 'Nginx Full'
 ##
 ###
 #### Acesso HTTP e HTTPS, início
+
+##### Gerenciamento do dia a dia
+#### Iniciar, reiniciar, parar serviços, e status (ver se estão ativos)
+### vsftpd (serviço de SFTP)
+sudo systemctl start vsftpd
+sudo systemctl restart vsftpd
+sudo systemctl stop vsftpd
+sudo systemctl status vsftpd

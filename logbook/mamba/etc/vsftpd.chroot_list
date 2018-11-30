@@ -1,0 +1,6 @@
+# Arquivo /etc/vsftpd.chroot_list
+# Com parametro chroot_local_user=YES + chroot_list_enable=YES habilitados
+# este arquivo explicita quais usuários FTP podem acessar arquivos fora
+# do seu diretório home. Note que "usuariodeteste" não faz parte desta lista
+kissabi
+fititnt
