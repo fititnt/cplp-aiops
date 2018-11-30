@@ -1,7 +1,7 @@
 ###############################  logbook: mamba  ###############################
 # 2 vCPUs, 1GB RAM, 20GB SSD (CloudAtCost)
 # Ubuntu 16.04.2 LTS 64bit
-# mamba.kayen.ga (45.55.32.60)
+# mamba.kayen.ga (45.62.226.140)
 ###############################################################################
 
 ### Atalhos Rápidos
@@ -69,8 +69,63 @@ mount /boot
 sudo apt update
 sudo apt upgrade -y
 
-### Preparação Inicial, fim
-
-
 # Aplicações básicas. Não realmente essencial, mas torna vida mais simples
 sudo apt install mosh htop tree -y
+
+### UFW
+## @see https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server
+sudo ufw allow ssh
+sudo ufw allow ftp
+
+### FTP
+## @see https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-a-user-s-directory-on-ubuntu-16-04
+sudo apt install vsftpd
+sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.orig
+
+sudo ufw allow 20/tcp
+sudo ufw allow 21/tcp
+sudo ufw allow 990/tcp
+sudo ufw allow 40000:50000/tcp
+sudo ufw status
+
+## Arquivo /etc/vsftpd.conf
+# Garanta que as seguintes linhas existam dessa forma e estejam descomendadas
+write_enable=YES
+
+#### Preparação Inicial, fim
+
+#### Usuários, inicio
+
+### kissabi
+sudo adduser kissabi
+
+sudo mkdir /home/kissabi/ftp
+sudo chown nobody:nogroup /home/kissabi/ftp
+sudo chmod a-w /home/kissabi/ftp
+sudo ls -la /home/kissabi/ftp
+
+sudo mkdir /home/kissabi/ftp/files
+sudo chown kissabi:kissabi /home/kissabi/ftp/files
+sudo ls -la /home/kissabi/ftp
+
+echo "vsftpd test file" | sudo tee /home/kissabi/ftp/files/test.txt
+
+#### Usuários, fim
+
+#### Acesso HTTP e HTTPS, início
+###
+##
+#
+
+### NGinx
+## @see https://www.digitalocean.com/community/tutorials/como-instalar-o-nginx-no-ubuntu-16-04-pt
+sudo apt install nginx
+sudo ufw allow 'Nginx Full'
+
+### Documentação de NGinx + Let's Encrypt em Ubuntu 16:
+## @see https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
+
+#
+##
+###
+#### Acesso HTTP e HTTPS, início
