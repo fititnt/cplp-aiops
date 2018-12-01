@@ -169,6 +169,12 @@ sudo ufw allow 'Nginx Full'
 
 ### Documentação de NGinx + Let's Encrypt em Ubuntu 16:
 ## @see https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install python-certbot-nginx
+
+# Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
+sudo certbot --nginx -d kayen.ga -d mamba.kayen.ga -d www.kayen.ga -d pyladies.kayen.ga
 
 #
 ##
@@ -212,6 +218,9 @@ sudo systemctl start nginx
 sudo systemctl restart nginx
 sudo systemctl stop nginx
 sudo systemctl status nginx
+
+# comando especial reload: testar se confiração do NGinx não tem erros graves
+sudo nginx -t
 
 # comando especial reload: recarrega configurações SEM reiniciar serviço!
 sudo systemctl reload nginx
