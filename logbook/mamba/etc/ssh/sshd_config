@@ -65,7 +65,7 @@ X11Forwarding yes
 X11DisplayOffset 10
 PrintMotd no
 PrintLastLog yes
-TCPKeepAlive yes
+TCPKeepAlive no
 #UseLogin no
 
 #MaxStartups 10:30:60

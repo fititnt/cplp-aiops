@@ -105,21 +105,6 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/privat
 # Aviso: o arquivo /logbook/mamba/etc/vsftpd.conf contém alterações mais
 #        detalhadas
 
-# TODO: revisar no futuro se o aviso de segurança abaixo poderá ser removido
-#       ao simplesmente revisar com calma as configurações
-#       (fititnt, 2018-11-30 03:37 BRST)
-
-## AVISO DE SEGURANÇA SOBRE CONFIGURAÇÕES FTP, inicio
-# A documentação de referência da digital ocean (bem como outros locais)
-# tendem a sugerir que o usuário FTP não tenha permissão até mesmo de alterar
-# arquivos do seu próprio diretório /home/NomeDoUsuario pois, em situações
-# muito específicas, seria possível que uma conta FTP comum poderia comprometer
-# segurança de servidor inteiro. Sugestões de melhoria são bem vindas, porém
-# note que, ao menos inicialmente, prefere-se dar flexibilidade aos usuários
-# e restringir numero de pessoas e recomendar boas práticas de segurança a elas
-# para mitigar incidentes com contas comprometidas.
-## AVISO DE SEGURANÇA SOBRE CONFIGURAÇÕES FTP, fim
-
 ## Arquivo /etc/vsftpd.conf
 # Garanta que as seguintes linhas existam dessa forma e estejam descomendadas
 write_enable=YES
@@ -135,7 +120,17 @@ ssl_sslv3=NO
 pasv_min_port=40000
 pasv_max_port=50000
 
+### SSH, otimizações para reduzir uso de dados em conexção 3G
+## @see https://superuser.com/questions/624720/how-much-data-does-ssh-typically-use/1199986#1199986
+## @see ./mamba/etc/ssh/sshd_config
 
+# Garanta os parametros a seguir no arquivo /etc/ssh/sshd_config do *SERVIDOR* Mamba
+TCPKeepAlive no
+
+# Garanta os parametros a seguir no arquivo ssh_config do cliente (o telefone que acessa o servidor):
+ServerAliveInterval 180
+ServerAliveCountMax 40
+TCPKeepAlive no
 
 #### Preparação Inicial, fim
 
