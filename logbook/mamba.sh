@@ -126,7 +126,16 @@ pasv_max_port=50000
 
 sudo mkdir -p /var/ftp/pub
 sudo chown nobody:nogroup /var/ftp/pub
-echo "vsftpd test file" | sudo tee /var/ftp/pub/test.txt
+sudo chown nobody:ftp-users /var/ftp/pub
+# echo "vsftpd test file" | sudo tee /var/ftp/pub/test.txt
+sudo chmod g+s /var/ftp/pub
+
+# Usar isso para corrigir permissoes
+sudo chgrp -R ftp-users /var/ftp/pub
+sudo chmod -R g+w /var/ftp/pub
+sudo chmod g+s /var/ftp/pub
+sudo systemctl restart vsftpd
+sudo systemctl restart nginx
 
 # @see https://github.com/gibatronic/ngx-superbindex
 # Adicionado "ngx-superbindex"
@@ -154,8 +163,17 @@ sudo adduser kissabi
 ### fititnt
 sudo adduser fititnt
 
-### fititnt
+### pyladies
 sudo adduser pyladies
+
+### pyladies
+sudo adduser loopchaves
+
+groupadd ftp-users
+usermod -a -G ftp-users kissabi
+usermod -a -G ftp-users fititnt
+usermod -a -G ftp-users loopchaves
+usermod -a -G ftp-users www-data
 
 ### usuariodeteste
 # Este usuário é usado para testar restrições a usuários
