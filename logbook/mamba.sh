@@ -122,10 +122,14 @@ pasv_max_port=50000
 
 ## Anonymous FTP
 # @see https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-anonymous-downloads-on-ubuntu-16-04
+# @see https://www.cyberciti.biz/tips/configure-vsfptd-secure-connections-via-ssl-tls.html
 
 sudo mkdir -p /var/ftp/pub
 sudo chown nobody:nogroup /var/ftp/pub
 echo "vsftpd test file" | sudo tee /var/ftp/pub/test.txt
+
+# @see https://github.com/gibatronic/ngx-superbindex
+# Adicionado "ngx-superbindex"
 
 ### SSH, otimizações para reduzir uso de dados em conexção 3G
 ## @see https://superuser.com/questions/624720/how-much-data-does-ssh-typically-use/1199986#1199986
