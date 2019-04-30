@@ -120,6 +120,13 @@ ssl_sslv3=NO
 pasv_min_port=40000
 pasv_max_port=50000
 
+## Anonymous FTP
+# @see https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-anonymous-downloads-on-ubuntu-16-04
+
+sudo mkdir -p /var/ftp/pub
+sudo chown nobody:nogroup /var/ftp/pub
+echo "vsftpd test file" | sudo tee /var/ftp/pub/test.txt
+
 ### SSH, otimizações para reduzir uso de dados em conexção 3G
 ## @see https://superuser.com/questions/624720/how-much-data-does-ssh-typically-use/1199986#1199986
 ## @see ./mamba/etc/ssh/sshd_config
@@ -169,7 +176,7 @@ sudo apt-get update
 sudo apt-get install python-certbot-nginx
 
 # Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
-sudo certbot --nginx -d kayen.ga -d mamba.kayen.ga -d www.kayen.ga -d pyladies.kayen.ga
+sudo certbot --nginx -d kayen.ga -d mamba.kayen.ga -d www.kayen.ga -d pyladies.kayen.ga -d ftp.etica.ai
 
 #
 ##
