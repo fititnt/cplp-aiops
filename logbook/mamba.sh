@@ -213,7 +213,34 @@ sudo certbot --nginx -d kayen.ga -d mamba.kayen.ga -d www.kayen.ga -d pyladies.k
 LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 apt update
 
-apt install php7.3 php7.3-fpm php7.3-common
+apt install php7.3 php7.3-fpm php7.3-common php7.3-gd
+
+# O h5ai tem alguns requisitos extras, como imagemagick
+sudo apt install php7.3-imagick
+sudo apt install imagemagick
+sudo install zip
+
+# ffmpeg pro h5ai
+# @see https://tecadmin.net/install-ffmpeg-on-linux/
+sudo add-apt-repository ppa:jonathonf/ffmpeg-4
+sudo apt update
+sudo apt install ffmpeg
+
+# Desabilitar file uploads &  cgi.fix_pathinfo=0
+vim /etc/php/7.3/fpm/php.ini
+# cgi.fix_pathinfo=0
+# (...)
+#; NOTA: file uploads desabilitdo por padrao; 
+#file_uploads = Off
+
+sudo systemctl restart php7.3-fpm
+
+# Testar configuacao do NGinx sem reiniciar
+sudo nginx -t
+sudo systemctl reload nginx
+
+## full reload
+sudo systemctl restart php7.3-fpm && sudo systemctl reload nginx
 
 #
 ##
