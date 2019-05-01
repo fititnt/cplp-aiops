@@ -22,7 +22,7 @@
     "resources": {
         "scripts": [],
         "styles": [
-            "//fonts.googleapis.com/css?family=Ubuntu:300,400,700%7CUbuntu+Mono:400,700"
+    //        "//fonts.googleapis.com/css?family=Ubuntu:300,400,700%7CUbuntu+Mono:400,700"
         ]
     },
 
@@ -63,8 +63,8 @@
         "disableSidebar": false,
         "fallbackMode": false,
         "fastBrowsing": true,
-        "fonts": ["Ubuntu", "Roboto", "Helvetica", "Arial", "sans-serif"],
-        "fontsMono": ["Ubuntu Mono", "Monaco", "Lucida Sans Typewriter", "monospace"],
+        "fonts": ["Droid Sans", "Ubuntu", "Roboto",  "Helvetica", "Arial", "sans-serif"],
+        "fontsMono": ["Droid Sans Mono", "Ubuntu Mono", "Monaco", "Lucida Sans Typewriter", "Consolas", "monospace"],
         "hidden": ["^\\.", "^_h5ai"],
         "hideFolders": false,
         "hideIf403": true,
