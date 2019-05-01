@@ -16,6 +16,12 @@
 
 #### Preparação Inicial:
 
+sudo hostnamectl set-hostname mamba.kayen.ga
+
+vim /etc/hosts
+# Add to hostfiles
+# 127.0.0.1 mamba.kayen.ga
+
 ### Swap + /boot, inicio
 ## CloudAtCost, reduz swap padrão para aumentar /boot (permite atualizar kernel)
 ## @see http://www2.fugitol.com/2012/04/linux-resizing-boot-partition.html
@@ -199,6 +205,15 @@ sudo apt-get install python-certbot-nginx
 
 # Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
 sudo certbot --nginx -d kayen.ga -d mamba.kayen.ga -d www.kayen.ga -d pyladies.kayen.ga -d ftp.etica.ai
+
+## PHP
+# @see https://www.digitalocean.com/community/tutorials/como-instalar-linux-nginx-mysql-php-pilha-lemp-no-ubuntu-16-04-pt
+# @see https://www.rosehosting.com/blog/how-to-install-php-7-3-on-ubuntu-16-04/
+# Ubuntu 16 tem apenas php 7.0, aproveitar para instalar logo o 7.3
+LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
+apt update
+
+apt install php7.3 php7.3-fpm php7.3-common
 
 #
 ##
