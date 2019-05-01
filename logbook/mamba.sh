@@ -270,6 +270,39 @@ sudo chmod 775 -R /home/pyladies/public_html
 ####
 ##### Configuração de websites, fim
 
+#### Estatístiticas e logs, início
+###
+##
+#
+
+### VNstat
+# @see https://www.howtoforge.com/tutorial/vnstat-network-monitoring-ubuntu/
+sudo apt-get install vnstat
+sudo apt-get install vnstati
+
+ifconfig
+# Escolha a network para iniciar monitoramento. Neste caso é ens32
+vnstat -u -i ens32
+
+## vnstat --iflist
+#Available interfaces: ens32 (1000 Mbit) lo
+
+sudo systemctl start vnstat
+sudo systemctl enable vnstat
+
+vim /etc/vnstat.conf
+# trocar eth0 pela network especifica
+# default interface
+# Interface "ens32"
+# Para ver em tempo real o uso de rede
+vnstat -l
+
+
+#
+##
+####
+##### statístiticas e logs, fim
+
 ##### Gerenciamento do dia a dia, inicio
 #### Iniciar, reiniciar, parar serviços, e status (ver se estão ativos)
 ### vsftpd (serviço de SFTP)
