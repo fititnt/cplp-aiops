@@ -65,7 +65,7 @@
         "fastBrowsing": true,
         "fonts": ["Droid Sans", "Ubuntu", "Roboto",  "Helvetica", "Arial", "sans-serif"],
         "fontsMono": ["Droid Sans Mono", "Ubuntu Mono", "Monaco", "Lucida Sans Typewriter", "Consolas", "monospace"],
-        "hidden": ["^\\.", "^_h5ai"],
+        "hidden": ["^\\.", "^_h5ai", "robots.txt"],
         "hideFolders": false,
         "hideIf403": true,
         "hideParentFolder": false,
@@ -123,9 +123,9 @@
     */
     "download": {
         "enabled": true,
-        "type": "php-tar",
+        "type": "shell-zip",
         "packageName": null,
-        "alwaysVisible": false
+        "alwaysVisible": true
     },
 
     /*
@@ -142,7 +142,7 @@
     - ignorecase: boolean, ignore case
     */
     "filter": {
-        "enabled": false,
+        "enabled": true,
         "advanced": true,
         "debounceTime": 100,
         "ignorecase": true
@@ -158,7 +158,7 @@
     */
     "foldersize": {
         "enabled": true,
-        "type": "php"
+        "type": "shell-du"
     },
 
     /*
@@ -197,7 +197,7 @@
     */
     "l10n": {
         "enabled": true,
-        "lang": "en",
+        "lang": "pt",
         "useBrowserLang": true
     },
 
@@ -304,9 +304,9 @@
     - ignorecase: boolean, ignore case
     */
     "search": {
-        "enabled": false,
+        "enabled": true,
         "advanced": true,
-        "debounceTime": 300,
+        "debounceTime": 500,
         "ignorecase": true
     },
 
