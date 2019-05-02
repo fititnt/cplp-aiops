@@ -65,7 +65,7 @@
         "fastBrowsing": true,
         "fonts": ["Droid Sans", "Ubuntu", "Roboto",  "Helvetica", "Arial", "sans-serif"],
         "fontsMono": ["Droid Sans Mono", "Ubuntu Mono", "Monaco", "Lucida Sans Typewriter", "Consolas", "monospace"],
-        "hidden": ["^\\.", "^_h5ai", "robots.txt"],
+        "hidden": ["^\\.", "^_h5ai", "robots.txt", "banner-ftp-etica.ai.png", "sitemal.xml"],
         "hideFolders": false,
         "hideIf403": true,
         "hideParentFolder": false,
