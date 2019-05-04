@@ -1,0 +1,9 @@
+# Robots for http://ftp.etica.ai/robots.txt
+# Robots for https://ftp.etica.ai/robots.txt
+
+User-agent: * 
+Disallow: /africabr
+Disallow: /_h5ai
+Disallow: /TEMP
+
+Sitemap: https://ftp.etica.ai/sitemap.xml

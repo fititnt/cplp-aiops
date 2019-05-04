@@ -1,4 +1,4 @@
+# Robots for ftp://ftp.etica.ai/robots.txt
+
 User-agent: * 
-Disallow: /africabr
-Disallow: /_h5ai
-Disallow: /TEMP
+Disallow: /
