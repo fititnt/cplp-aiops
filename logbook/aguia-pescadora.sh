@@ -72,3 +72,12 @@ reboot
 
 sudo apt update
 sudo do-release-upgrade
+
+
+#### Preparação Inicial:
+
+sudo hostnamectl set-hostname aguia-pescadora.etica.ai
+
+sudo vim /etc/hosts
+# Add to hostfiles
+# 127.0.0.1 mamba.kayen.ga
