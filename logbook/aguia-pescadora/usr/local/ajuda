@@ -3,8 +3,7 @@ export TERM=xterm-256color
 blue=$( tput setaf 51 );
 green=$( tput setaf 10 );
 yellow=$( tput setaf 11 );
-normal=$( tput sgr 0);
-echo
+normal=$( tput sgr 0 );
 echo "${green}
 Comando 'ajuda' de aguia-pescadora.etica.ai
 

@@ -235,3 +235,48 @@ sudo apt install emacs
 ##
 ###
 ##### Editores de texto / Editores de código via terminal, inicio
+
+##### Jogos de terminal, inicio
+####
+###
+##
+# @see https://www.ubuntupit.com/top-20-best-linux-terminal-console-games-that-you-can-play-right-now/
+
+### bastet
+sudo apt-get install bastet
+
+### BSD Games
+## see https://github.com/vattam/BSDGames
+sudo apt-get install bsdgames
+
+### Dunnet (easter egg do Emacs)
+emacs -batch -l dunnet
+
+### greed
+sudo apt-get install greed
+
+### moon-buggy
+sudo apt-get install moon-buggy
+
+### NetHack
+# @see https://www.nethack.org/
+sudo apt-get install nethack-console
+
+### nsnake
+sudo apt-get install nsnake
+
+### ninvaders
+sudo apt-get install ninvaders
+
+### nudoku
+sudo apt-get install nudoku
+
+### Tron (multiplayer, via SSH)
+# ssh sshtron.zachlatta.com
+
+### zangband
+sudo apt-get install zangband
+
+##
+###
+##### Jogos de terminal, fim

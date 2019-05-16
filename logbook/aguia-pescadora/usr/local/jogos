@@ -1,0 +1,101 @@
+#!/bin/sh
+export TERM=xterm-256color
+blue=$( tput setaf 51 );
+green=$( tput setaf 10 );
+yellow=$( tput setaf 11 );
+normal=$( tput sgr 0 );
+echo "${green}
+Comando 'jogos' de aguia-pescadora.etica.ai
+
+  (Inspirado em https://www.ubuntupit.com/top-20-best-linux-terminal-console-games-that-you-can-play-right-now/)
+
+  JOGOS
+  -----
+
+  Bastet
+    ${yellow}bastet${green}
+
+  Dunnet (easter egg do Emacs; tem guia na internet pra quem quer spoiler)
+       ${yellow}emacs -batch -l dunnet${green}
+
+  NetHack (https://www.nethack.org/)
+    ${yellow}nethack${green}
+
+  moon-buggy
+    ${yellow}moon-buggy${green}
+
+  nsnake
+    ${yellow}nsnake${green}
+
+  nudoku
+    ${yellow}nudoku${green}
+
+   ninvaders
+    ${yellow}ninvaders${green}
+
+  Tron (multiplayer, via SSH)
+    ${yellow}ssh sshtron.zachlatta.com${green}
+
+  zangband
+    ${yellow}zangband${green}
+
+  BSD Games (coleção de uns 40 jogos, veja pasta '/usr/games' )
+    Documentação http://wiki.linuxquestions.org/wiki/Mille
+    Código fonte: https://github.com/vattam/BSDGames
+
+    Para saber mais sobre cada item execute 'man JOGO'; por exemplo
+      man caesar
+    Afirma que ${yellow}caesar${green} procura desencriptar rot13 baseado em frequência
+    de letras em inglês
+    -------------------------------------------------------------
+    ${yellow}
+    adventure:	the original adventure by Crowther and Woods
+    arithmetic:	arithmetic quiz/speed test
+    atc:		air traffic control
+    backgammon:	backgammon
+    banner:		display a message in big letters
+    battlestar:	adventure game on a battlestar
+    bcd:		outputs text in an antique form
+    boggle:		boggle
+    caesar:		reads fortunes from the game fortune, also some internet posts
+    canfield:	curses-based solitaire
+    countmail:	tell you how much new mail you have
+    cribbage:	cribbage
+    dab:		dots and boxes
+    dm:		dungeon master, regulates games playing
+    factor:		factor a number
+    fish:		go fish
+    fortune:	displays a random silly message
+    gomoku:		gomoku
+    hack:		exploring the Dungeons of Doom
+    hangman:	guess the word before it is too late
+    hunt:		hunt each other in a maze (multiplayer -- great)
+    mille:		mille borne against the computer
+    monop:		monopoly
+    morse:		output morse code
+    number:		output the English text for a number
+    phantasia:	interterminal fantasy game
+    pig:		output text in Pig Latin
+    pom:		display the phase of the moon
+    ppt:		outputs text in another antique form
+    primes:		generate primes
+    quiz:		random knowledge tests
+    rain:		attempts to create a rain drop effect (best at 9600 baud)
+    random:		random lines from a file or random numbers
+    robots:		well... avoid the robots
+    sail:		sail your ship into battle
+    snake:		grab the cash and avoid the snake and exit
+    tetris:		tetris
+    trek:		We come in peace, shoot to kill.  It's worse than that, he's
+            dead Jim.  Ye cannot change the laws of physics.  It's life
+            Jim, but not as we know it.  There's Klingons on the starboard
+            bow ...
+    wargames:	would you like to play a game?
+    worm:		eat the numbers without running into anything
+    worms:		random worms scurrying across your screen
+    wtf:		translate acronyms, e.g. 'wtf is WTF'
+    wump:		hunt the wumpus${green}
+
+   
+
+${normal}"
