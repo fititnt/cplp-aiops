@@ -1,0 +1,22 @@
+#!/bin/sh
+export TERM=xterm-256color
+green=$( tput setaf 10 );
+normal=$( tput sgr 0);
+echo
+echo "${green}-------------------------------------------------------------------------------
+Ajuda do agua-pescadora.etica.ai
+
+PACOTES INSTALADOS
+
+PYTHON
+  Padrao do sistema: 2.6 (voce pode customizar um alias de python para python3)
+    python
+  Python 2.6:
+    python2
+  Python 3.6
+    python3
+
+
+LINKS EXTERNOS
+  Discussão no GitHub:
+    - https://github.com/fititnt/cplp-aiops/issues?q=is%3Aissue+is%3Aopen+label%3Aserver-ag

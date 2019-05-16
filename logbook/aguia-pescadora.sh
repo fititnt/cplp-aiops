@@ -138,3 +138,39 @@ sudo passwd -e jefferson091
 ##
 ####
 ##### Usuarios de sistema, fim
+
+##### Customização de motd (Mensagem do dia)
+### @see https://linuxconfig.org/how-to-change-welcome-message-motd-on-ubuntu-18-04-server
+# Desliga mensagem padrão de ajuda do Ubuntu 18
+sudo chmod +x /etc/update-motd.d/10-help-text
+
+# Desliga mensagem remota da Canonical
+vim /etc/default/motd-news
+# altera ENABLED=1 para ENABLED=0
+
+## Cria uma mensagem customizada nossa
+sudo touch /etc/update-motd.d/11-aguia-pescadora
+sudo chmod +x /etc/update-motd.d/11-aguia-pescadora
+
+# @TODO testar melhor bugs no motd customizado (fititnt, 2019-05-16 03:56 BRT)
+
+
+##### Comando de ajuda do servidor
+touch  /usr/local/bin/ajuda
+sudo chmod +x  /usr/local/bin/ajuda
+
+vim /usr/local/bin/ajuda
+# customizar aqui... o arquivo esta commitado no repositorio
+
+
+
+##### Ambientes de desenvolvimento / Linguagens de programação
+#### Python
+
+# Python3 no Ubuntu 18.04 (ele já vem instalado, mas como python3)
+apt install python3
+
+# Python 2.7 no Ubuntu 18.04 (ele já vem instalado, mas como python3)
+apt install python-minimal
+
+# @TODO ver com mais calma versoes padroes do python (fititnt, 2019-05-16 03:56 BRT)
