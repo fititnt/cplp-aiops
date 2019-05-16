@@ -1,3 +1,5 @@
+echo "Este diário de bordo foi feito para ser visualizado, nao executado assim!"
+exit
 ######################  Diario de bordo: aguia-pescadora #######################
 # 2 vCPUs, 1,5GB RAM, 30GB SSD (CloudAtCost)
 # Ubuntu 16.04.2 LTS 64bit
@@ -166,6 +168,7 @@ vim /usr/local/bin/ajuda
 # customizar aqui... o arquivo esta commitado no repositorio
 
 
+##### Ambientes de desenvolvimento / Linguagens de programação, inicio
 
 ##### Ambientes de desenvolvimento / Linguagens de programação
 #### C/C++
@@ -178,8 +181,24 @@ sudo apt install gcc build-essential
 #    libbinutils libc-dev-bin libc6-dev libcc1-0 libcilkrts5 libdpkg-perl libfakeroot libfile-fcntllock-perl libgcc-7-dev libgomp1 libisl19 libitm1 liblsan0 libmpc3 libmpx2 libquadmath0 libstdc++-7-dev libtsan0 libubsan0
 #    linux-libc-dev make manpages-dev
 
+#### NodeJS
+###
+##
+#
+# @see https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04
+sudo apt install nodejs
+sudo apt install npm
 
-##### Ambientes de desenvolvimento / Linguagens de programação
+# @TODO: considerar dar mais opções. Ou então deixar que o usuario escolha versões exatas, e aqui permanecer o padrao de sistema (fititnt, 2019-05-16 05:59 BRT)
+
+#### PHP
+###
+##
+# PHP 7.2
+sudo apt install php-cli php-common
+
+# @TODO por padrão instala o 7.2 (que assim como python nem é a ultima); considerar melhorar mais opções disso (fititnt, 2019-05-16 04:39 BRT)
+
 #### Python
 ###
 ##
@@ -191,11 +210,28 @@ apt install python-minimal
 
 # @TODO ver com mais calma versoes padroes do python (fititnt, 2019-05-16 03:56 BRT)
 
-#### PHP
-###
+##### Ambientes de desenvolvimento / Linguagens de programação, fim
+
+##### Editores de texto / Editores de código via terminal, inicio
+####
 ##
-# PHP 7.2
-sudo apt install php-cli php-common
+#
+#### Emacs
+sudo apt install emacs
 
+#### nano
+# Já veio instalado com o Ubuntu 18.04
 
-# @TODO por padrão instala o 7.2 (que assim como python nem é a ultima); considerar melhorar mais opções disso (fititnt, 2019-05-16 04:39 BRT)
+#### NeoVim
+# @see https://neovim.io/
+# @see https://www.youtube.com/watch?v=kZDT10nFiTY
+
+# @TODO considerar instalar o NeoVim, que em tese seria mais amigável que o Vim (fititnt, 2019-05-16 06:27 BRT)
+
+#### vi/ vim
+# Já vieram instalados com o  Ubuntu 18.04
+
+#
+##
+###
+##### Editores de texto / Editores de código via terminal, inicio

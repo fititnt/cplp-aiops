@@ -8,18 +8,32 @@ echo
 echo "${green}
 Comando 'ajuda' de aguia-pescadora.etica.ai
 
-  PACOTES INSTALADOS
+Discussão no GitHub: https://github.com/fititnt/cplp-aiops/issues?q=is%3Aissue+is%3Aopen+label%3Aserver-aguia-pescadora
+Configuração de aguia-pescadora: https://raw.githubusercontent.com/fititnt/cplp-aiops/master/logbook/aguia-pescadora.sh
 
-
+  PACOTES PARA DESENVOLVIMENTO DE SOFTWARE
+  ----------------------------------------
   C/C++
     CCC padrão: [$(gcc --version | head -n1)]
       ${yellow}gcc${green}
     G++ padrão: [$(g++ --version | head -n1)]
       ${yellow}g++${green}
 
+  JAVASCRIPT (NODEJS)
+    NodeJS padrão (**): [$(nodejs -v | head -n1)]
+      ${yellow}nodejs${green}  [$(nodejs -v | head -n1)]
+      ${yellow}node${green}  [$(node -v | head -n1)]
+      ${yellow}js${green}  [$(js -v | head -n1)]
+    Node Package Manager, NPM padrão (**), o gerenciador de pacotes do NodeJS
+      ${yellow}npm${green}  [$(npm -v | head -n1)]
+
   PERL
     Perl padrão: [$(perl -v | head -n2 | tail -n1)]
       ${yellow}perl${green}
+
+  SHELL SCRIPT
+    Bash padrão:
+      ${yellow}bash${green}  [$(bash --version | head -n1 | tail -n1)]
 
   PHP
     PHP padrão (*): [$(php --version | head -n1)]
@@ -38,7 +52,13 @@ Comando 'ajuda' de aguia-pescadora.etica.ai
   *: recomendado você customizar um alias para versão explicita que quer usar.
      Esta versão padrão poderá ser alterada sem previo aviso para uma versão mais atual
 
-  LINKS EXTERNOS
-    Discussão no GitHub:
-      - https://github.com/fititnt/cplp-aiops/issues?q=is%3Aissue+is%3Aopen+label%3Aserver-aguia-pescadora
+  **: considere usar gerenciador de pacote da própria linguagem (NVM do NodeJS,
+      RVM do Ruby, etc)
+
+  EDITORES DE CÓDIGO / IDEs
+  --------------
+    ${yellow}emacs${green} [$(emacs --version | head -n1)]
+    ${yellow}nano${green} [$(nano --version | head -n1)]
+    ${yellow}vim${green} [$(vim --version | head -n1)]
+
 ${normal}"
