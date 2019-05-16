@@ -1,22 +1,44 @@
 #!/bin/sh
 export TERM=xterm-256color
+blue=$( tput setaf 51 );
 green=$( tput setaf 10 );
+yellow=$( tput setaf 11 );
 normal=$( tput sgr 0);
 echo
-echo "${green}-------------------------------------------------------------------------------
-Ajuda do agua-pescadora.etica.ai
+echo "${green}
+Comando 'ajuda' de aguia-pescadora.etica.ai
 
-PACOTES INSTALADOS
-
-PYTHON
-  Padrao do sistema: 2.6 (voce pode customizar um alias de python para python3)
-    python
-  Python 2.6:
-    python2
-  Python 3.6
-    python3
+  PACOTES INSTALADOS
 
 
-LINKS EXTERNOS
-  Discussão no GitHub:
-    - https://github.com/fititnt/cplp-aiops/issues?q=is%3Aissue+is%3Aopen+label%3Aserver-ag
+  C/C++
+    CCC padrão: [$(gcc --version | head -n1)]
+      ${yellow}gcc${green}
+    G++ padrão: [$(g++ --version | head -n1)]
+      ${yellow}g++${green}
+
+  PERL
+    Perl padrão: [$(perl -v | head -n2 | tail -n1)]
+      ${yellow}perl${green}
+
+  PHP
+    PHP padrão (*): [$(php --version | head -n1)]
+      ${yellow}php${green}
+    PHP 7.2:
+      ${yellow}php7.2${green}
+
+  PYTHON
+    Python padrão (*): []
+      ${yellow}python${green}
+    Python 2.6:
+      ${yellow}python2${green}
+    Python 3.6
+      ${yellow}python3${green}
+
+  *: recomendado você customizar um alias para versão explicita que quer usar.
+     Esta versão padrão poderá ser alterada sem previo aviso para uma versão mais atual
+
+  LINKS EXTERNOS
+    Discussão no GitHub:
+      - https://github.com/fititnt/cplp-aiops/issues?q=is%3Aissue+is%3Aopen+label%3Aserver-aguia-pescadora
+${normal}"

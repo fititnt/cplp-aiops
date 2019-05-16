@@ -152,11 +152,14 @@ vim /etc/default/motd-news
 sudo touch /etc/update-motd.d/11-aguia-pescadora
 sudo chmod +x /etc/update-motd.d/11-aguia-pescadora
 
+vim /etc/update-motd.d/11-aguia-pescadora
+# customizar...
+
 # @TODO testar melhor bugs no motd customizado (fititnt, 2019-05-16 03:56 BRT)
 
 
 ##### Comando de ajuda do servidor
-touch  /usr/local/bin/ajuda
+touch /usr/local/bin/ajuda
 sudo chmod +x  /usr/local/bin/ajuda
 
 vim /usr/local/bin/ajuda
@@ -165,8 +168,21 @@ vim /usr/local/bin/ajuda
 
 
 ##### Ambientes de desenvolvimento / Linguagens de programação
-#### Python
+#### C/C++
+# @see https://linuxconfig.org/how-to-install-gcc-the-c-compiler-on-ubuntu-18-04-bionic-beaver-linux
+#
 
+sudo apt install gcc build-essential
+#  The following NEW packages will be installed:
+#    binutils binutils-common binutils-x86-64-linux-gnu build-essential cpp cpp-7 dpkg-dev fakeroot g++ g++-7 gcc gcc-7 gcc-7-base libalgorithm-diff-perl libalgorithm-diff-xs-perl libalgorithm-merge-perl libasan4 libatomic1
+#    libbinutils libc-dev-bin libc6-dev libcc1-0 libcilkrts5 libdpkg-perl libfakeroot libfile-fcntllock-perl libgcc-7-dev libgomp1 libisl19 libitm1 liblsan0 libmpc3 libmpx2 libquadmath0 libstdc++-7-dev libtsan0 libubsan0
+#    linux-libc-dev make manpages-dev
+
+
+##### Ambientes de desenvolvimento / Linguagens de programação
+#### Python
+###
+##
 # Python3 no Ubuntu 18.04 (ele já vem instalado, mas como python3)
 apt install python3
 
@@ -174,3 +190,12 @@ apt install python3
 apt install python-minimal
 
 # @TODO ver com mais calma versoes padroes do python (fititnt, 2019-05-16 03:56 BRT)
+
+#### PHP
+###
+##
+# PHP 7.2
+sudo apt install php-cli php-common
+
+
+# @TODO por padrão instala o 7.2 (que assim como python nem é a ultima); considerar melhorar mais opções disso (fititnt, 2019-05-16 04:39 BRT)
