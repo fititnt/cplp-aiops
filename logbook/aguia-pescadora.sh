@@ -73,11 +73,68 @@ reboot
 sudo apt update
 sudo do-release-upgrade
 
-
 #### Preparação Inicial:
 
 sudo hostnamectl set-hostname aguia-pescadora.etica.ai
 
 sudo vim /etc/hosts
-# Add to hostfiles
-# 127.0.0.1 mamba.kayen.ga
+## Adicione o seguinte ao /etc/hosts
+# 127.0.0.1	aguia-pescadora
+
+##### Usuarios de sistema, inicio
+####
+##
+#
+
+#### Padrao para copiar e colar para criar usuarios novos, inicio
+# Cria o usuario, inclusive diretorio home /home/UsernameDoUsuario
+sudo adduser UsernameDoUsuario
+
+# Este comando força usuario usar uma senha propria no próximo login.
+# Uma alternativa seria já ter chaves publicas de cada usuario
+sudo passwd -e UsernameDoUsuario
+
+#### Padrao para copiar e colar para criar usuarios novos, inicio
+
+#### Usuarios adicionados ao aguia-pescadora.etica.ai, inicio
+##
+#
+## fititnt
+sudo adduser fititnt
+sudo passwd -e fititnt
+
+## kissabi
+sudo adduser kissabi
+sudo passwd -e kissabi
+
+## loopchaves
+sudo adduser loopchaves
+sudo passwd -e loopchaves
+
+## rodriguesjeff
+sudo adduser rodriguesjeff
+sudo passwd -e rodriguesjeff
+
+## renatonerijr
+sudo adduser renatonerijr
+sudo passwd -e renatonerijr
+
+## betafcc
+sudo adduser betafcc
+sudo passwd -e betafcc
+
+## fcomarcosmabreu
+sudo adduser fcomarcosmabreu
+sudo passwd -e fcomarcosmabreu
+
+## jefferson091
+sudo adduser jefferson091
+sudo passwd -e jefferson091
+#
+###
+#### Usuarios adicionados ao aguia-pescadora.etica.ai, fim
+
+#
+##
+####
+##### Usuarios de sistema, fim
