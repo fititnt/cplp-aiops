@@ -1,7 +1,7 @@
 ######################  Diario de bordo: aguia-pescadora #######################
 # 2 vCPUs, 1,5GB RAM, 30GB SSD (CloudAtCost)
 # Ubuntu 16.04.2 LTS 64bit
-# (104.167.109.226)
+# aguia-pescadora.etica.ai (104.167.109.226)
 ################################################################################
 
 
@@ -62,3 +62,13 @@ mount /boot
 #
 ##
 ### Swap + /boot, fim
+
+### Atualizar de Ubuntu 16.04.2 LTS para Ubuntu 18.04.02 LTS
+
+sudo apt update
+sudo apt upgrade
+sudo apt autoremove
+reboot
+
+sudo apt update
+sudo do-release-upgrade
