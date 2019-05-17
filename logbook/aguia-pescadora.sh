@@ -4,8 +4,35 @@ exit
 # 2 vCPUs, 1,5GB RAM, 30GB SSD (CloudAtCost)
 # Ubuntu 16.04.2 LTS 64bit
 # aguia-pescadora.etica.ai (104.167.109.226)
+#
+# Sobre esta documentação de configuração de servidor:
+#   License: Public Domain (não é preciso citar créditos ao copiar)
+#
+# Sobre como fazer login no servidor
+#   Por terminal de comando:
+#     ssh seuusuario@aguia-pescadora.etica.ai
+#     mosh seuusuario@aguia-pescadora.etica.ai
+#
+#   Por programa gráfico:
+#     Servidor: aguia-pescadora.etica.ai
+#     Usuário: seuusuario
+#     Porta: 22
+#     Protocolo: "SSH", ou "SCP". Talvez "SFTP" (Aviso: não temos "FTP" aqui!)
+#
 ################################################################################
 
+#------------------------------------------------------------------------------#
+#  ***Envie avisos de segurança para rocha(at)ieee.org sobre este servidor.***
+# Porém tenha em mente alguns pontos:
+#
+#   1. Por decisão de projeto este servidor não tem o firewall padrão ligado.
+#      - Motivo: é um servidor laboratório, e não é possível dar acesso root
+#        para todos. Porém ajustes no servidor que não atrapalhem os usuários
+#        são bem vindas
+#      - Sugestão para quem quer replicar com firewall ligado:
+#        https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-18-04
+#
+#------------------------------------------------------------------------------#
 
 #### Preparação Inicial:
 
@@ -141,7 +168,7 @@ sudo passwd -e jefferson091
 ####
 ##### Usuarios de sistema, fim
 
-##### Customização de motd (Mensagem do dia)
+##### Customização de motd (Mensagem do dia), inicio
 ### @see https://linuxconfig.org/how-to-change-welcome-message-motd-on-ubuntu-18-04-server
 # Desliga mensagem padrão de ajuda do Ubuntu 18
 sudo chmod +x /etc/update-motd.d/10-help-text
@@ -167,6 +194,32 @@ sudo chmod +x  /usr/local/bin/ajuda
 vim /usr/local/bin/ajuda
 # customizar aqui... o arquivo esta commitado no repositorio
 
+##
+####
+##### Customização de motd (Mensagem do dia), fim
+
+##### Acesso HTTP e HTTPS, início
+####
+##
+#
+### NGinx
+## @see https://www.digitalocean.com/community/tutorials/como-instalar-o-nginx-no-ubuntu-16-04-pt
+sudo apt install nginx
+# sudo ufw allow 'Nginx Full' # Firewall desabilitado especialmente neste servidor
+
+### Como Proteger o Nginx com o Let's Encrypt no Ubuntu 18.04:
+## @see https://www.digitalocean.com/community/tutorials/como-proteger-o-nginx-com-o-let-s-encrypt-no-ubuntu-18-04-pt
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install python-certbot-nginx
+
+# Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
+sudo certbot --nginx -d aguia-pescadora.etica.ai  -d www.aguia-pescadora.etica.ai
+
+#
+##
+####
+##### Acesso HTTP e HTTPS, Fim
 
 ##### Ambientes de desenvolvimento / Linguagens de programação, inicio
 
