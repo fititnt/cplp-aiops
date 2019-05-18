@@ -263,4 +263,48 @@ sudo passwd -e loopchaves
 # TL;DR: Configurações específicas de interpretadores e/ou compiladores        #
 #------------------------------------------------------------------------------#
 
-# ...
+
+##### C/C++ ____________________________________________________________________
+# Inclui bibliotecas extras para compilar outras ferramentas
+
+## @see https://linuxconfig.org/how-to-install-gcc-the-c-compiler-on-ubuntu-18-04-bionic-beaver-linux
+
+sudo apt install gcc build-essential
+# Serão instalados os seguintes NOVOS pacotes:
+#  binutils binutils-common binutils-x86-64-linux-gnu build-essential cpp cpp-7 dpkg-dev fakeroot g++ g++-7 gcc gcc-7 gcc-7-base libalgorithm-diff-perl libalgorithm-diff-xs-perl libalgorithm-merge-perl libasan4 libatomic1 libbinutils
+#  libc-dev-bin libc6-dev libcc1-0 libcilkrts5 libdpkg-perl libfakeroot libfile-fcntllock-perl libgcc-7-dev libgomp1 libisl19 libitm1 liblsan0 libmpc3 libmpx2 libquadmath0 libstdc++-7-dev libtsan0 libubsan0 linux-libc-dev make
+#  manpages-dev
+#
+#  É necessário obter 37,1 MB de arquivos.
+#  Após esta operação, serão utilizados 161 MB adicionais de espaço em disco.
+
+##### JavaScript/NodeJS ________________________________________________________
+#
+
+# @see https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04
+sudo apt install nodejs
+# Resultado:
+# (...)
+# Serão instalados os seguintes NOVOS pacotes:
+#    libc-ares2 libhttp-parser2.7.1 nodejs nodejs-doc
+#  É necessário obter 5606 kB de arquivos.
+#  Após esta operação, serão utilizados 24,7 MB adicionais de espaço em disco.
+
+sudo apt install npm
+# Resultado:
+# (...)
+# Serão instalados os seguintes NOVOS pacotes:
+#   gyp libjs-async libjs-inherits libjs-node-uuid libjs-underscore libssl1.0-dev libuv1-dev node-abbrev node-ansi node-ansi-color-table node-archy node-async node-balanced-match node-block-stream node-brace-expansion
+#   node-builtin-modules node-combined-stream node-concat-map node-cookie-jar node-delayed-stream node-forever-agent node-form-data node-fs.realpath node-fstream node-fstream-ignore node-github-url-from-git node-glob node-graceful-fs
+#   node-gyp node-hosted-git-info node-inflight node-inherits node-ini node-is-builtin-module node-isexe node-json-stringify-safe node-lockfile node-lru-cache node-mime node-minimatch node-mkdirp node-mute-stream node-node-uuid
+#   node-nopt node-normalize-package-data node-npmlog node-once node-osenv node-path-is-absolute node-pseudomap node-qs node-read node-read-package-json node-request node-retry node-rimraf node-semver node-sha node-slide
+#   node-spdx-correct node-spdx-expression-parse node-spdx-license-ids node-tar node-tunnel-agent node-underscore node-validate-npm-package-license node-which node-wrappy node-yallist nodejs-dev npm
+# 0 pacotes actualizados, 71 pacotes novos instalados, 0 a remover e 0 não actualizados.
+# É necessário obter 4176 kB de arquivos.
+# Após esta operação, serão utilizados 23,6 MB adicionais de espaço em disco.
+
+
+#------------------------------------------------------------------------------#
+# temp...
+
+apt-get install fish
