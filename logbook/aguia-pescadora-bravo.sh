@@ -81,5 +81,54 @@ sudo apt install language-pack-pt language-pack-pt-base
 
 sudo update-locale LANG=pt_PT.utf8
 
-### Criar Swap_____________________________________________
-# @see aguia-pescadora-bravo-benchmarks.sh
+### Criar Swap__________________________________________________________________
+
+
+#------------------------------------------------------------------------------#
+# SEÇÃO: Benchmark do sistema                                                  #
+# TL;DR: Avalia performance da máquina virtual e de rede                       #
+#        Essa VM mais do que decente pelo preço dela!!!                        #
+#------------------------------------------------------------------------------#
+# Nota: logs detalhados no aguia-pescadora-bravo-benchmarks.sh, aqui tem apenas
+#       parte da informação
+
+### Velocidade da internet
+sudo apt-get install speedtest-cli
+speedtest-cli
+
+# Nota: as velocidades estão dentro do oferecido pela OVH (que é 100Mbit/s)
+#       e isso é otimo considerando que é trafego ilimitado e mais do que
+#       atende as necessidades que se pretende usar o aguia-pescadora.
+# Download: 97.58 Mbit/s
+# Upload: 4.04 Mbit/s
+
+### @see https://www.shellhacks.com/disk-speed-test-read-write-hdd-ssd-perfomance-linux/
+
+# @see https://linuxhint.com/check-ram-ubuntu/
+sudo apt-get install memtester
+# Nota: memtester nao retorna velocidade, apenas se memoria esta saudável.
+#       melhor usar outros
+
+### @see http://www.geekpills.com/operating-system/linux/linux-check-ram-speed-type
+
+### @see https://askubuntu.com/questions/634513/cpu-benchmarking-utility-for-linux/634516#634516
+### @see https://github.com/akopytov/sysbench#linux
+curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.deb.sh | sudo bash
+sudo apt install sysbench
+
+## CPU, via sysbench
+sysbench cpu run
+# Resultado em aguia-pescadora-bravo-benchmarks.sh
+
+## Memória RAM, via sysbench
+sysbench memory run
+# Resultado em aguia-pescadora-bravo-benchmarks.sh
+
+## Disco SSH, via sysbench
+#@see https://www.howtoforge.com/how-to-benchmark-your-system-cpu-file-io-mysql-with-sysbench
+
+# O tamanho do arquivo de teste precisa ser muito maior que nossa RAM
+# (que é 8GB), porém nosso disco tem livre 75GB. Vamos testar com 50GB
+sysbench --test=fileio --file-total-size=50G prepare
+sysbench --test=fileio --file-total-size=50G --file-test-mode=rndrw --max-requests=0 run
+sysbench --test=fileio --file-total-size=50G cleanup
