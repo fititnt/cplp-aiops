@@ -59,3 +59,27 @@ sudo hostnamectl set-hostname aguia-pescadora-bravo.etica.ai
 sudo vi /etc/hosts
 ## Adicione
 # 127.0.0.1 aguia-pescadora-bravo.etica.ai  aguia-pescadora-bravo
+
+### Define horário padrão de sistema_____________________________________________
+# Vamos definir como horário padrão de servidor o UTC.
+# Motivo 1: para aplicações de usuário, é mais fácil calcular a partir do horário
+#           Zulu
+# Motivo 2: Este servidor será acessado por pessoas de diversos países, não
+#           apenas falantes de português que são do Brasil (e que, aliás, o
+#           próprio Brasil tem mais de um fuso horário)
+sudo timedatectl set-timezone UTC
+
+### Idioma padrão do servidor: português________________________________________
+# Vamos definir o idioma padrão (e também outras configurações de localização)
+# para o português
+# Motivo 1: aguia-pescadora é voltada para pessoas falantes de português
+# Motivo 2: mesmo que pessoas administradoras do servidor saibam inglês as
+#           pessoas que criam aplicações (principalmente as que usam ferramentas
+#           com menos abstrações, como as por shell) poderiam ter mais
+#           dificuldades, e nosso foco aqui é facilitar para todo mundo
+sudo apt install language-pack-pt language-pack-pt-base
+
+sudo update-locale LANG=pt_PT.utf8
+
+### Criar Swap_____________________________________________
+# @see aguia-pescadora-bravo-benchmarks.sh
