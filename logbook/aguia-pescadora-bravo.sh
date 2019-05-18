@@ -132,6 +132,53 @@ cat /proc/sys/vm/vfs_cache_pressure
 vim /etc/sysctl.conf
 # Adciona 'vm.vfs_cache_pressure=50' (sem aspas) no final do arquivo
 
+### Cotas de uso de arquivos por usuários e grupos de usuários__________________
+## @see https://www.digitalocean.com/community/tutorials/how-to-set-filesystem-quotas-on-ubuntu-18-04
+
+sudo apt update
+sudo apt install quota
+
+# Checa se já temos o kernel preparado. Em geral VMs não vem por padrão
+find /lib/modules/`uname -r` -type f -name '*quota_v*.ko*'
+
+# E realmente não veio. Vamos instalar
+sudo apt install linux-image-extra-virtual
+
+sudo vim /etc/fstab
+# Troque
+#   LABEL=cloudimg-rootfs   /        ext4   defaults        0 0
+# Por (e repare, não tem espaço entre as virgulas!):
+#   LABEL=cloudimg-rootfs   /        ext4   usrquota,grpquota        0 0
+
+# Isso força as ações no /etc/fstab entrarem em efeito imediatamente sem
+# reiniciar
+sudo mount -o remount /
+
+# O comando a seguir exibira os parâmetros extras
+cat /proc/mounts | grep ' / '
+
+# Prepara sistema para ter cotas de arquivos por usuario e grupos de usuario
+sudo quotacheck -ugm /
+# O comando acima cria dois arquivos, /aquota.group e /aquota.user
+
+# O comando torna ativo o monitoramento de cotas (que serao definidas logo...)
+sudo quotaon -v /
+# /dev/sda1 [/]: group quotas turned on
+# /dev/sda1 [/]: user quotas turned on
+
+# O comando a seguir gera um relatorio de uso do disco
+sudo repquota -s /
+
+## SOBRE CONFIGURAÇÕES EXTRAS DE COTAS DE ARQUIVOS
+# Veja os detalhes extras em https://www.digitalocean.com/community/tutorials/how-to-set-filesystem-quotas-on-ubuntu-18-04
+# Em especial, os seguintes items podem ser refinidos
+#   - Soft limit: se passar desse limite, tem um período de tolerância até este
+#       soft limit se tornar um hard limit. Note que arquivos não são deletados,
+#       apenas o usuário é impedido de criar novo conteúdo até que volte ao
+#       limite abaixo do soft limit
+#   - Hard limit: se passar desse limite, o S.O. impede de escrever em disco
+#   - Período de tolerância: tempo entre o soft limit se tornar hard limit
+
 #------------------------------------------------------------------------------#
 # SEÇÃO: Benchmark do sistema                                                  #
 # TL;DR: Avalia performance da máquina virtual e de rede                       #
@@ -180,3 +227,40 @@ sysbench memory run
 sysbench --test=fileio --file-total-size=50G prepare
 sysbench --test=fileio --file-total-size=50G --file-test-mode=rndrw --max-requests=0 run
 sysbench --test=fileio --file-total-size=50G cleanup
+
+#------------------------------------------------------------------------------#
+# SEÇÃO: USUÁRIOS DO SISTEMA                                                   #
+# TL;DR: Cria os usuários de sistema, e outras customizações                   #
+#------------------------------------------------------------------------------#
+
+### Guia para ser feito por cada usuário de sistema (copie e cole), início
+# Cria o usuario, inclusive diretorio home /home/UsernameDoUsuario
+sudo adduser UsernameDoUsuario
+
+# Este comando força usuario usar uma senha propria no próximo login.
+# Uma alternativa seria já ter chaves publicas de cada usuario
+sudo passwd -e UsernameDoUsuario
+### Guia para ser feito por cada usuário de sistema (copie e cole), fim
+
+## fititnt
+sudo adduser fititnt
+sudo passwd -e fititnt
+
+## loopchaves
+sudo adduser loopchaves
+sudo passwd -e loopchaves
+
+
+#------------------------------------------------------------------------------#
+# SEÇÃO: EDITORES DE TEXTO, EDITORES DE CÓDIGO, IDES                           #
+# TL;DR: Programas do lado do servidor que permitem  programar                 #
+#------------------------------------------------------------------------------#
+
+# ...
+
+#------------------------------------------------------------------------------#
+# SEÇÃO: AMBIENTES DE DESENVOLVIMENTO DE LINGUAGENS DE PROGRAMAÇÃO             #
+# TL;DR: Configurações específicas de interpretadores e/ou compiladores        #
+#------------------------------------------------------------------------------#
+
+# ...
