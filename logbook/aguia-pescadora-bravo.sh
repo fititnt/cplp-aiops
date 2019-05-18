@@ -81,8 +81,56 @@ sudo apt install language-pack-pt language-pack-pt-base
 
 sudo update-locale LANG=pt_PT.utf8
 
-### Criar Swap__________________________________________________________________
+### Criar Swap & ajusta Swappiness______________________________________________
+# Se o sistema operacional ficar sem memória ram suficiênte, ele pode ter falha
+# crítica. Diferente de windows, no Linux swap precisa ser especificada
+# explícitamente. No caso da aguia-pescadora-bravo, tanto por estabilidade do
+# sistema como para explicitamente permitir que usuários possam fazer tarefas
+# eventualmente intensivas, vamos por 12GB de Swap (A RAM desse sistema é 8GB)
+#
+# AVISO: apesar de:
+#
+#        1) os discos SSD da OVH tenham uma performance fantástica
+#        2) não seria incomum o uso de swap em tarefas pontuais de data science
+#        3) todo usuário de aguia-pescadora-bravo esteja ciente que
+#           eventualmente colegas podem usar usar muita CPU e muita RAM
+#           e que não poderão reclamar de lentidão apps e afins
+#
+#        é uma boa prática de vizinhança
+#
+#        1) se for rodar tarefas pesadas por várias horas, esteja online
+#        2) se puder escolher horários que menos pessoas estão usando, melhor
+#        3) feche seus programas quando parar de usar, e se algo der errado
+#           avise algum admin para dar um reinstart na máquina
 
+## Cria um /swapfile de 12GB
+# @see https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04
+sudo fallocate -l 12G /swapfile
+sudo chmod 600 /swapfile
+ls -lh /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+sudo cp /etc/fstab /etc/fstab.bak
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+## Ajusta swappness (tendência do SO a fazer swap)
+# 100 = preferir fazer swap agressivamente (deixar memoria ram livre)
+# 0 = só fazer swap em caso de urgência (deixa RAM o mais ocupada possivel)
+cat /proc/sys/vm/swappiness
+# O padrão vem com 60, vamos por em 10 (para so faze swap em casos mais criticos)
+
+sudo sysctl vm.swappiness=10
+
+vim /etc/sysctl.conf
+# Adciona 'vm.swappiness=10' (sem aspas) no final do arquivo
+
+## Cache Pressure
+cat /proc/sys/vm/vfs_cache_pressure
+# 100, vamos alterar para 50
+
+vim /etc/sysctl.conf
+# Adciona 'vm.vfs_cache_pressure=50' (sem aspas) no final do arquivo
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: Benchmark do sistema                                                  #
