@@ -394,6 +394,40 @@ sudo apt install php-cli php-common
 #       nos repositorios principais a 3.7 (fititnt, 2019-05-18 21:40 BRT)
 
 #------------------------------------------------------------------------------#
+# SEÇÃO: HTTP/HTTPS PADRÃO                                                     #
+# TL;DR: Documenta o uso de NGinx e afins como proxy reverso a aplicações      #
+#        internas. Os colaboradores podem solicitar endereços customizados     #
+#        (como domínios de todo gratuitos no freenom.com) que incluimos também #
+#        nas configurações do servidor                                         #
+#------------------------------------------------------------------------------#
+
+##### Sites Habilitados neste servidor _________________________________________
+# Cada usuário, mesmo sem acesso sudo (super usuário) pode chamar aplicações
+# em portas acima da 1024, como em http://apb.etica.ai:3000. A lista a seguir
+# são ou padrão de sistema, ou que usuários pediram para rotear via HTTP e HTTPS
+# para uma de suas aplicações internas.
+#
+# - http://aguia-pescadora-bravo.etica.ai
+# - https://aguia-pescadora-bravo.etica.ai
+# - http://apb.etica.ai
+# - https://apb.etica.ai
+
+##### NGinx ____________________________________________________________________
+## @see http://nginx.org/
+## @see https://www.digitalocean.com/community/tutorials/como-instalar-o-nginx-no-ubuntu-16-04-pt
+sudo apt install nginx
+# sudo ufw allow 'Nginx Full' # Firewall desabilitado especialmente neste servidor
+
+### Como Proteger o Nginx com o Let's Encrypt no Ubuntu 18.04:
+## @see https://www.digitalocean.com/community/tutorials/como-proteger-o-nginx-com-o-let-s-encrypt-no-ubuntu-18-04-pt
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install python-certbot-nginx
+
+# Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
+sudo certbot --nginx -d aguia-pescadora-bravo.etica.ai -d apb.etica.ai
+
+#------------------------------------------------------------------------------#
 # temp...
 
 apt-get install fish
