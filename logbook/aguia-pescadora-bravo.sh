@@ -220,6 +220,13 @@ sudo vim /etc/vnstat.conf
 #        ser necessário testes extras
 sudo apt install mosh
 
+##### Sdkman ___________________________________________________________________
+# @see https://sdkman.io/
+# Sdkman é usado para gerenciar SDKs relacionadas a JVM, desde Java, Scala até
+# Kotlin
+## wget -O sdk.install.sh "https://get.sdkman.io"
+
+
 #------------------------------------------------------------------------------#
 # SEÇÃO: Benchmark do sistema                                                  #
 # TL;DR: Avalia performance da máquina virtual e de rede                       #
@@ -352,6 +359,11 @@ sudo apt install emacs
 # TL;DR: Configurações específicas de interpretadores e/ou compiladores        #
 #------------------------------------------------------------------------------#
 
+## Ambientes a serem considerados...
+# F# https://fsharp.org/use/linux/
+# Julia (nao tem package manager oficial) https://julialang.org
+# Lisp https://lisp-lang.org/learn/getting-started/
+# Rust https://www.rust-lang.org/tools/install
 
 ##### C/C++ ____________________________________________________________________
 # Inclui bibliotecas extras para compilar outras ferramentas
@@ -366,6 +378,13 @@ sudo apt install gcc build-essential
 #
 #  É necessário obter 37,1 MB de arquivos.
 #  Após esta operação, serão utilizados 161 MB adicionais de espaço em disco.
+
+##### Go _______________________________________________________________________
+# @see https://golang.org/
+# @see https://github.com/golang/go/wiki/Ubuntu
+
+# Esta forma instala versão mais atual estável de Go.
+sudo snap install --classic go
 
 ##### JavaScript/NodeJS ________________________________________________________
 #

@@ -28,6 +28,13 @@ Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
     G++ padrão: [$(g++ --version | head -n1)]
       ${yellow}g++${green}
 
+  GO
+    Go:
+      ${yellow}go${green}  [$(go version | head -n1)]
+
+  JAVA
+    Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/9
+
   JAVASCRIPT (NODEJS)
     NodeJS padrão (**): [$(nodejs -v | head -n1)]
       ${yellow}nodejs${green}  [$(nodejs -v | head -n1)]
@@ -35,6 +42,9 @@ Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
       ${yellow}js${green}  [$(js -v | head -n1)]
     Node Package Manager, NPM padrão (**), o gerenciador de pacotes do NodeJS
       ${yellow}npm${green}  [$(npm -v | head -n1)]
+
+  KOTLIN
+    Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/10
 
   PERL
     Perl padrão: [$(perl -v | head -n2 | tail -n1)]
