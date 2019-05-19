@@ -17,6 +17,12 @@ exit
 #   Full: aguia-pescadora-bravo.etica.ai (apb.etica.ai)
 #   Short: apb.etica.ai
 #
+# Login:
+#   ssh user@aguia-pescadora-bravo.etica.ai
+#   mosh user@aguia-pescadora-bravo.etica.ai
+#   ssh user@abp.etica.ai
+#   mosh user@abp.etica.ai
+#
 # -----------------------------------------------------------------------------#
 # LICENSE: Public Domain
 #   Except where otherwise noted, content on this server configuration and to
@@ -178,6 +184,41 @@ sudo repquota -s /
 #       limite abaixo do soft limit
 #   - Hard limit: se passar desse limite, o S.O. impede de escrever em disco
 #   - Período de tolerância: tempo entre o soft limit se tornar hard limit
+
+##### VNstat [configuração inicial] ____________________________________________
+# VNstat é uma ferramenta super eficiente que permite monitorar uso de rede
+# ao longo do mês
+# @see https://www.howtoforge.com/tutorial/vnstat-network-monitoring-ubuntu/
+
+sudo apt install vnstat vnstati
+
+# O comando a seguir deve ser usado para decidir qual a interface a monitorar
+ifconfig
+# Escolha a network para iniciar monitoramento. Neste caso é ens3
+
+vnstat -u -i ens3
+
+## vnstat --iflist
+# Available interfaces: ens3 lo
+
+# Vamos iniciar vnstat para rodar imediatamente, e também iniciar com sistema
+sudo systemctl start vnstat
+sudo systemctl enable vnstat
+
+# O arquivo /etc/vnstat.conf deve estar marcado para nossa interface desejada
+sudo vim /etc/vnstat.conf
+# trocar eth0 pela network especifica
+# default interface
+# Interface "ens3"
+# Para ver em tempo real o uso de rede
+
+##### Mosh _____________________________________________________________________
+# @see https://mosh.org
+#  Mosh é uma ferramenta que pode ajudar quem tem conecção movel intermitente.
+#  Note: sem ajustes extras (que não são feitos aqui) o uso de Mosh não
+#        significa automaticamente redução do custo de banda, por isso pode
+#        ser necessário testes extras
+sudo apt install mosh
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: Benchmark do sistema                                                  #
@@ -372,7 +413,7 @@ sudo apt install php-cli php-common
 # @TODO adicionar multiplas versões de PHP, não apenas a 7.2
 #       (fititnt, 2019-05-18 21:22 BRT)
 
-##### Python ______________________________________________________________________
+##### Python ___________________________________________________________________
 # @see https://www.python.org/
 # @see https://pypi.org/
 # @see https://docs.python.org/3/
@@ -395,6 +436,35 @@ sudo apt install php-cli php-common
 # @TODO ver com mais calma versoes padroes do python. Ja se tem disponivel
 #       nos repositorios principais a 3.7 (fititnt, 2019-05-18 21:40 BRT)
 
+##### R ________________________________________________________________________
+# @see https://www.r-project.org/
+# @see https://pt.wikipedia.org/wiki/R_(linguagem_de_programa%C3%A7%C3%A3o)
+# @see https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04
+# @see https://cran.r-project.org/bin/linux/ubuntu/README.html
+
+# R vai requerer adicionar um repositorio que não é tão atualizado no Ubuntu
+# Isto aqui prepara para importar o repositório oficial
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
+sudo apt update
+
+sudo apt install r-base
+# Resultado do comando acima:
+# (...)
+# Serão instalados os seguintes NOVOS pacotes:
+#   bzip2-doc gfortran gfortran-7 gir1.2-harfbuzz-0.0 icu-devtools libauthen-sasl-perl libblas-dev libblas3 libbz2-dev libdata-dump-perl libdrm-amdgpu1 libdrm-intel1 libdrm-nouveau2 libdrm-radeon1 libencode-locale-perl
+#   libfile-basedir-perl libfile-desktopentry-perl libfile-listing-perl libfile-mimeinfo-perl libfont-afm-perl libfontenc1 libgfortran-7-dev libgfortran4 libgl1 libgl1-mesa-dri libgl1-mesa-glx libglapi-mesa libglib2.0-bin libglib2.0-dev
+#   libglib2.0-dev-bin libglvnd0 libglx-mesa0 libglx0 libgraphite2-dev libharfbuzz-dev libharfbuzz-gobject0 libharfbuzz-icu0 libhtml-form-perl libhtml-format-perl libhtml-parser-perl libhtml-tagset-perl libhtml-tree-perl
+#   libhttp-cookies-perl libhttp-daemon-perl libhttp-date-perl libhttp-message-perl libhttp-negotiate-perl libicu-dev libicu-le-hb-dev libicu-le-hb0 libiculx60 libio-html-perl libio-socket-ssl-perl libipc-system-simple-perl libjpeg-dev
+#   libjpeg-turbo8-dev libjpeg8-dev liblapack-dev liblapack3 libllvm7 liblwp-mediatypes-perl liblwp-protocol-https-perl liblzma-dev libmailtools-perl libncurses5-dev libnet-dbus-perl libnet-http-perl libnet-smtp-ssl-perl
+#   libnet-ssleay-perl libpciaccess0 libpcre16-3 libpcre3-dev libpcre32-3 libpcrecpp0v5 libpng-dev libpng-tools libreadline-dev libsensors4 libtcl8.6 libtie-ixhash-perl libtimedate-perl libtinfo-dev libtk8.6 libtry-tiny-perl liburi-perl
+#   libwww-perl libwww-robotrules-perl libx11-protocol-perl libxaw7 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-shape0 libxcb-sync1 libxml-parser-perl libxml-twig-perl libxml-xpathengine-perl libxmu6 libxshmfence1
+#   libxss1 libxv1 libxxf86dga1 libxxf86vm1 perl-openssl-defaults pkg-config python3-distutils python3-lib2to3 r-base r-base-core r-base-dev r-base-html r-cran-boot r-cran-class r-cran-cluster r-cran-codetools r-cran-foreign
+#   r-cran-kernsmooth r-cran-lattice r-cran-mass r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-nnet r-cran-rpart r-cran-spatial r-cran-survival r-doc-html r-recommended unzip x11-utils x11-xserver-utils xdg-utils zip zlib1g-dev
+# 0 pacotes actualizados, 135 pacotes novos instalados, 0 a remover e 2 não actualizados.
+# É necessário obter 97,2 MB de arquivos.
+# Após esta operação, serão utilizados 416 MB adicionais de espaço em disco.
+
 #------------------------------------------------------------------------------#
 # SEÇÃO: AJUDA AO USUARIO                                                      #
 # TL;DR: Lista como é documentado ao usuario final o que este servidor         #
@@ -402,12 +472,25 @@ sudo apt install php-cli php-common
 #        interpretadores/compiladores de linguagens de programação             #
 #------------------------------------------------------------------------------#
 
+##### ansi2html ________________________________________________________________
+# Esse script converte uma saída de terminal para HTML. É usado para dar a
+# usuários que não estão logados o que o comando ajuda retornaria
+# Instalar https://github.com/pixelb/scripts/blob/master/scripts/ansi2html.sh
+# em
+vim /usr/local/bin/ansi2html
+sudo chmod +x  /usr/local/bin/ansi2html
+
 ##### Comando de ajuda do servidor _____________________________________________
 touch /usr/local/bin/ajuda
 sudo chmod +x  /usr/local/bin/ajuda
 
 vim /usr/local/bin/ajuda
 # customizar aqui... o arquivo esta commitado no repositorio
+
+### ATENÇÃO: toda vez que atualizar o script, rode isso para atualizar o HTML
+/usr/local/bin/ajuda | ansi2html --bg=dark -p > /var/www/html/ajuda.html
+
+sudo lshw -html > /var/www/html/lshw.html
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: HTTP/HTTPS PADRÃO                                                     #
@@ -448,38 +531,6 @@ sudo certbot --nginx -d aguia-pescadora-bravo.etica.ai -d apb.etica.ai
 # TL;DR: Atalhos para algumas rotinas comuns do dia a dia de administrador de  #
 #        sistemas, como atalhos para ver logs de acesso, rotinas para          #
 #        reiniciar tarefas que tendem a dar problemas, etc.                    #
-#                                                                              #
-#        Adicionalmente documenta instalação/preparação de ferramentas que por #
-#        serem tão extremamente especificas de administração de sistemas já    #
-#        não foram instaladas em etapas anteriores                             #
-#------------------------------------------------------------------------------#
-
-##### VNstat [configuração inicial] ____________________________________________
-# @see https://www.howtoforge.com/tutorial/vnstat-network-monitoring-ubuntu/
-# Passos executados apenas para configurações iniciais
-
-sudo apt install vnstat vnstati
-
-# O comando a seguir deve ser usado para decidir qual a interface a monitorar
-ifconfig
-# Escolha a network para iniciar monitoramento. Neste caso é ens3
-
-vnstat -u -i ens3
-
-## vnstat --iflist
-# Available interfaces: ens3 lo
-
-# Vamos iniciar vnstat para rodar imediatamente, e também iniciar com sistema
-sudo systemctl start vnstat
-sudo systemctl enable vnstat
-
-# O arquivo /etc/vnstat.conf deve estar marcado para nossa interface desejada
-sudo vim /etc/vnstat.conf
-# trocar eth0 pela network especifica
-# default interface
-# Interface "ens3"
-# Para ver em tempo real o uso de rede
-
 #------------------------------------------------------------------------------#
 
 ### Monitorar rede em tempo real ______________________________________________#

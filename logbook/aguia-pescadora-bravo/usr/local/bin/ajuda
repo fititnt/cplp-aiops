@@ -1,4 +1,10 @@
 #!/bin/sh
+
+# Nota: execute o seguinte comando toda vez que este arquivo for atualizado
+#       para gerar https://aguia-pescadora-bravo.etica.ai/ajuda.html ao público:
+# 
+#  /usr/local/bin/ajuda | ansi2html --bg=dark -p > /var/www/html/ajuda.html
+
 export TERM=xterm-256color
 blue=$( tput setaf 51 );
 green=$( tput setaf 10 );
@@ -7,11 +13,15 @@ normal=$( tput sgr 0 );
 echo "${green}
 Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
 
-Discussão no GitHub: https://github.com/fititnt/cplp-aiops/issues?q=is%3Aissue+is%3Aopen+label%3Aserver-aguia-pescadora
-Configuração de aguia-pescadora: https://raw.githubusercontent.com/fititnt/cplp-aiops/master/logbook/aguia-pescadora-bravo.sh
+  EDITORES DE CÓDIGO / IDEs
+  --------------
+    ${yellow}emacs${green} [$(emacs --version | head -n1)]
+    ${yellow}nano${green} [$(nano --version | head -n1)]
+    ${yellow}vim${green} [$(vim --version | head -n1)]
 
   PACOTES PARA DESENVOLVIMENTO DE SOFTWARE
   ----------------------------------------
+
   C/C++
     CCC padrão: [$(gcc --version | head -n1)]
       ${yellow}gcc${green}
@@ -47,6 +57,10 @@ Configuração de aguia-pescadora: https://raw.githubusercontent.com/fititnt/cpl
       ${yellow}python2${green}
     Python 3.6
       ${yellow}python3${green}
+  
+  R
+    R padrão: [$(R --version | head -n1)]
+      ${yellow}R${green}
 
   *: recomendado você customizar um alias para versão explicita que quer usar.
      Esta versão padrão poderá ser alterada sem previo aviso para uma versão mais atual
@@ -54,10 +68,19 @@ Configuração de aguia-pescadora: https://raw.githubusercontent.com/fititnt/cpl
   **: considere usar gerenciador de pacote da própria linguagem (NVM do NodeJS,
       RVM do Ruby, etc)
 
-  EDITORES DE CÓDIGO / IDEs
-  --------------
-    ${yellow}emacs${green} [$(emacs --version | head -n1)]
-    ${yellow}nano${green} [$(nano --version | head -n1)]
-    ${yellow}vim${green} [$(vim --version | head -n1)]
+  INFORMAÇÕES EXTRAS
+  ------------------
+  Nota: versões novas (ou antigas) de ambientes de desenvolvimento que
+        requeiram instalação por super usuário root podem ser solicitadas a
+        qualquer momento. Sem pedido explícito de usuários geralmente o que é
+        instalado são pacotes mais comuns da distribuição Ubuntu 18.04 LTS,
+        porém podemos adicionar versões mais recentes (mesmo que compiladas
+        do código fonte) para você.
+
+  - Discussão no GitHub:
+    - https://github.com/fititnt/cplp-aiops/issues?q=is%3Aissue+is%3Aopen+label%3Aserver-aguia-pescadora
+  - Configuração de aguia-pescadora:
+    - https://raw.githubusercontent.com/fititnt/cplp-aiops/master/logbook/aguia-pescadora-bravo.sh
+
 
 ${normal}"
