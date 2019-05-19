@@ -396,6 +396,20 @@ sudo apt install php-cli php-common
 #       nos repositorios principais a 3.7 (fititnt, 2019-05-18 21:40 BRT)
 
 #------------------------------------------------------------------------------#
+# SEÇÃO: AJUDA AO USUARIO                                                      #
+# TL;DR: Lista como é documentado ao usuario final o que este servidor         #
+#        oferece. Em geral é uma forma de documentar as IDEs e todos os        #
+#        interpretadores/compiladores de linguagens de programação             #
+#------------------------------------------------------------------------------#
+
+##### Comando de ajuda do servidor _____________________________________________
+touch /usr/local/bin/ajuda
+sudo chmod +x  /usr/local/bin/ajuda
+
+vim /usr/local/bin/ajuda
+# customizar aqui... o arquivo esta commitado no repositorio
+
+#------------------------------------------------------------------------------#
 # SEÇÃO: HTTP/HTTPS PADRÃO                                                     #
 # TL;DR: Documenta o uso de NGinx e afins como proxy reverso a aplicações      #
 #        internas. Os colaboradores podem solicitar endereços customizados     #
@@ -430,6 +444,52 @@ sudo apt-get install python-certbot-nginx
 sudo certbot --nginx -d aguia-pescadora-bravo.etica.ai -d apb.etica.ai
 
 #------------------------------------------------------------------------------#
-# temp...
+# SEÇÃO: ADMINISTRAÇÃO DO DIA A DIA                                            #
+# TL;DR: Atalhos para algumas rotinas comuns do dia a dia de administrador de  #
+#        sistemas, como atalhos para ver logs de acesso, rotinas para          #
+#        reiniciar tarefas que tendem a dar problemas, etc.                    #
+#                                                                              #
+#        Adicionalmente documenta instalação/preparação de ferramentas que por #
+#        serem tão extremamente especificas de administração de sistemas já    #
+#        não foram instaladas em etapas anteriores                             #
+#------------------------------------------------------------------------------#
 
+##### VNstat [configuração inicial] ____________________________________________
+# @see https://www.howtoforge.com/tutorial/vnstat-network-monitoring-ubuntu/
+# Passos executados apenas para configurações iniciais
+
+sudo apt install vnstat vnstati
+
+# O comando a seguir deve ser usado para decidir qual a interface a monitorar
+ifconfig
+# Escolha a network para iniciar monitoramento. Neste caso é ens3
+
+vnstat -u -i ens3
+
+## vnstat --iflist
+# Available interfaces: ens3 lo
+
+# Vamos iniciar vnstat para rodar imediatamente, e também iniciar com sistema
+sudo systemctl start vnstat
+sudo systemctl enable vnstat
+
+# O arquivo /etc/vnstat.conf deve estar marcado para nossa interface desejada
+sudo vim /etc/vnstat.conf
+# trocar eth0 pela network especifica
+# default interface
+# Interface "ens3"
+# Para ver em tempo real o uso de rede
+
+#------------------------------------------------------------------------------#
+
+### Monitorar rede em tempo real ______________________________________________#
+## Vnstat
+# @see https://www.howtoforge.com/tutorial/vnstat-network-monitoring-ubuntu/
+vnstat -l
+
+
+#------------------------------------------------------------------------------#
+# temp...
+# O que estiver a partir daqui são comandos que foram realizadas e ainda não
+# foram propriamente documentados (fititnt, 2019-05-19 05:04 BRT)
 apt-get install fish

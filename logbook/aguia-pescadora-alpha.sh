@@ -104,7 +104,7 @@ sudo do-release-upgrade
 
 #### Preparação Inicial:
 
-sudo hostnamectl set-hostname aguia-pescadora.etica.ai
+sudo hostnamectl set-hostname aguia-pescadora-alpha.etica.ai
 
 sudo vim /etc/hosts
 ## Adicione o seguinte ao /etc/hosts

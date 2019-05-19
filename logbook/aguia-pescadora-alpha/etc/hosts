@@ -1,6 +1,6 @@
 127.0.0.1	localhost
 127.0.1.1	ubuntu
-127.0.0.1	aguia-pescadora
+127.0.0.1	aguia-pescadora-alpha.etica.ai	aguia-pescadora-alpha
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback

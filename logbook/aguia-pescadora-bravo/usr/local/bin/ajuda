@@ -1,0 +1,63 @@
+#!/bin/sh
+export TERM=xterm-256color
+blue=$( tput setaf 51 );
+green=$( tput setaf 10 );
+yellow=$( tput setaf 11 );
+normal=$( tput sgr 0 );
+echo "${green}
+Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
+
+Discussão no GitHub: https://github.com/fititnt/cplp-aiops/issues?q=is%3Aissue+is%3Aopen+label%3Aserver-aguia-pescadora
+Configuração de aguia-pescadora: https://raw.githubusercontent.com/fititnt/cplp-aiops/master/logbook/aguia-pescadora-bravo.sh
+
+  PACOTES PARA DESENVOLVIMENTO DE SOFTWARE
+  ----------------------------------------
+  C/C++
+    CCC padrão: [$(gcc --version | head -n1)]
+      ${yellow}gcc${green}
+    G++ padrão: [$(g++ --version | head -n1)]
+      ${yellow}g++${green}
+
+  JAVASCRIPT (NODEJS)
+    NodeJS padrão (**): [$(nodejs -v | head -n1)]
+      ${yellow}nodejs${green}  [$(nodejs -v | head -n1)]
+      ${yellow}node${green}  [$(node -v | head -n1)]
+      ${yellow}js${green}  [$(js -v | head -n1)]
+    Node Package Manager, NPM padrão (**), o gerenciador de pacotes do NodeJS
+      ${yellow}npm${green}  [$(npm -v | head -n1)]
+
+  PERL
+    Perl padrão: [$(perl -v | head -n2 | tail -n1)]
+      ${yellow}perl${green}
+
+  SHELL SCRIPT
+    Bash padrão:
+      ${yellow}bash${green}  [$(bash --version | head -n1 | tail -n1)]
+
+  PHP
+    PHP padrão (*): [$(php --version | head -n1)]
+      ${yellow}php${green}
+    PHP 7.2:
+      ${yellow}php7.2${green}
+
+  PYTHON
+    Python padrão (*): []
+      ${yellow}python${green}
+    Python 2.6:
+      ${yellow}python2${green}
+    Python 3.6
+      ${yellow}python3${green}
+
+  *: recomendado você customizar um alias para versão explicita que quer usar.
+     Esta versão padrão poderá ser alterada sem previo aviso para uma versão mais atual
+
+  **: considere usar gerenciador de pacote da própria linguagem (NVM do NodeJS,
+      RVM do Ruby, etc)
+
+  EDITORES DE CÓDIGO / IDEs
+  --------------
+    ${yellow}emacs${green} [$(emacs --version | head -n1)]
+    ${yellow}nano${green} [$(nano --version | head -n1)]
+    ${yellow}vim${green} [$(vim --version | head -n1)]
+
+${normal}"
