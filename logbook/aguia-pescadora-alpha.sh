@@ -131,6 +131,7 @@ sudo passwd -e UsernameDoUsuario
 ## fititnt
 sudo adduser fititnt
 sudo passwd -e fititnt
+sudo usermod -aG sudo fititnt
 
 ## kissabi
 sudo adduser kissabi
@@ -139,6 +140,7 @@ sudo passwd -e kissabi
 ## loopchaves
 sudo adduser loopchaves
 sudo passwd -e loopchaves
+sudo usermod -aG sudo loopchaves
 
 ## rodriguesjeff
 sudo adduser rodriguesjeff

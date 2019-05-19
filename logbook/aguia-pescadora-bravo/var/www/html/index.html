@@ -62,37 +62,55 @@
 -->
 <h2 id="regras">Recomendações de uso <a href="#regras">#</a></h2>
 <p>
-  O servidor Águia Pesquisadora <strong>Bravo</strong> é voltados para quem quer
-  realizar trabalhos pontuais que podem estressar CPUs e usar quantidades
-  enormes de memória RAM e, <strong>como objetivo secundário</strong>, poder
-  servir pequenos projetos em que você esteja disposto a responder mais lento.
+  Considerando que objetivos dos servidores Águia Pesquisadora sejam fazer
+  funcionalidades que são complexas de desenvolver em computadores pessoais e/ou
+  smartphones, pode-se listar:
+</p>
+<ol>
+  <li>Ambiente para executar código de diversas linguagens de programação</li>
+  <li><strong>Ambiente para executar tarefas pesadas de forma pontual</strong><sup><mark>(foco do servidor Bravo)</mark></sup></li>
+  <li>Rodar pequenas aplicações o tempo todo</li>
+</ol>
+<p>
+  Como foco da Bravo (e inclusive é um dos motivos dela ter mais RAM e SWAP)
+  é fazer algo que Alpha não seria capaz, é que as recomendações de uso
+  constante dela são baixas e as de uso pontual são muito maiores.
 </p>
 <ul>
-  <li><strong>Uso privado</strong> <em>(Exemplo: API criada em uma linguagem nova, backend para um chatbot, compilando uma APK android, etc)</em>
+  <li><strong>Uso privado/Sem aviso prévio</strong> <em>(Exemplo: API criada em uma linguagem nova, backend para um chatbot, compilando uma APK android, etc)</em>
     <ul>
       <li>
-        <strong>Uso permanente</strong>
+        <strong>Uso constante de recursos</strong>
         <ul>
           <li>Espaço em disco: <strong>256 MB</strong></li>
           <li>Uso de memória RAM: <strong>256 MB</strong></li>
         </ul>
       </li>
       <li>
-        <strong>Uso pontual alto</strong>
+        <strong>Uso pontual alto de recursos</strong>
         <ul>
           <li>
             Espaço em disco: <strong>5 GB</strong>
             <ul>
               <li>Ideal: 14 dias para reduzir o uso.</li>
+              <li>Ideal: use as ferramentas de linha de comando para mover arquivos grandes para conta free no Dropbox ou Google Drive</li>
+              <li>Recomendação forte: se o que está ocupando espaço é um dataset que pode ser baixado novamente da internet, opte por deletar do disco. A internet de Alpha e Bravo é liberada, mas o disco não</li>
+              <li>Recomendação forte: se precisar de um espaço muito maior (por exemplo, uns 12~20GB) pode pedir por um curto espaço de tempo, como um final de semana.</li>
             </ul>
           </li>
-          <li>Uso de memória RAM: <strong>5 GB</strong> <sup>(nota: se for tarefa agendada, deve ser por minutos; já se você estiver online e poucas pessoas estiverem usando, pode usar por várias horas seguidas)</sup></li>
+          <li>Uso de memória RAM: <strong>5 GB</strong>
+            <ul>
+              <li>Ideal: se for tarefa agendada, sem você online, deve ser por minutos</li>
+              <li>Ideal: se você estiver online e notar que o servidor está com pouco uso, pode usar por horas</li>
+              <li>Recomendação forte: caso sem querer cometa um erro e o servidor ultrapasse muito esse limite sem você conseguir parar sozinho, notifique os administradores pra gente resolver. Não tem punição por passar esse limite por acidente.</li>
+            </ul>
+          </li>
         </ul>
       </li>
     </ul>
   </li>
   <li>
-    <strong>Uso com aviso dos demais</strong>
+    <strong>Uso pré-informado</strong>
     <ol>
       <li>Pelo menos o dobro em relação ao "Uso privado". Ou você pode pedir para duplicar sua cota pessoal</li>
       <li>Pode pedir para usar um domínio customizado (ex.: <em>meuapp.meusite.com</em> vs <em>apb.etica.ai:8080</em></li>
@@ -108,6 +126,7 @@
   <a href="https://en.wikipedia.org/wiki/Round-robin_DNS">Round-robin DNS</a>
   do Bravo + Alpha.
 </p>
+<!--
 <h2>Sobre o servidor Bravo</h2>
 <h3>Diario de bordo</h3>
 <p>
@@ -117,6 +136,7 @@
 <p>
   Veja <a href="https://github.com/fititnt/cplp-aiops/issues?q=label%3Aserver-aguia-pescadora">cplp-aiops/issues?q=label:server-aguia-pescadora</a>.
 </p>
+-->
 <hr>
 <h2 id="license">Licença de Uso</h2>
 <img src="https://i.creativecommons.org/p/mark/1.0/88x31.png" alt="PDM">

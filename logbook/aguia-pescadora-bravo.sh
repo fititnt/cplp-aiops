@@ -245,10 +245,12 @@ sudo passwd -e UsernameDoUsuario
 ## fititnt
 sudo adduser fititnt
 sudo passwd -e fititnt
+sudo usermod -aG sudo fititnt
 
 ## loopchaves
 sudo adduser loopchaves
 sudo passwd -e loopchaves
+sudo usermod -aG sudo loopchaves
 
 
 #------------------------------------------------------------------------------#
