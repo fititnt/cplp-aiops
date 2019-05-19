@@ -256,7 +256,53 @@ sudo passwd -e loopchaves
 # TL;DR: Programas do lado do servidor que permitem  programar                 #
 #------------------------------------------------------------------------------#
 
+##### Emacs ____________________________________________________________________
+# @see https://www.gnu.org/s/emacs/
+# @see https://www.emacswiki.org/emacs/NovatoNoEmacs
 # ...
+
+sudo apt install emacs
+
+# Resultado do comando acima:
+# (...)
+#
+# Serão instalados os seguintes NOVOS pacotes:
+#   adwaita-icon-theme at-spi2-core dconf-gsettings-backend dconf-service emacs emacs25 emacs25-bin-common emacs25-common emacs25-el emacsen-common fontconfig fontconfig-config fonts-dejavu-core fonts-droid-fallback fonts-noto-mono
+#   ghostscript glib-networking glib-networking-common glib-networking-services gsettings-desktop-schemas gsfonts gtk-update-icon-cache hicolor-icon-theme humanity-icon-theme imagemagick-6-common libasound2 libasound2-data
+#   libatk-bridge2.0-0 libatk1.0-0 libatk1.0-data libatspi2.0-0 libavahi-client3 libavahi-common-data libavahi-common3 libcairo-gobject2 libcairo2 libcolord2 libcroco3 libcups2 libcupsfilters1 libcupsimage2 libdatrie1 libdconf1
+#   libepoxy0 libfftw3-double3 libfontconfig1 libgd3 libgdk-pixbuf2.0-0 libgdk-pixbuf2.0-bin libgdk-pixbuf2.0-common libgif7 libgraphite2-3 libgs9 libgs9-common libgtk-3-0 libgtk-3-bin libgtk-3-common libharfbuzz0b libice6 libijs-0.35
+#   libjbig0 libjbig2dec0 libjpeg-turbo8 libjpeg8 libjson-glib-1.0-0 libjson-glib-1.0-common liblcms2-2 liblockfile-bin liblockfile1 liblqr-1-0 libltdl7 libm17n-0 libmagickcore-6.q16-3 libmagickwand-6.q16-3 libotf0 libpango-1.0-0
+#   libpangocairo-1.0-0 libpangoft2-1.0-0 libpaper-utils libpaper1 libpixman-1-0 libproxy1v5 librest-0.7-0 librsvg2-2 librsvg2-common libsm6 libsoup-gnome2.4-1 libsoup2.4-1 libthai-data libthai0 libtiff5 libwayland-client0
+#   libwayland-cursor0 libwayland-egl1 libwebp6 libx11-xcb1 libxcb-render0 libxcb-shm0 libxcomposite1 libxcursor1 libxdamage1 libxfixes3 libxft2 libxi6 libxinerama1 libxkbcommon0 libxpm4 libxrandr2 libxrender1 libxt6 libxtst6 m17n-db
+#   poppler-data ubuntu-mono x11-common
+# 0 pacotes actualizados, 115 pacotes novos instalados, 0 a remover e 0 não actualizados.
+# É necessário obter 64,7 MB de arquivos.
+# Após esta operação, serão utilizados 239 MB adicionais de espaço em disco.
+
+##### Nano _____________________________________________________________________
+# @see https://www.nano-editor.org/
+
+# Nota: Nano já veio instalado com o Ubuntu 18.04. Por isso não há comandos aqui
+
+# @TODO considerar configurações extras do Nano, como realce de sintaxe. Vou
+#       ser sincero e admitir que eu nunca precisei ir a fundo em configuração
+#       do Nano (fititnt, 2019-05-18 21:01 BRT)
+
+##### NeoVim ___________________________________________________________________
+# @see https://neovim.io/
+# @see https://www.youtube.com/watch?v=kZDT10nFiTY
+
+# @TODO considerar instalar o NeoVim, que em tese seria mais amigável que o Vim (fititnt, 2019-05-16 06:27 BRT)
+
+
+##### Vi/Vim ___________________________________________________________________
+
+# Nota: Vi/Vim  já veio instalado com o Ubuntu 18.04. Por isso não há comandos aqui
+
+# @TODO considerar configurações extras do Vi/Vim, como realce de sintaxe. Vou
+#       ser sincero e admitir que eu nunca precisei ir a fundo em configuração
+#       do Vi/Vim. O máximo que já fiz foi copiar configurações de alguém mais
+#       hardcore do que eu (fititnt, 2019-05-18 21:01 BRT)
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: AMBIENTES DE DESENVOLVIMENTO DE LINGUAGENS DE PROGRAMAÇÃO             #
@@ -303,6 +349,49 @@ sudo apt install npm
 # É necessário obter 4176 kB de arquivos.
 # Após esta operação, serão utilizados 23,6 MB adicionais de espaço em disco.
 
+# @TODO considerar documentar aos usuarios iniciantes como eles podem usar
+#       versões mais customizadas caso as de sistema não sejam suficientes
+#       (fititnt, 2019-05-18 21:21 BRT)
+
+##### PHP ______________________________________________________________________
+# @see https://php.net/
+# @see https://www.php.net/manual/pt_BR/
+
+# PHP 7.2
+sudo apt install php-cli php-common
+# Resultado do comando acima:
+# (...)
+# Serão instalados os seguintes NOVOS pacotes:
+#   libsodium23 php-cli php-common php7.2-cli php7.2-common php7.2-json php7.2-opcache php7.2-readline
+# 0 pacotes actualizados, 8 pacotes novos instalados, 0 a remover e 0 não actualizados.
+# É necessário obter 2644 kB de arquivos.
+# Após esta operação, serão utilizados 12,7 MB adicionais de espaço em disco.
+
+# @TODO adicionar multiplas versões de PHP, não apenas a 7.2
+#       (fititnt, 2019-05-18 21:22 BRT)
+
+##### Python ______________________________________________________________________
+# @see https://www.python.org/
+# @see https://pypi.org/
+# @see https://docs.python.org/3/
+
+## Testes previos antes de instalar o python...
+## python --version
+# Python 2.7.15rc1
+#
+## python2 --version
+# Python 2.7.15rc1
+#
+## python3 --version
+# Python 3.6.7
+
+# NOTA: O ubuntu 18.04 já vem com Python 3 instalado por padrão em vez do 2.7
+#       Vamos procurar deixar com que 'python' tenda a retornar a versão sempre
+#       mais recente, porém dar alternativa de ter pelo menos python 2.7.
+#       Exceto se isso for quebrar mais coisas... (fititnt, 2019-05-18 21:36 BRT)
+
+# @TODO ver com mais calma versoes padroes do python. Ja se tem disponivel
+#       nos repositorios principais a 3.7 (fititnt, 2019-05-18 21:40 BRT)
 
 #------------------------------------------------------------------------------#
 # temp...
