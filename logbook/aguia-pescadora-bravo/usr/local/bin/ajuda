@@ -17,6 +17,7 @@ Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
   --------------
     ${yellow}emacs${green} [$(emacs --version | head -n1)]
     ${yellow}nano${green} [$(nano --version | head -n1)]
+    ${yellow}nvim${green} [$(nvim --version | head -n1)]
     ${yellow}vim${green} [$(vim --version | head -n1)]
 
   PACOTES PARA DESENVOLVIMENTO DE SOFTWARE

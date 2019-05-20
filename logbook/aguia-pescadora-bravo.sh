@@ -342,7 +342,22 @@ sudo apt install emacs
 # @see https://neovim.io/
 # @see https://www.youtube.com/watch?v=kZDT10nFiTY
 
-# @TODO considerar instalar o NeoVim, que em tese seria mais amigável que o Vim (fititnt, 2019-05-16 06:27 BRT)
+## Instalando NeoVim do PPA, que já tem o 0.3+ (O do Ubuntu 18.04 é 0.2)
+# @see https://github.com/neovim/neovim/wiki/Installing-Neovim#ubuntu
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo apt-get update
+sudo apt-get install neovim
+
+# Resultado do comando acima:
+# (...)
+#
+# Serão instalados os seguintes NOVOS pacotes:
+#   libjs-sphinxdoc libluajit-5.1-2 libluajit-5.1-common libmsgpackc2 libtermkey1 libunibilium4 libvterm0 neovim neovim-runtime python-concurrent.futures python-greenlet python-msgpack python-neovim python-six python-trollius
+#   python3-greenlet python3-msgpack python3-neovim
+# 0 pacotes actualizados, 18 pacotes novos instalados, 0 a remover e 5 não actualizados.
+# É necessário obter 5494 kB de arquivos.
+# Após esta operação, serão utilizados 24,1 MB adicionais de espaço em disco.
+# Deseja continuar? [S/n]
 
 
 ##### Vi/Vim ___________________________________________________________________
@@ -354,6 +369,9 @@ sudo apt install emacs
 #       do Vi/Vim. O máximo que já fiz foi copiar configurações de alguém mais
 #       hardcore do que eu (fititnt, 2019-05-18 21:01 BRT)
 
+# @TODO considerar por vim-sensible como padrão https://github.com/tpope/vim-sensible
+#       (fititnt, 2019-05-20 06:55 BRT)
+
 #------------------------------------------------------------------------------#
 # SEÇÃO: AMBIENTES DE DESENVOLVIMENTO DE LINGUAGENS DE PROGRAMAÇÃO             #
 # TL;DR: Configurações específicas de interpretadores e/ou compiladores        #
@@ -364,6 +382,21 @@ sudo apt install emacs
 # Julia (nao tem package manager oficial) https://julialang.org
 # Lisp https://lisp-lang.org/learn/getting-started/
 # Rust https://www.rust-lang.org/tools/install
+# Conda (multiplos usuarios; nao vai ser trivial)
+#   <https://medium.com/@pjptech/installing-anaconda-for-multiple-users-650b2a6666c6>
+#   <https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart>
+#   <https://stackoverflow.com/questions/48871289/how-to-share-an-anaconda-python-environment-between-multiple-users>
+#   <https://medium.freecodecamp.org/why-you-need-python-environments-and-how-to-manage-them-with-conda-85f155f4353c>
+#   <https://docs.anaconda.com/anaconda/install/>
+#   <https://hub.docker.com/r/continuumio/anaconda3/dockerfile>
+
+## Ambientes para adicionar a curto prazo
+# Lua
+#   (sim, vai ter que ser compilado do fonte)
+#   - https://www.lua.org/versions.html#5.3
+# Fortran (com GFortran)
+#   - https://gcc.gnu.org/wiki/GFortran
+#   - https://packages.ubuntu.com/bionic/gfortran-8
 
 ##### C/C++ ____________________________________________________________________
 # Inclui bibliotecas extras para compilar outras ferramentas
