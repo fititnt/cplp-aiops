@@ -87,6 +87,9 @@ sudo apt install language-pack-pt language-pack-pt-base
 
 sudo update-locale LANG=pt_PT.utf8
 
+### Traceroute e afins _________________________________________________________
+sudo apt install traceroute
+
 ### Criar Swap & ajusta Swappiness______________________________________________
 # Se o sistema operacional ficar sem memória ram suficiênte, ele pode ter falha
 # crítica. Diferente de windows, no Linux swap precisa ser especificada
@@ -288,11 +291,24 @@ sudo adduser UsernameDoUsuario
 # Este comando força usuario usar uma senha propria no próximo login.
 # Uma alternativa seria já ter chaves publicas de cada usuario
 sudo passwd -e UsernameDoUsuario
+
+## Caso o usuario perca acesso ao sistema
+sudo passwd UsernameDoUsuario
+# Digite uma senha temporaria, então execute o seguinte para força-la temporaria
+sudo passwd -e UsernameDoUsuario
+
+
 ### Guia para ser feito por cada usuário de sistema (copie e cole), fim
+
+## cdiegosr
+sudo adduser cdiegosr
+sudo passwd -e cdiegosr
+sudo chsh -s /usr/bin/fish cdiegosr
 
 ## fititnt
 sudo adduser fititnt
 sudo passwd -e fititnt
+sudo chsh -s /usr/bin/fish fititnt
 sudo usermod -aG sudo fititnt
 
 ## loopchaves
