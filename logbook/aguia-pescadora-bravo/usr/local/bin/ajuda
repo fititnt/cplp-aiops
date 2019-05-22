@@ -44,6 +44,10 @@ Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
     Node Package Manager, NPM padrão (**), o gerenciador de pacotes do NodeJS
       ${yellow}npm${green}  [$(npm -v | head -n1)]
 
+  LISP
+    Steel Bank Common Lisp, padrão (**):
+    ${yellow}sbcl${green} [$(sbcl --version | head -n1)]
+
   KOTLIN
     Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/10
 

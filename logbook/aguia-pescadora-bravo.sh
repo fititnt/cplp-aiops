@@ -396,7 +396,6 @@ sudo apt-get install neovim
 ## Ambientes a serem considerados...
 # F# https://fsharp.org/use/linux/
 # Julia (nao tem package manager oficial) https://julialang.org
-# Lisp https://lisp-lang.org/learn/getting-started/
 # Rust https://www.rust-lang.org/tools/install
 # Conda (multiplos usuarios; nao vai ser trivial)
 #   <https://medium.com/@pjptech/installing-anaconda-for-multiple-users-650b2a6666c6>
@@ -405,14 +404,6 @@ sudo apt-get install neovim
 #   <https://medium.freecodecamp.org/why-you-need-python-environments-and-how-to-manage-them-with-conda-85f155f4353c>
 #   <https://docs.anaconda.com/anaconda/install/>
 #   <https://hub.docker.com/r/continuumio/anaconda3/dockerfile>
-
-## Ambientes para adicionar a curto prazo
-# Lua
-#   (sim, vai ter que ser compilado do fonte)
-#   - https://www.lua.org/versions.html#5.3
-# Fortran (com GFortran)
-#   - https://gcc.gnu.org/wiki/GFortran
-#   - https://packages.ubuntu.com/bionic/gfortran-8
 
 ##### C/C++ ____________________________________________________________________
 # Inclui bibliotecas extras para compilar outras ferramentas
@@ -463,6 +454,21 @@ sudo apt install npm
 # @TODO considerar documentar aos usuarios iniciantes como eles podem usar
 #       versões mais customizadas caso as de sistema não sejam suficientes
 #       (fititnt, 2019-05-18 21:21 BRT)
+
+##### Lisp _____________________________________________________________________
+# @see https://lisp-lang.org/
+# @see https://lisp-lang.org/learn/getting-started/
+# Hello World:
+#   sbcl --script lisp.lsp
+
+sudo apt-get install sbcl
+# Resultado:
+# (...)
+# Serão instalados os seguintes NOVOS pacotes:
+#   binfmt-support sbcl
+# 0 pacotes actualizados, 2 pacotes novos instalados, 0 a remover e 8 não actualizados.
+# É necessário obter 8632 kB de arquivos.
+# Após esta operação, serão utilizados 47,7 MB adicionais de espaço em disco
 
 ##### PHP ______________________________________________________________________
 # @see https://php.net/
