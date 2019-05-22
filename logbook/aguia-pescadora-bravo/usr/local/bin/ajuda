@@ -3,13 +3,17 @@
 # Nota: execute o seguinte comando toda vez que este arquivo for atualizado
 #       para gerar https://aguia-pescadora-bravo.etica.ai/ajuda.html ao público:
 # 
-#  /usr/local/bin/ajuda | ansi2html --bg=dark -p > /var/www/html/ajuda.html
+#  sudo /usr/local/bin/ajuda | ansi2html --bg=dark -p > /var/www/html/ajuda.html
 
 export TERM=xterm-256color
 blue=$( tput setaf 51 );
+silver=$( tput setaf 7 );
 green=$( tput setaf 10 );
 yellow=$( tput setaf 11 );
 normal=$( tput sgr 0 );
+
+# Nota: para outras cores, veja https://jonasjacek.github.io/colors/
+
 echo "${green}
 Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
 
@@ -23,18 +27,26 @@ Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
   PACOTES PARA DESENVOLVIMENTO DE SOFTWARE
   ----------------------------------------
 
-  C/C++
+  C
     CCC padrão: [$(gcc --version | head -n1)]
       ${yellow}gcc${green}
+
+  C++
     G++ padrão: [$(g++ --version | head -n1)]
       ${yellow}g++${green}
+
+  FORTRAN
+    ${silver}Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/30${green}
 
   GO
     Go:
       ${yellow}go${green}  [$(go version | head -n1)]
 
+  HASKELL
+    ${silver}Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/33${green}
+
   JAVA
-    Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/9
+    ${silver}Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/9${green}
 
   JAVASCRIPT (NODEJS)
     NodeJS padrão (**): [$(nodejs -v | head -n1)]
@@ -48,12 +60,21 @@ Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
     Steel Bank Common Lisp, padrão (**):
     ${yellow}sbcl${green} [$(sbcl --version | head -n1)]
 
+  LUA
+    ${silver}Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/26${green}
+
   KOTLIN
-    Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/10
+    ${silver}Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/10${green}
 
   PERL
     Perl padrão: [$(perl -v | head -n2 | tail -n1)]
       ${yellow}perl${green}
+
+  SCALA
+    ${silver}Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/24${green}
+
+  SWIFT
+    ${silver}Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/34${green}
 
   SHELL SCRIPT
     Bash padrão:

@@ -280,7 +280,7 @@ sysbench --test=fileio --file-total-size=50G --file-test-mode=rndrw --max-reques
 sysbench --test=fileio --file-total-size=50G cleanup
 
 #------------------------------------------------------------------------------#
-# SEÇÃO: USUÁRIOS DO SISTEMA                                                   #
+# SEÇÃO: USUÁRIOS DO SISTEMA - ETAPA DE CRIAÇÃO/EDIÇÃO                         #
 # TL;DR: Cria os usuários de sistema, e outras customizações                   #
 #------------------------------------------------------------------------------#
 
@@ -294,9 +294,13 @@ sudo passwd -e UsernameDoUsuario
 
 ## Caso o usuario perca acesso ao sistema
 sudo passwd UsernameDoUsuario
+
 # Digite uma senha temporaria, então execute o seguinte para força-la temporaria
 sudo passwd -e UsernameDoUsuario
 
+# Pessoas tem dificuldade no primeiro login (ex.: quem usa Putty no Windows),
+# Pe precisar de um prazo para trocar senha temporária. Isto aqui força isso
+sudo passwd --warndays 7 UsernameDoUsuario
 
 ### Guia para ser feito por cada usuário de sistema (copie e cole), fim
 
@@ -304,6 +308,10 @@ sudo passwd -e UsernameDoUsuario
 sudo adduser cdiegosr
 sudo passwd -e cdiegosr
 sudo chsh -s /usr/bin/fish cdiegosr
+
+## fcomarcosmabreu
+sudo adduser fcomarcosmabreu
+sudo passwd -e fcomarcosmabreu
 
 ## fititnt
 sudo adduser fititnt
@@ -316,6 +324,103 @@ sudo adduser loopchaves
 sudo passwd -e loopchaves
 sudo usermod -aG sudo loopchaves
 
+#------------------------------------------------------------------------------#
+# SEÇÃO: USUÁRIOS DO SISTEMA - MENSAGENS INFORMATIVAS                          #
+# TL;DR: Modelo padrão para copiar e colar e informar os usuários desde        #
+#        servidor sobre criação de conta, edição, etc.                         #
+#------------------------------------------------------------------------------#
+
+##### Conta de usuário criada __________________________________________________
+# Nota: começa inclua no inicio "```sh" e no fim "``"
+# Inicio
+: '
+
+```sh
+#### Dados da sua conta NomeUsuario em https://aguia-pescadora-bravo.etica.ai
+
+### Seus dados
+# Usuário: NomeUsuario
+# Senha (temporaria): troque-me@NomeUsuario#OutrosCaracteresAqui
+# fscrypt + Linux-PAM em /home/NomeUsuario: NÃO
+# Servidor: aguia-pescadora-bravo.etica.ai
+# Servidor: apb.etica.ai
+
+### Atalhos para fazer login
+## Via interface de linha de comando ("CLI"), use uma das opções
+# SSH:
+ssh NomeUsuario@aguia-pescadora-bravo.etica.ai
+ssh NomeUsuario@apb.etica.ai
+
+# Mosh: (Mobile Shell), alternativa para internet intermitente, veja mosh.org
+mosh NomeUsuario@aguia-pescadora-bravo.etica.ai
+mosh NomeUsuario@apb.etica.ai
+
+# Dropbear: opção não instalada neste momento
+# Multi-Factor Authentication (i.e. 2FA): opção não instalada neste momento
+
+## Comando para trocar sua senha de usuario a qualquer momento:
+passwd
+
+############################ GUIA RÁPIDO AO USUÁRIO ############################
+##### Programas úteis para usar ________________________________________________
+# NOTA: existem outras opções; aqui são recomendações que podemos dar ajuda
+#       extra caso tenha problema.
+#
+#### Android
+## Android 1.6+
+# - Via CLI (inclui terminal, login SSH e suporte a geração de chaves privadas)
+#     - ConnectBot
+#         - Recomendado! Mesmo que tenha Android 5.0 e Termux
+#         - <https://play.google.com/store/apps/details?id=org.connectbot>
+## Android 5.0+
+# - Via CLI (inclui terminal, login SSH e suporte a geração de chaves privadas)
+#     - Termux
+#         - Terminal amigável (até mais do que os de Windows e certos Linux!)
+#         - <https://play.google.com/store/apps/details?id=com.termux>
+#         - pkg install openssh
+#
+#### Linux
+# - Login SSH:
+#     - openssh
+#
+#### MacOS
+# - Login SSH:
+#     - Seu terminal padrão provavelmente já tem ssh instalado (requer feedback)
+#
+#### Windows
+# - Login SSH (já com emulador de terminal inclusos)
+#     - Git For Windows <https://gitforwindows.org/> (Ideal)
+#     - Putty <https://www.putty.org/> (alternativa)
+#
+##### Perguntas frequêntes _____________________________________________________
+### Não estou conseguindo logar na máquina, mesmo com esse guia
+# - Fale com a pessoa que entregou os seus dados (e sim, isso é comum)
+#
+### Perdi minha senha de usuario, e agora? (sem fscrypt)
+# - Solicite a um administrador resetar sua senha para uma temporária
+#
+### Perdi minha senha de usuario, e agora? (com fscrypt)
+# - Solicite a um administrador resetar sua senha para uma temporária. Note que:
+#      - Arquivos: /home/NomeUsuario: permanecerão encriptados com senha antiga
+#      - Arquivos: /home2/NomeUsuario: acessíveis
+#      - Arquivos seus em outros diretórios: acessíveis
+# - Nota: mesmo com fscrypt ativado sua chave privada, 2FA, etc não são usados
+#   como senha na encriptação do seu /home/NomeUsuario
+### Perdi minha senha de usuario, e agora? (com fscrypt)
+# - Solicite a um administrador resetar sua senha para uma temporária. Note que:
+#      - Arquivos: /home/NomeUsuario: permanecerão encriptados com senha antiga
+#      - Arquivos: /home2/NomeUsuario: acessíveis
+#      - Arquivos seus em outros diretórios: acessíveis
+# - Nota: mesmo com fscrypt ativado sua chave privada, 2FA, etc não são usados
+#   como senha na encriptação do seu /home/NomeUsuario
+### Perdi minha senha de root, e agora?
+# - Fale com outro usuário com acesso root
+# - Se todos os usuários perderem acesso root, é preciso fazer acesso via KVM,
+#   vide https://docs.ovh.com/pt/vps/utilizar_o_kvm_para_um_servidor_vps/
+```
+
+'
+# Fim
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: EDITORES DE TEXTO, EDITORES DE CÓDIGO, IDES                           #
@@ -394,6 +499,9 @@ sudo apt-get install neovim
 #------------------------------------------------------------------------------#
 
 ## Ambientes a serem considerados...
+# COBOL
+#    - https://en.wikipedia.org/wiki/GnuCOBOL
+#    - https://open-cobol.sourceforge.io/
 # F# https://fsharp.org/use/linux/
 # Julia (nao tem package manager oficial) https://julialang.org
 # Rust https://www.rust-lang.org/tools/install
