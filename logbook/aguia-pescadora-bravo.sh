@@ -583,6 +583,10 @@ sudo apt install mono-devel
 #       rápida na internet, seria algo como 'dotnet run' mas parece
 #       seria outro site para instalar isso
 
+# @TODO: criar os hello world no repositório de tutoriais, vide
+#        https://www.mono-project.com/docs/getting-started/mono-basics/
+#        (fititnt, 2019-05-23 BRT)
+
 #------------------------------------------------------------------------------#
 # SEÇÃO 4.0: AMBIENTES DE DESENVOLVIMENTO: LINGUAGENS DE PROGRAMAÇÃO           #
 #                                                                              #

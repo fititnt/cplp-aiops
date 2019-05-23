@@ -35,6 +35,13 @@ Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
     G++ padrão: [$(g++ --version | head -n1)]
       ${yellow}g++${green}
 
+  C#
+    Visual C# Compiler (Via Mono):
+      ${yellow}csc${green} [$(csc -version | head -n1)]
+      ${silver}Olá mundo!:
+        Compilar: csc csharp.cs
+        Executar: mono csharp.exe${green}
+
   FORTRAN
     ${silver}Em breve. Acompanhe em https://github.com/fititnt/cplp-aiops/issues/30${green}
 
@@ -103,6 +110,11 @@ Comando 'ajuda' de aguia-pescadora-bravo.etica.ai
 
   **: considere usar gerenciador de pacote da própria linguagem (NVM do NodeJS,
       RVM do Ruby, etc)
+
+  PACOTES, SDKS E AFINS COMUNS A VARIOS AMBIENTES DE DESENVOLVIMENTO
+  ----------------------------------------
+    Mono
+      Mono: [$(mono --version | head -n1)]
 
   INFORMAÇÕES EXTRAS
   ------------------
