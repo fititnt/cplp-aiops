@@ -37,7 +37,7 @@ exit
 ################################################################################
 
 #------------------------------------------------------------------------------#
-# SEÇÃO: Configuração inicial                                                  #
+# SEÇÃO 0.1: Configuração inicial                                              #
 # TL;DR: Isso é feito ao receber uma VPS do zero                               #
 #------------------------------------------------------------------------------#
 
@@ -231,9 +231,14 @@ sudo apt install mosh
 
 
 #------------------------------------------------------------------------------#
-# SEÇÃO: Benchmark do sistema                                                  #
+# SEÇÃO 0.2: BENCHMARK DO SISTEMA                                              #
+#                                                                              #
 # TL;DR: Avalia performance da máquina virtual e de rede                       #
 #        Essa VM mais do que decente pelo preço dela!!!                        #
+#                                                                              #
+# AVISO: Esta sessão pode ser ignorada completamente. Está aqui apenas para    #
+#        administradores de sistemas curiosos com VMs e hardware dedicados em  #
+#        datacenters novos                                                     #
 #------------------------------------------------------------------------------#
 # Nota: logs detalhados no aguia-pescadora-bravo-benchmarks.sh, aqui tem apenas
 #       parte da informação
@@ -280,7 +285,7 @@ sysbench --test=fileio --file-total-size=50G --file-test-mode=rndrw --max-reques
 sysbench --test=fileio --file-total-size=50G cleanup
 
 #------------------------------------------------------------------------------#
-# SEÇÃO: USUÁRIOS DO SISTEMA - ETAPA DE CRIAÇÃO/EDIÇÃO                         #
+# SEÇÃO 1.0: USUÁRIOS DO SISTEMA - ETAPA DE CRIAÇÃO/EDIÇÃO                     #
 # TL;DR: Cria os usuários de sistema, e outras customizações                   #
 #------------------------------------------------------------------------------#
 
@@ -325,17 +330,25 @@ sudo passwd -e loopchaves
 sudo usermod -aG sudo loopchaves
 
 #------------------------------------------------------------------------------#
-# SEÇÃO: USUÁRIOS DO SISTEMA - MENSAGENS INFORMATIVAS                          #
+# SEÇÃO 1.1: USUÁRIOS DO SISTEMA - MENSAGENS INFORMATIVAS                      #
+#                                                                              #
 # TL;DR: Modelo padrão para copiar e colar e informar os usuários desde        #
 #        servidor sobre criação de conta, edição, etc.                         #
+#                                                                              #
+# AVISO: esta sessão pode ser ignorada. Está aqui se você pretende realmente   #
+#        dar acesso a contas SSHs para usuários novos terem uma visão geral.   #
+#        Está aqui porque um ds propósitos dos servidores Águia Pescadora é    #
+#        dar acesso a usuários em um sistema Linux Ubuntu Server (e "mais      #
+#        simples" do que o github.com/fititnt/chatops-wg 2018/01 que usava     #
+#        Docker)                                                               #
 #------------------------------------------------------------------------------#
 
 ##### Conta de usuário criada __________________________________________________
-# Nota: começa inclua no inicio "```sh" e no fim "``"
+# Nota: começa inclua no inicio "```bash" e no fim "``"
 # Inicio
 : '
 
-```sh
+```bash
 #### Dados da sua conta NomeUsuario em https://aguia-pescadora-bravo.etica.ai
 
 ### Seus dados
@@ -423,7 +436,8 @@ passwd
 # Fim
 
 #------------------------------------------------------------------------------#
-# SEÇÃO: EDITORES DE TEXTO, EDITORES DE CÓDIGO, IDES                           #
+# SEÇÃO 2.0: EDITORES DE TEXTO, EDITORES DE CÓDIGO, IDES                       #
+#                                                                              #
 # TL;DR: Programas do lado do servidor que permitem  programar                 #
 #------------------------------------------------------------------------------#
 
@@ -494,15 +508,38 @@ sudo apt-get install neovim
 #       (fititnt, 2019-05-20 06:55 BRT)
 
 #------------------------------------------------------------------------------#
-# SEÇÃO: AMBIENTES DE DESENVOLVIMENTO DE LINGUAGENS DE PROGRAMAÇÃO             #
+# SEÇÃO 3.0: AMBIENTES DE DESENVOLVIMENTO: REQUISITOS DE MULTIPLOS AMBIENTES   #
+#                                                                              #
+# TL;DR: Certos ambientes de linguagens de programação tem dependências comuns #
+#        até mesmo para interpretar/compilar um hello world. Você verá aqui:   #
+#            - Gerenciadores de pacotes (os usados por mais de uma linguagem)  #
+#            - Gerenciadores de SDKs                                           #
+#                                                                              #
+# AVISO: esta sessão pode ser ignorada completamente quando:                   #
+#            - Não são dependência de linguagem que você usa da [SEÇÃO 4.0]    #
+#            - Você optou por instalar um ambiente da [SEÇÃO 4.0] sem depender #
+#              explicitamente destes requisitos usando algum guia externo      #
+#                                                                              #
+# PROTIP: se está com pressa, rode a [SEÇÃO 4.0] nas linguagens que quer usar  #
+#         e só volte para ler esta [SEÇÃO 3.0] se comandos falharem. Lembre-se #
+#         que este guia foi escrito de forma não linear                        #
+#------------------------------------------------------------------------------#
+
+##### C/C++ (quando usado para compilar outros pacotes do fonte) _______________
+# ...
+
+#------------------------------------------------------------------------------#
+# SEÇÃO 4.0: AMBIENTES DE DESENVOLVIMENTO: LINGUAGENS DE PROGRAMAÇÃO           #
+#                                                                              #
 # TL;DR: Configurações específicas de interpretadores e/ou compiladores        #
+#                                                                              #
+# PROTIP: se você seguiu a PROTIP da [SEÇÃO 3.0] (de ignorá-la completamente)  #
+#         e algo aqui falhar, você pode optar por ler a [SEÇÃO 3.0] ou         #
+#         pesquisar uma solução mais específica e exclusiva apenas para sua    #
+#         linguagem.                                                           #
 #------------------------------------------------------------------------------#
 
 ## Ambientes a serem considerados...
-# COBOL
-#    - https://en.wikipedia.org/wiki/GnuCOBOL
-#    - https://open-cobol.sourceforge.io/
-# F# https://fsharp.org/use/linux/
 # Julia (nao tem package manager oficial) https://julialang.org
 # Rust https://www.rust-lang.org/tools/install
 # Conda (multiplos usuarios; nao vai ser trivial)
@@ -512,6 +549,8 @@ sudo apt-get install neovim
 #   <https://medium.freecodecamp.org/why-you-need-python-environments-and-how-to-manage-them-with-conda-85f155f4353c>
 #   <https://docs.anaconda.com/anaconda/install/>
 #   <https://hub.docker.com/r/continuumio/anaconda3/dockerfile>
+# ML .Net
+#   - <https://dotnet.microsoft.com/learn/machinelearning-ai/ml-dotnet-get-started-tutorial/install>
 
 ##### C/C++ ____________________________________________________________________
 # Inclui bibliotecas extras para compilar outras ferramentas
