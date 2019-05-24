@@ -416,8 +416,11 @@ sudo usermod -a -G www-data loopchaves
 sudo -u loopchaves mkdir /home2/loopchaves/web
 sudo -u loopchaves mkdir /home2/loopchaves/web/public_html
 sudo -u loopchaves mkdir /home2/loopchaves/web/public_api
+sudo -u loopchaves mkdir /home2/loopchaves/web/php
 
 sudo -u loopchaves echo "loopchaves <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/loopchaves/web/public_html/index.html" > /home2/loopchaves/web/public_html/index.html
+sudo -u loopchaves echo "loopchaves <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/loopchaves/web/php/index.php <br><?php phpinfo(); ?>" > /home2/loopchaves/web/php/index.php
+
 
 sudo cp /etc/nginx/sites-available/EXEMPLO-USUARIO.abp.etica.ai.conf /etc/nginx/sites-available/loopchaves.apb.etica.ai.conf
 
@@ -429,6 +432,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 
 sudo certbot --nginx -d loopchaves.apb.etica.ai
+sudo certbot --nginx -d php.loopchaves.apb.etica.ai
 
 sudo chown loopchaves:loopchaves -R /home2/loopchaves
 
@@ -447,12 +451,13 @@ sudo chmod 751 /home2/usuariodeteste
 
 # Em Home2, prepara diretórios comuns para sair usando apps web
 
-sudo mkdir /home2/usuariodeteste/web
-sudo mkdir /home2/usuariodeteste/web/public_html
-sudo mkdir /home2/usuariodeteste/web/public_api
+sudo -u usuariodeteste mkdir /home2/usuariodeteste/web
+sudo -u usuariodeteste mkdir /home2/usuariodeteste/web/public_html
+sudo -u usuariodeteste mkdir /home2/usuariodeteste/web/public_api
+sudo -u usuariodeteste mkdir /home2/usuariodeteste/web/php
 
-sudo echo "usuariodeteste <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/usuariodeteste/web/public_html/index.html" > /home2/usuariodeteste/web/public_html/index.html
-sudo chown usuariodeteste:usuariodeteste /home2/usuariodeteste/web/public_html/index.html
+sudo -u usuariodeteste echo "usuariodeteste <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/usuariodeteste/web/public_html/index.html" > /home2/usuariodeteste/web/public_html/index.html
+sudo -u usuariodeteste echo "usuariodeteste <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/usuariodeteste/web/php/index.php <br><?php phpinfo(); ?>" > /home2/usuariodeteste/web/php/index.php
 
 sudo vim /etc/nginx/sites-available/usuariodeteste.apb.etica.ai.conf
 # Adicione todas as customizacoes deste usuario no arquivo acima...
@@ -482,6 +487,7 @@ curl http://python.usuariodeteste.lb-ap.etica.ai
 # Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
 # Nota: o subdominio de lb-ap via HTTPS ainda não sera adicionado, veja https://github.com/fititnt/cplp-aiops/issues/35#issuecomment-495508373
 sudo certbot --nginx -d usuariodeteste.apb.etica.ai
+sudo certbot --nginx -d php.usuariodeteste.apb.etica.ai
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 1.1: USUÁRIOS DO SISTEMA - MENSAGENS INFORMATIVAS                      #
