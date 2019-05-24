@@ -356,6 +356,10 @@ sudo usermod -aG sudo fititnt
 ## Dominios customizados de fititnt (já adicionados na CloudFlare)
 curl http://fititnt.apb.etica.ai
 curl http://fititnt.lb-ap.etica.ai
+curl http://php.fititnt.apb.etica.ai
+curl http://php.fititnt.lb-ap.etica.ai
+curl http://go.fititnt.apb.etica.ai
+curl http://go.fititnt.lb-ap.etica.ai
 
 # Aviso: descrição da razão dessaes passos esta em usuariodeteste
 sudo mkdir /home2/fititnt
@@ -367,10 +371,10 @@ sudo usermod -a -G www-data fititnt
 sudo -u fititnt mkdir /home2/fititnt/web
 sudo -u fititnt mkdir /home2/fititnt/web/public_html
 sudo -u fititnt mkdir /home2/fititnt/web/public_api
-sudo -u fititnt mkdir /home2/fititnt/web/public_php
+sudo -u fititnt mkdir /home2/fititnt/web/php
 
 sudo -u fititnt echo "fititnt <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/fititnt/web/public_html/index.html" > /home2/fititnt/web/public_html/index.html
-sudo -u fititnt echo "fititnt <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/fititnt/web/public_php/index.php <br><?php phpinfo(); ?>" > /home2/fititnt/web/public_php/index.php
+sudo -u fititnt echo "fititnt <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/fititnt/web/php/index.php <br><?php phpinfo(); ?>" > /home2/fititnt/web/php/index.php
 
 sudo cp /etc/nginx/sites-available/EXEMPLO-USUARIO.abp.etica.ai.conf /etc/nginx/sites-available/fititnt.apb.etica.ai.conf
 
@@ -382,6 +386,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 
 sudo certbot --nginx -d fititnt.apb.etica.ai
+sudo certbot --nginx -d php.fititnt.apb.etica.ai
 # Nota: neste site escolhido redirecionar todo trafico HTTP para HTTPS
 
 sudo chown fititnt:fititnt -R /home2/fititnt
@@ -394,6 +399,12 @@ sudo usermod -aG sudo loopchaves
 ## Dominios customizados de loopchaves (já adicionados na CloudFlare)
 curl http://loopchaves.apb.etica.ai
 curl http://loopchaves.lb-ap.etica.ai
+curl http://php.loopchaves.apb.etica.ai
+curl http://php.loopchaves.lb-ap.etica.ai
+curl http://go.loopchaves.apb.etica.ai
+curl http://go.loopchaves.lb-ap.etica.ai
+curl http://python.loopchaves.apb.etica.ai
+curl http://python.loopchaves.lb-ap.etica.ai
 
 # Aviso: descrição da razão dessaes passos esta em usuariodeteste
 sudo mkdir /home2/loopchaves
@@ -460,6 +471,12 @@ sudo chown usuariodeteste:usuariodeteste -R /home2/usuariodeteste
 ## Dominios customizados de usuariodeteste (já adicionados na CloudFlare)
 curl http://usuariodeteste.apb.etica.ai
 curl http://usuariodeteste.lb-ap.etica.ai
+curl http://php.usuariodeteste.apb.etica.ai
+curl http://php.usuariodeteste.lb-ap.etica.ai
+curl http://go.usuariodeteste.apb.etica.ai
+curl http://go.usuariodeteste.lb-ap.etica.ai
+curl http://python.usuariodeteste.apb.etica.ai
+curl http://python.usuariodeteste.lb-ap.etica.ai
 
 ## Certificado HTTPS para usuariodeteste
 # Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
@@ -814,10 +831,12 @@ sudo apt-get install sbcl
 # Após esta operação, serão utilizados 47,7 MB adicionais de espaço em disco
 
 ##### PHP ______________________________________________________________________
+# @see https://github.com/fititnt/cplp-aiops/issues/7
+# @see https://github.com/fititnt/cplp-aiops/issues/41
 # @see https://php.net/
 # @see https://www.php.net/manual/pt_BR/
 
-# PHP 7.2
+## PHP 7.2
 sudo apt install php-cli php-common
 # Resultado do comando acima:
 # (...)
@@ -829,6 +848,26 @@ sudo apt install php-cli php-common
 
 # @TODO adicionar multiplas versões de PHP, não apenas a 7.2
 #       (fititnt, 2019-05-18 21:22 BRT)
+
+## PHP 7.2, para web
+# @see https://github.com/fititnt/cplp-aiops/issues/7
+sudo apt install php-fpm
+
+sudo systemctl start php7.2-fpm
+sudo systemctl enable php7.2-fpm
+# AVISO: o sistema tem um PHP-FPM padrão que roda com www-data, que pode servir
+#        para casos simples. Porém o recomendado é que cada usuário e projeto
+#        tenha seu próprio worker de PHP-FPM
+
+# Nota: arquivo /etc/php/7.2/fpm/pool.d/www.conf pode precisar de ajuste para
+#       usar o log a seguir
+sudo touch /var/log/fpm-php.www.log
+sudo chown www-data:www-data /var/log/fpm-php.www.log
+
+## Acompanhar logs de erros comuns (usados caso usuario não especifique)
+sudo tail -f /var/log/fpm-php.www.log
+sudo tail -f /etc/nginx/error.log
+sudo tail -f /etc/nginx/access.log
 
 ##### Python ___________________________________________________________________
 # @see https://www.python.org/

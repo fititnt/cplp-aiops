@@ -1,0 +1,60 @@
+# FILE:         /etc/nginx/sites-available/fititnt.apb.etica.ai.conf
+
+server {
+    root /home2/fititnt/web/public_html;
+
+    index index.html;
+
+    server_name fititnt.apb.etica.ai fititnt.lb-ap.etica.ai;
+
+    ### OPÇÕES PARA DEBUG EXCLUSIVAMENTE NESTE DOMINIO, INICIO
+    # Autoindex não é algo recomendado. Porém fititnt está debugando
+    autoindex on;
+    # Desliguei isso no final. Este modo de debug é MUITO detalhado. Pode lotar o disco!
+    error_log /var/log/nginx/error-fititnt.log debug;
+
+    # Use isto por terminal:
+    # tail -f /var/log/nginx/error-fititnt.log
+    ### OPÇÕES PARA DEBUG EXCLUSIVAMENTE NESTE DOMINIO, INICIO
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ^~ /php {
+        root /home2/fititnt/web/php;
+
+        index index.php;
+        try_files $uri $uri/ index.php;
+        
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            # fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+    }
+
+    listen [::]:443 ssl; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/fititnt.apb.etica.ai/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/fititnt.apb.etica.ai/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = fititnt.apb.etica.ai) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+
+    listen 80;
+    listen [::]:80;
+
+    server_name fititnt.apb.etica.ai fititnt.lb-ap.etica.ai;
+    return 404; # managed by Certbot
+
+
+}
