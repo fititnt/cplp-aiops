@@ -14,8 +14,22 @@ exit
 # IPv4: 192.99.247.117
 # IPv6: 2607:5300:201:3100:0:0:0:87fc
 # Domain:
-#   Full: aguia-pescadora-bravo.etica.ai (apb.etica.ai)
+#   Full: aguia-pescadora-bravo.etica.ai
 #   Short: apb.etica.ai
+#
+# Domain, extras:
+#  - apb.etica.ai (TTL: 15 min)
+#      - CNAME aguia-pescadora-bravo.etica.ai (sempre aponta para Bravo)
+#  - usuario.apb.etica.ai (TTL: 15 min)
+#      - CNAME aguia-pescadora-bravo.etica.ai (sempre aponta para Bravo)
+#      - Veja https://github.com/fititnt/cplp-aiops/issues/35
+#  - lb-ap.etica.ai (TTL: 2 min)
+#      - Balanceamento de carga via Round-robin DNS.
+#      - Veja github.com/fititnt/cplp-aiops/issues/40
+#  - usuario.lb-ap.etica.ai (TTL: 2 min)
+#      - CNAME lb-ap.etica.ai (Balanceamento de carga via Round-robin DNS)
+#      - Veja github.com/fititnt/cplp-aiops/issues/35
+#      - Veja github.com/fititnt/cplp-aiops/issues/40
 #
 # Login:
 #   ssh user@aguia-pescadora-bravo.etica.ai
@@ -34,6 +48,9 @@ exit
 #   inspiration and inspire without get names noted in places that software
 #   developers look. I'm saying this in special for people who help over
 #   Facebook discussions. Even the ones without a personal computer yet.
+# SECURITY:
+#   Reporting a Vulnerability:
+#   Send e-mail to Emerson Rocha: rocha(at)ieee.org.
 ################################################################################
 
 #------------------------------------------------------------------------------#
@@ -861,7 +878,6 @@ sudo nginx -t
 #    outra pessoa reiniciar o servidor o seu rascunho efetivamente de problemas:
 #       - rm /etc/nginx/sites-enabled/userdir.conf
 #    Então teste nomamente com 'sudo nginx -t' para ver se não daria problemas
-
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: ADMINISTRAÇÃO DO DIA A DIA                                            #
