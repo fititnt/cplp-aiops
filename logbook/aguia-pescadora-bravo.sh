@@ -346,6 +346,22 @@ sudo usermod -aG sudo loopchaves
 # poderão acessar esta conta
 sudo useradd -r -s /bin/false usuariodeteste
 
+# Adiciona o usuario ao grupo www-data. Isso pode ser necessario em alguns casos
+sudo usermod -a -G www-data usuariodeteste
+
+# Prepara Home2 do usuario
+sudo mkdir /home2/usuariodeteste
+sudo chown usuariodeteste:usuariodeteste /home2/usuariodeteste
+sudo chmod 751 /home2/usuariodeteste
+
+# Em Home2, prepara diretórios comuns para sair usando apps web
+
+sudo mkdir /home2/usuariodeteste/web
+sudo mkdir /home2/usuariodeteste/web/public_html
+sudo mkdir /home2/usuariodeteste/web/public_api
+
+echo "usuariodeteste" > /home2/usuariodeteste/web/public_html/index.html
+
 #------------------------------------------------------------------------------#
 # SEÇÃO 1.1: USUÁRIOS DO SISTEMA - MENSAGENS INFORMATIVAS                      #
 #                                                                              #
@@ -822,6 +838,30 @@ sudo apt-get install python-certbot-nginx
 
 # Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
 sudo certbot --nginx -d aguia-pescadora-bravo.etica.ai -d apb.etica.ai
+
+
+### Userdir
+# @see https://github.com/fititnt/cplp-aiops/issues/35
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/userdir.conf
+
+vim /etc/nginx/sites-available/userdir.conf
+# Adicione as configurações desejadas neste servidor no arquivo acima...
+
+# Depois de o arquivo estar minimamente ok, use o comando a seguir
+# para criar um link simbolico dele para diretório em que o NGinx realmente
+# irá ler o arquivo
+sudo ln -s /etc/nginx/sites-available/userdir.conf /etc/nginx/sites-enabled/
+
+# Antes de efetivamente habilitar, use o comando a seguir para testar se
+# configurações estão ok.
+sudo nginx -t
+# Se o comando acima falhar, faça:
+# 1. edite /etc/nginx/sites-available/userdir.conf e resolva em pouco tempo
+# 2. apague o link simbolico (não o seu arquivo de rascunho) para evitar que se
+#    outra pessoa reiniciar o servidor o seu rascunho efetivamente de problemas:
+#       - rm /etc/nginx/sites-enabled/userdir.conf
+#    Então teste nomamente com 'sudo nginx -t' para ver se não daria problemas
+
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: ADMINISTRAÇÃO DO DIA A DIA                                            #
