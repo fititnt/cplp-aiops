@@ -366,6 +366,30 @@ sudo usermod -aG sudo loopchaves
 curl http://loopchaves.apb.etica.ai
 curl http://loopchaves.lb-ap.etica.ai
 
+# Aviso: descrição da razão dessaes passos esta em usuariodeteste
+sudo mkdir /home2/loopchaves
+sudo chown loopchaves:loopchaves /home2/loopchaves
+sudo chmod 751 /home2/loopchaves
+
+sudo usermod -a -G www-data loopchaves
+
+sudo -u loopchaves mkdir /home2/loopchaves/web
+sudo -u loopchaves mkdir /home2/loopchaves/web/public_html
+sudo -u loopchaves mkdir /home2/loopchaves/web/public_api
+
+sudo -u loopchaves echo "loopchaves <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/loopchaves/web/public_html/index.html" > /home2/loopchaves/web/public_html/index.html
+
+sudo cp /etc/nginx/sites-available/EXEMPLO-USUARIO.abp.etica.ai.conf /etc/nginx/sites-available/loopchaves.apb.etica.ai.conf
+
+sudo vim /etc/nginx/sites-available/loopchaves.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/loopchaves.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo chown loopchaves:loopchaves -R /home2/loopchaves
+
 ### usuariodeteste -------------------------------------------------------------
 # Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
 # poderão acessar esta conta
@@ -385,9 +409,10 @@ sudo mkdir /home2/usuariodeteste/web
 sudo mkdir /home2/usuariodeteste/web/public_html
 sudo mkdir /home2/usuariodeteste/web/public_api
 
-echo "usuariodeteste" > /home2/usuariodeteste/web/public_html/index.html
+sudo echo "usuariodeteste <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/usuariodeteste/web/public_html/index.html" > /home2/usuariodeteste/web/public_html/index.html
+sudo chown usuariodeteste:usuariodeteste /home2/usuariodeteste/web/public_html/index.html
 
-vim /etc/nginx/sites-available/usuarioteste.apb.etica.ai.conf
+sudo vim /etc/nginx/sites-available/usuarioteste.apb.etica.ai.conf
 # Adicione todas as customizacoes deste usuario no arquivo acima...
 
 sudo ln -s /etc/nginx/sites-available/usuarioteste.apb.etica.ai.conf /etc/nginx/sites-enabled/
@@ -397,6 +422,9 @@ sudo nginx -t
 #    sudo rm /etc/nginx/sites-enabled/usuarioteste.apb.etica.ai.conf
 # Se ele não falhou, de reload no NGinx
 sudo systemctl reload nginx
+
+# Corrige permissões que por acaso tenham ficado para tras
+sudo chown usuariodeteste:usuariodeteste -R /home2/usuariodeteste
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 1.1: USUÁRIOS DO SISTEMA - MENSAGENS INFORMATIVAS                      #
