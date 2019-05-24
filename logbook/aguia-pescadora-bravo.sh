@@ -747,6 +747,22 @@ sudo apt install mono-devel
 #        https://www.mono-project.com/docs/getting-started/mono-basics/
 #        (fititnt, 2019-05-23 BRT)
 
+##### Snap _____________________________________________________________________
+# @see https://snapcraft.io/
+#
+# Ambientes de desenvolvimento potencialmente afetados:
+#     - Go
+
+# Nota, snap já veio instalado no Ubuntu Server 18.04, porém o caminho
+# '/snap/bin' não está adicionada em /etc/environment para ser carregado por
+# padrão.
+
+sudo cp /etc/environment /etc/environment.bkp
+
+sudo echo 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"' > /etc/environment
+
+sudo snap install --classic go
+
 #------------------------------------------------------------------------------#
 # SEÇÃO 4.0: AMBIENTES DE DESENVOLVIMENTO: LINGUAGENS DE PROGRAMAÇÃO           #
 #                                                                              #
