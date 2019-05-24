@@ -357,6 +357,35 @@ sudo usermod -aG sudo fititnt
 curl http://fititnt.apb.etica.ai
 curl http://fititnt.lb-ap.etica.ai
 
+# Aviso: descrição da razão dessaes passos esta em usuariodeteste
+sudo mkdir /home2/fititnt
+sudo chown fititnt:fititnt /home2/fititnt
+sudo chmod 751 /home2/fititnt
+
+sudo usermod -a -G www-data fititnt
+
+sudo -u fititnt mkdir /home2/fititnt/web
+sudo -u fititnt mkdir /home2/fititnt/web/public_html
+sudo -u fititnt mkdir /home2/fititnt/web/public_api
+sudo -u fititnt mkdir /home2/fititnt/web/public_php
+
+sudo -u fititnt echo "fititnt <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/fititnt/web/public_html/index.html" > /home2/fititnt/web/public_html/index.html
+sudo -u fititnt echo "fititnt <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/fititnt/web/public_php/index.php <br><?php phpinfo(); ?>" > /home2/fititnt/web/public_php/index.php
+
+sudo cp /etc/nginx/sites-available/EXEMPLO-USUARIO.abp.etica.ai.conf /etc/nginx/sites-available/fititnt.apb.etica.ai.conf
+
+sudo vim /etc/nginx/sites-available/fititnt.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/fititnt.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d fititnt.apb.etica.ai
+# Nota: neste site escolhido redirecionar todo trafico HTTP para HTTPS
+
+sudo chown fititnt:fititnt -R /home2/fititnt
+
 ### loopchaves -----------------------------------------------------------------
 sudo adduser loopchaves
 sudo passwd -e loopchaves
@@ -388,6 +417,8 @@ sudo ln -s /etc/nginx/sites-available/loopchaves.apb.etica.ai.conf /etc/nginx/si
 sudo nginx -t
 sudo systemctl reload nginx
 
+sudo certbot --nginx -d loopchaves.apb.etica.ai
+
 sudo chown loopchaves:loopchaves -R /home2/loopchaves
 
 ### usuariodeteste -------------------------------------------------------------
@@ -412,19 +443,28 @@ sudo mkdir /home2/usuariodeteste/web/public_api
 sudo echo "usuariodeteste <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/usuariodeteste/web/public_html/index.html" > /home2/usuariodeteste/web/public_html/index.html
 sudo chown usuariodeteste:usuariodeteste /home2/usuariodeteste/web/public_html/index.html
 
-sudo vim /etc/nginx/sites-available/usuarioteste.apb.etica.ai.conf
+sudo vim /etc/nginx/sites-available/usuariodeteste.apb.etica.ai.conf
 # Adicione todas as customizacoes deste usuario no arquivo acima...
 
-sudo ln -s /etc/nginx/sites-available/usuarioteste.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/usuariodeteste.apb.etica.ai.conf /etc/nginx/sites-enabled/
 
 sudo nginx -t
 # Se o comando acima falhar:
-#    sudo rm /etc/nginx/sites-enabled/usuarioteste.apb.etica.ai.conf
+#    sudo rm /etc/nginx/sites-enabled/usuariodeteste.apb.etica.ai.conf
 # Se ele não falhou, de reload no NGinx
 sudo systemctl reload nginx
 
 # Corrige permissões que por acaso tenham ficado para tras
 sudo chown usuariodeteste:usuariodeteste -R /home2/usuariodeteste
+
+## Dominios customizados de usuariodeteste (já adicionados na CloudFlare)
+curl http://usuariodeteste.apb.etica.ai
+curl http://usuariodeteste.lb-ap.etica.ai
+
+## Certificado HTTPS para usuariodeteste
+# Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
+# Nota: o subdominio de lb-ap via HTTPS ainda não sera adicionado, veja https://github.com/fititnt/cplp-aiops/issues/35#issuecomment-495508373
+sudo certbot --nginx -d usuariodeteste.apb.etica.ai
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 1.1: USUÁRIOS DO SISTEMA - MENSAGENS INFORMATIVAS                      #

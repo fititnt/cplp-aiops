@@ -45,10 +45,6 @@ server {
 
 	server_name _;
 
-	# Inclui nossa funcionalidade de diretorios de usuarios
-	# disponibilizada em /etc/nginx/snippets/userdir.conf
-	include snippets/userdir.conf;
-
 	location / {
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
@@ -119,10 +115,6 @@ server {
 	# Add index.php to the list if you are using PHP
 	index index.html index.htm index.nginx-debian.html;
     server_name apb.etica.ai aguia-pescadora-bravo.etica.ai; # managed by Certbot
-
-	# Inclui nossa funcionalidade de diretorios de usuarios
-	# disponibilizada em /etc/nginx/snippets/userdir.conf
-	include snippets/userdir.conf;
 
 	location / {
 		# First attempt to serve request as file, then
