@@ -309,6 +309,18 @@ sudo passwd --warndays 7 UsernameDoUsuario
 
 ### Guia para ser feito por cada usuário de sistema (copie e cole), fim
 
+#### Preparação antes de adicionar usuários ____________________________________
+
+## Cria base de /home2
+# Em alguns casos, a /home/UsernameDoUsuario terá criptografia. Então vamos
+# criar por padrão uma /home2/UsernameDoUsuario para que os guias de uso
+# indiquem usar esta pasta para serviços que administradores poderiam dar
+# suporte ao usuário sem precisar de senhas extras ou autorização prévia
+# explícita
+sudo mkdir /home2
+
+#### Usuarios adicionados ______________________________________________________
+
 ## cdiegosr
 sudo adduser cdiegosr
 sudo passwd -e cdiegosr
@@ -328,6 +340,11 @@ sudo usermod -aG sudo fititnt
 sudo adduser loopchaves
 sudo passwd -e loopchaves
 sudo usermod -aG sudo loopchaves
+
+## usuariodeteste
+# Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
+# poderão acessar esta conta
+sudo useradd -r -s /bin/false usuariodeteste
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 1.1: USUÁRIOS DO SISTEMA - MENSAGENS INFORMATIVAS                      #
