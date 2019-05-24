@@ -338,27 +338,35 @@ sudo mkdir /home2
 
 #### Usuarios adicionados ______________________________________________________
 
-## cdiegosr
+### cdiegosr -------------------------------------------------------------------
 sudo adduser cdiegosr
 sudo passwd -e cdiegosr
 sudo chsh -s /usr/bin/fish cdiegosr
 
-## fcomarcosmabreu
+### fcomarcosmabreu ------------------------------------------------------------
 sudo adduser fcomarcosmabreu
 sudo passwd -e fcomarcosmabreu
 
-## fititnt
+### fititnt --------------------------------------------------------------------
 sudo adduser fititnt
 sudo passwd -e fititnt
 sudo chsh -s /usr/bin/fish fititnt
 sudo usermod -aG sudo fititnt
 
-## loopchaves
+## Dominios customizados de fititnt (já adicionados na CloudFlare)
+curl http://fititnt.apb.etica.ai
+curl http://fititnt.lb-ap.etica.ai
+
+### loopchaves -----------------------------------------------------------------
 sudo adduser loopchaves
 sudo passwd -e loopchaves
 sudo usermod -aG sudo loopchaves
 
-## usuariodeteste
+## Dominios customizados de loopchaves (já adicionados na CloudFlare)
+curl http://loopchaves.apb.etica.ai
+curl http://loopchaves.lb-ap.etica.ai
+
+### usuariodeteste -------------------------------------------------------------
 # Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
 # poderão acessar esta conta
 sudo useradd -r -s /bin/false usuariodeteste
@@ -378,6 +386,17 @@ sudo mkdir /home2/usuariodeteste/web/public_html
 sudo mkdir /home2/usuariodeteste/web/public_api
 
 echo "usuariodeteste" > /home2/usuariodeteste/web/public_html/index.html
+
+vim /etc/nginx/sites-available/usuarioteste.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/usuarioteste.apb.etica.ai.conf /etc/nginx/sites-enabled/
+
+sudo nginx -t
+# Se o comando acima falhar:
+#    sudo rm /etc/nginx/sites-enabled/usuarioteste.apb.etica.ai.conf
+# Se ele não falhou, de reload no NGinx
+sudo systemctl reload nginx
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 1.1: USUÁRIOS DO SISTEMA - MENSAGENS INFORMATIVAS                      #
@@ -859,15 +878,14 @@ sudo certbot --nginx -d aguia-pescadora-bravo.etica.ai -d apb.etica.ai
 
 ### Userdir
 # @see https://github.com/fititnt/cplp-aiops/issues/35
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/userdir.conf
 
-vim /etc/nginx/sites-available/userdir.conf
+vim /etc/nginx/sites-available/usuario.apb.etica.ai.conf
 # Adicione as configurações desejadas neste servidor no arquivo acima...
 
 # Depois de o arquivo estar minimamente ok, use o comando a seguir
 # para criar um link simbolico dele para diretório em que o NGinx realmente
 # irá ler o arquivo
-sudo ln -s /etc/nginx/sites-available/userdir.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/usuario.apb.etica.ai.conf /etc/nginx/sites-enabled/
 
 # Antes de efetivamente habilitar, use o comando a seguir para testar se
 # configurações estão ok.
@@ -878,6 +896,15 @@ sudo nginx -t
 #    outra pessoa reiniciar o servidor o seu rascunho efetivamente de problemas:
 #       - rm /etc/nginx/sites-enabled/userdir.conf
 #    Então teste nomamente com 'sudo nginx -t' para ver se não daria problemas
+
+# reload nginx: Aplicar alterações nas configurações sem reiniciar o NGinx
+sudo systemctl reload nginx
+
+# PROTIP: acompanhe os arquivos a seguir para debugar
+#             tail -f /var/log/nginx/access.log
+#             tail -f /var/log/nginx/error.log
+#         Em geral o principal motivo de erro serão permissões de arquivo e de
+#         diretório até o respectivo arquivo
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: ADMINISTRAÇÃO DO DIA A DIA                                            #
