@@ -957,6 +957,41 @@ sudo apt install r-base
 # https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-monit
 sudo apt install monit
 
+sudo systemctl enable monit
+sudo systemctl start monit
+
+vim /etc/nginx/sites-available/monit.abp.etica.ai.conf
+# Adicione as configurações do monit...
+sudo vim /etc/nginx/sites-available/monit.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+# Aqui criamos uma pasta "compartilhada" para depois permitir que usuarios
+# possam editar algumas coisas no que o monit monitora
+sudo mkdir -p /home2/_compartilhado
+
+sudo vim /home2/_compartilhado/ips-aceitavelmente-confiaveis.conf
+# NOTA: restrição baseada apenas em IPs deve ser feita com muito cuidado.
+#       no nosso caso qualquer pessoa poderia acessar o monitoramento do Monit
+#       via localhost, o que implica todos que tem acesso de conta SSH comum.
+#       Isso não chega a ser um problema se confiamos nas pessoas, mas é algo
+#       que precisa aplicações que eles e que dão acesso simulando localhost
+#       podem dar problema. (fititnt, 2019-05-25 09:56 BRT)
+
+sudo ln -s /etc/nginx/sites-available/monit.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d monit.apb.etica.ai
+
+# Copia alguns arquivos padroes do monit e os habilita
+sudo ln -s /etc/monit/conf-available/nginx /etc/monit/conf-enabled
+
+sudo systemctl reload monit
+
+# Aqui criamos uma pasta "compartilhada" para depois permitir que usuarios
+# possam editar algumas coisas no que o monit monitora
+sudo mkdir -p /home2/_compartilhado/monit/conf-enabled/
+
 #------------------------------------------------------------------------------#
 # SEÇÃO: AJUDA AO USUARIO                                                      #
 # TL;DR: Lista como é documentado ao usuario final o que este servidor         #

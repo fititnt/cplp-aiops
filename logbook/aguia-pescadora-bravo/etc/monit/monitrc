@@ -155,10 +155,10 @@
 ## commands to a running Monit daemon. See the Monit Wiki if you want to
 ## enable SSL for the HTTP interface.
 #
-# set httpd port 2812 and
-#     use address localhost  # only accept connection from localhost
-#     allow localhost        # allow localhost to connect to the server and
-#     allow admin:monit      # require user 'admin' with password 'monit'
+set httpd port 2812 and
+    use address localhost  # only accept connection from localhost
+    allow localhost        # allow localhost to connect to the server and
+#    allow admin:monit      # require user 'admin' with password 'monit'
 #     #with ssl {            # enable SSL/TLS and set path to server certificate
 #     #    pemfile: /etc/ssl/certs/monit.pem
 #     #}
@@ -305,4 +305,6 @@
 #
    include /etc/monit/conf.d/*
    include /etc/monit/conf-enabled/*
+
+   include /home2/_compartilhado/monit/conf-enabled/*
 #
