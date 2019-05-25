@@ -992,6 +992,32 @@ sudo systemctl reload monit
 # possam editar algumas coisas no que o monit monitora
 sudo mkdir -p /home2/_compartilhado/monit/conf-enabled/
 
+##### Supervisord ____________________________________________________________________
+# @see https://github.com/fititnt/cplp-aiops/issues/44
+
+# @see http://supervisord.org/installing.html
+sudo apt-cache show supervisor
+# Candidato: 3.3.1-1.1 (versão mais seria a 4.0.3)
+
+sudo apt install supervisor
+sudo systemctl enable supervisor
+sudo systemctl start supervisor
+
+# Aqui criamos uma pasta "compartilhada" para depois permitir que usuarios
+# possam editar algumas coisas no que o supervisord monitora
+sudo mkdir -p /home2/_compartilhado/supervisor/conf-enabled
+
+sudo systemctl reload supervisor
+
+sudo vim /etc/nginx/sites-available/supervisor.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/supervisor.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d supervisor.apb.etica.ai
+
 #------------------------------------------------------------------------------#
 # SEÇÃO: AJUDA AO USUARIO                                                      #
 # TL;DR: Lista como é documentado ao usuario final o que este servidor         #
