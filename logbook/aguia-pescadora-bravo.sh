@@ -944,6 +944,20 @@ sudo apt install r-base
 # Após esta operação, serão utilizados 416 MB adicionais de espaço em disco.
 
 #------------------------------------------------------------------------------#
+# SEÇÃO 5.0: GERENCIAMENTO DE PROCESSOS                                        #
+#                                                                              #
+# TL;DR: caso alguns usuários queiram que algo rode ao reiniciar o sistema ou  #
+#        periodicamente esta seção do documento dá uma alternativa genérica    #
+#        de gerenciamento e monitoramento                                      #
+#------------------------------------------------------------------------------#
+
+##### Monit ____________________________________________________________________
+# @see https://github.com/fititnt/cplp-aiops/issues/44
+
+# https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-monit
+sudo apt install monit
+
+#------------------------------------------------------------------------------#
 # SEÇÃO: AJUDA AO USUARIO                                                      #
 # TL;DR: Lista como é documentado ao usuario final o que este servidor         #
 #        oferece. Em geral é uma forma de documentar as IDEs e todos os        #
