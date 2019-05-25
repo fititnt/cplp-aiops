@@ -436,6 +436,43 @@ sudo certbot --nginx -d php.loopchaves.apb.etica.ai
 
 sudo chown loopchaves:loopchaves -R /home2/loopchaves
 
+
+### jefferson091 ---------------------------------------------------------------
+sudo adduser jefferson091
+sudo passwd -e jefferson091
+
+sudo chsh -s /usr/bin/fish jefferson091
+
+# Aviso: descrição da razão dessaes passos esta em usuariodeteste
+sudo mkdir /home2/jefferson091
+sudo chown jefferson091:jefferson091 /home2/jefferson091
+sudo chmod 751 /home2/jefferson091
+
+sudo usermod -a -G www-data jefferson091
+
+## Dominios customizados de jefferson091 (já adicionados na CloudFlare)
+curl http://jefferson091.apb.etica.ai
+curl http://jefferson091.lb-ap.etica.ai
+
+sudo -u jefferson091 mkdir /home2/jefferson091/web
+sudo -u jefferson091 mkdir /home2/jefferson091/web/public_html
+
+sudo -u jefferson091 echo "jefferson091 <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/jefferson091/web/public_html/index.html" > /home2/jefferson091/web/public_html/index.html
+
+sudo cp /etc/nginx/sites-available/EXEMPLO-USUARIO.abp.etica.ai.conf /etc/nginx/sites-available/jefferson091.apb.etica.ai.conf
+
+sudo vim /etc/nginx/sites-available/jefferson091.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/jefferson091.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d jefferson091.apb.etica.ai
+
+sudo chown jefferson091:jefferson091 -R /home2/jefferson091
+
+
 ### usuariodeteste -------------------------------------------------------------
 # Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
 # poderão acessar esta conta

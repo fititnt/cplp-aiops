@@ -335,3 +335,10 @@ sudo apt-get install zangband
 ##
 ###
 ##### Jogos de terminal, fim
+
+
+#------------------------------------------------------------------------------#
+# temp...
+# O que estiver a partir daqui são comandos que foram realizadas e ainda não
+# foram propriamente documentados (fititnt, 2019-05-19 05:04 BRT)
+sudo apt-get install fish
