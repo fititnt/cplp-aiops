@@ -989,7 +989,18 @@ sudo apt install r-base
 #------------------------------------------------------------------------------#
 
 sudo apt install haproxy
+
 vim /etc/default/haproxy
+# Fazer ajustes...
+
+vim /etc/nginx/sites-available/haproxy.abp.etica.ai.conf
+# Adicione todas as customizacoes no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/haproxy.abp.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d haproxy.abp.etica.ai
 
 
 #------------------------------------------------------------------------------#

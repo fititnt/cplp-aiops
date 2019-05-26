@@ -169,3 +169,24 @@ sudo add-apt-repository 'deb [arch=amd64] http://nyc2.mirrors.digitalocean.com/m
 
 # Instala o MariaDB ja com galera
 sudo apt install mariadb-server mariadb-client galera-3
+
+#mysql_secure_installation
+#CREATE USER 'haproxy@192.99.247.117';
+## Criar usuario para o HAproxy poder fazer checagens de saúde
+# mysql -u root -p
+## ... entre senha de root...
+# USE mysql;
+# INSERT INTO user (Host,User) values ('192.99.247.117','haproxy');
+# FLUSH PRIVILEGES;
+
+# Erro...
+#root@elefante-borneu-yul-01:/etc# mysql -u root -p
+#Enter password: 
+# (...)
+#MariaDB [(none)]> USE mysql;
+#Reading table information for completion of table and column names
+#You can turn off this feature to get a quicker startup with -A
+#
+#Database changed
+#MariaDB [mysql]> INSERT INTO user (Host,User) values ('192.99.247.117','haproxy');
+#ERROR 1364 (HY000): Field 'ssl_cipher' doesn't have a default value
