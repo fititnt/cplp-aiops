@@ -128,6 +128,13 @@ sudo vim /etc/vnstat.conf
 sudo systemctl start vnstat
 sudo systemctl enable vnstat
 
+##### Mosh _____________________________________________________________________
+# @see https://mosh.org
+sudo apt install -y mosh
+
+##### Rede [nmap, traceroute, dig (dnsutils)....] ______________________________
+sudo apt install -y traceroute nmap dnsutils
+
 #------------------------------------------------------------------------------#
 # SEÇÃO 1: PREPARAÇÃO DOS SERVIDORES PARA OPERAREM EM CLUSTER                  #
 # TL;DR:                                                                       #
@@ -151,3 +158,14 @@ sudo vi /etc/hosts
 # SEÇÃO 2: INSTALAÇÃO E CONFIGURAÇÃO DO MARIADB + GALERA CLUSTER               #
 # TL;DR:                                                                       #
 #------------------------------------------------------------------------------#
+
+### MariaDB 10.3 stable
+# @see https://downloads.mariadb.org/mariadb/repositories/#mirror=digitalocean-nyc&distro=Ubuntu&distro_release=bionic--ubuntu_bionic&version=10.3
+# @see http://galeracluster.com/documentation-webpages/installmariadb.html
+
+sudo apt-get install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository 'deb [arch=amd64] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main'
+
+# Instala o MariaDB ja com galera
+sudo apt install mariadb-server mariadb-client galera-3

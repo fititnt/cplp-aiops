@@ -981,7 +981,19 @@ sudo apt install r-base
 # Após esta operação, serão utilizados 416 MB adicionais de espaço em disco.
 
 #------------------------------------------------------------------------------#
-# SEÇÃO 5.0: GERENCIAMENTO DE PROCESSOS                                        #
+# SEÇÃO 5.0: BALANCEAMENTO DE CARGA PARA SERVIÇOS EXTERNOS COM HAPROXY         #
+#                                                                              #
+# TL;DR: alguns serviços importantes não são instalados nesta máquina, mas em  #
+#        algum servidor externo. Estratégias com uso de HAProxy podem permitir #
+#        abstração dessa complexidade para os usuarios                         #
+#------------------------------------------------------------------------------#
+
+sudo apt install haproxy
+vim /etc/default/haproxy
+
+
+#------------------------------------------------------------------------------#
+# SEÇÃO 6.0: GERENCIAMENTO DE PROCESSOS                                        #
 #                                                                              #
 # TL;DR: caso alguns usuários queiram que algo rode ao reiniciar o sistema ou  #
 #        periodicamente esta seção do documento dá uma alternativa genérica    #
