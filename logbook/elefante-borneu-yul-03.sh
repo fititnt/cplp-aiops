@@ -127,3 +127,27 @@ sudo vim /etc/vnstat.conf
 # Vamos iniciar vnstat para rodar imediatamente, e também iniciar com sistema
 sudo systemctl start vnstat
 sudo systemctl enable vnstat
+
+#------------------------------------------------------------------------------#
+# SEÇÃO 1: PREPARAÇÃO DOS SERVIDORES PARA OPERAREM EM CLUSTER                  #
+# TL;DR:                                                                       #
+#------------------------------------------------------------------------------#
+
+sudo vi /etc/hosts
+## Adicione ao final do arquivo:
+## Cluster, demais nos
+#149.56.130.19	elefante-borneu-yul-01.etica.ai		elefante-borneu-yul-01
+###149.56.130.66	elefante-borneu-yul-02.etica.ai		elefante-borneu-yul-02
+#149.56.130.178	elefante-borneu-yul-03.etica.ai		elefante-borneu-yul-03
+
+# Nota: teste ping de todas as maquinas para todas as demais. Nós vamos usar
+# preferencialmente hostname elefante-borneu-yul-NN em vez de IPs. E estes IPs
+# estão hardcored porque... bem, mesmo se usarmos dominio completo, isso poderia
+# causar uma lentidão absurda em certos casos. E vale a pena não correr riscos
+# (fititnt, 2019-05-26 14:35 BRT)
+
+
+#------------------------------------------------------------------------------#
+# SEÇÃO 2: INSTALAÇÃO E CONFIGURAÇÃO DO MARIADB + GALERA CLUSTER               #
+# TL;DR:                                                                       #
+#------------------------------------------------------------------------------#

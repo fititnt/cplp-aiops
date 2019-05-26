@@ -1,0 +1,12 @@
+#  elefante-borneu-yul-01.etica.ai
+# /etc/hosts 
+
+127.0.0.1	localhost
+127.0.0.1	elefante-borneu-yul-01.etica.ai		elefante-borneu-yul-01
+149.56.130.19	vps241357.vps.ovh.ca	vps241357
+127.0.1.1	vps241357.vps.ovh.ca	vps241357
+
+# Cluster, demais nos
+##149.56.130.19	elefante-borneu-yul-01.etica.ai		elefante-borneu-yul-01
+149.56.130.66	elefante-borneu-yul-02.etica.ai		elefante-borneu-yul-02
+149.56.130.178	elefante-borneu-yul-03.etica.ai		elefante-borneu-yul-03
