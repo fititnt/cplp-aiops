@@ -184,6 +184,46 @@ mysql -u root -p
 ## AVISO: neste momento os servidores ainda NÃO estão em cluster. Por isso
 ##        estamos tratando cada um individualmente.
 
-vim /etc/mysql/my.cnf
-# Edite 'bind-address = 0.0.0.0' em vez de 127.0.0.1. Não é o ideal, ainda mais
-# que o firewall não esta ativado, porém é aceitavel neste momento
+sudo vim /etc/mysql/my.cnf
+# Edite o arquivo acima conforme:
+# @see http://galeracluster.com/documentation-webpages/configuration.html
+
+sudo vim /etc/mysql/mariadb.conf.d/galera.cnf
+# Edite o arquivo acima conforme:
+# @see http://galeracluster.com/documentation-webpages/dbconfiguration.html
+
+# Vamos desligar o MariaDB. Quando forem ligados, serão parte de um Cluster
+# Master-Master :,)
+sudo systemctl stop mysql
+
+#------------------------------------------------------------------------------#
+# SEÇÃO 3: INICIALIZAÇÃO DE UM NOVO CLUSTER                                    #
+# TL;DR: Eu pessoalmente acho isso lindo. Não é o tipo de coisa que a gente    #
+#        faz com frequência. (fititnt, 2019-05-26 19:18 BRT)                   #
+#------------------------------------------------------------------------------#
+## @see http://galeracluster.com/documentation-webpages/startingcluster.html#starting-the-first-cluster-node
+## @see https://mariadb.com/kb/en/library/getting-started-with-mariadb-galera-cluster/#systemd-and-bootstrapping
+## @see http://man7.org/linux/man-pages/man1/galera_new_cluster.1.html
+
+## NOTA IMPORTANTE: isto será feito apenas no elefante-borneu-yul-01.etica.ai
+
+### ALERTA: NÃO EXECUTE ESTE COMANDO NOS DEMAIS NÓS! ISTO OCORRE APENAS UMA VEZ
+###         DURANTE A CRIAÇÃO DE UM CLUSTER DO ZERO!
+sudo galera_new_cluster
+
+# Nos demais nós, execute
+## sudo systemctl start mysql
+
+# sudo systemctl start mysql --wsrep-new-cluster
+## resposta: systemctl: unrecognized option '--wsrep-new-cluster'
+# sudo /usr/bin/mysqld_bootstrap
+## resposta: sudo: /usr/bin/mysqld_bootstrap: command not found
+## O comando acima falha
+
+## @TODO rever configuração em YUL-01, o cluster ainda não está ok para inicializar.
+#        Vide http://galeracluster.com/documentation-webpages/configuration.html
+#        (fititnt, 2019-05-26 20:08 BRT)
+
+
+## @todo Rocha deve migrar parte do conteudo de https://docs.google.com/document/d/1ZQsLgTPJUKQsqyoWbhAOYOXVaKWvo7oAhi91BbBVy9E/edit
+#        para estes diarios de bordo (fititnt, 2019-05-26 19:38 BRT)

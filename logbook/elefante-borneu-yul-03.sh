@@ -184,7 +184,30 @@ mysql -u root -p
 ## AVISO: neste momento os servidores ainda NÃO estão em cluster. Por isso
 ##        estamos tratando cada um individualmente.
 
-vim /etc/mysql/my.cnf
-# Edite 'bind-address = 0.0.0.0' em vez de 127.0.0.1. Não é o ideal, ainda mais
-# que o firewall não esta ativado, porém é aceitavel neste momento
+sudo vim /etc/mysql/my.cnf
+# Edite o arquivo acima conforme:
+# @see http://galeracluster.com/documentation-webpages/configuration.html
 
+sudo vim /etc/mysql/mariadb.conf.d/galera.cnf
+# Edite o arquivo acima conforme:
+# @see http://galeracluster.com/documentation-webpages/dbconfiguration.html
+
+# Vamos desligar o MariaDB. Quando forem ligados, serão parte de um Cluster
+# Master-Master :,)
+sudo systemctl stop mysql
+
+#------------------------------------------------------------------------------#
+# SEÇÃO 3: INICIALIZAÇÃO DE UM NOVO CLUSTER                                    #
+# TL;DR: Eu pessoalmente acho isso lindo. Não é o tipo de coisa que a gente    #
+#        faz com frequência. (fititnt, 2019-05-26 19:18 BRT)                   #
+#------------------------------------------------------------------------------#
+## @see http://galeracluster.com/documentation-webpages/startingcluster.html#starting-the-first-cluster-node
+
+## NOTA IMPORTANTE: isto será feito apenas no elefante-borneu-yul-01.etica.ai
+
+## @TODO rever configuração em YUL-01, o cluster ainda não está ok para inicializar.
+#        Vide http://galeracluster.com/documentation-webpages/configuration.html
+#        (fititnt, 2019-05-26 20:08 BRT)
+
+# O comando a seguir mantem YUL-02 e YUL-03 desligadas até o cluster estar iniciado
+sudo systemctl stop mysql

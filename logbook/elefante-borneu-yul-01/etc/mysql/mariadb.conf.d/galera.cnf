@@ -1,0 +1,8 @@
+# FILE:     /etc/mysql/mariadb.conf.d/galera.cnf
+# SERVER:   elefante-borneu-yul-01.etica.ai
+
+[mysqld]
+wsrep_cluster_name=ElefanteBorneu
+wsrep_cluster_address="gcomm://149.56.130.19, 149.56.130.66, 149.56.130.178"
+wsrep_node_name=YUL-01
+wsrep_node_address="149.56.130.19"
