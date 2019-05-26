@@ -170,23 +170,20 @@ sudo add-apt-repository 'deb [arch=amd64] http://nyc2.mirrors.digitalocean.com/m
 # Instala o MariaDB ja com galera
 sudo apt install mariadb-server mariadb-client galera-3
 
-#mysql_secure_installation
-#CREATE USER 'haproxy@192.99.247.117';
-## Criar usuario para o HAproxy poder fazer checagens de saúde
-# mysql -u root -p
-## ... entre senha de root...
-# USE mysql;
-# INSERT INTO user (Host,User) values ('192.99.247.117','haproxy');
+# Execute o comando padrão de deixar mais seguro as opcoes padroes
+mysql_secure_installation
+
+# Entre como super usuario no console do mysql
+mysql -u root -p
+
+## Execute os seguintes comandos. O user é o que o HAProxy usara para testar
+## se o servidor parece estar ok. E o IP é de onde ele fara isso
+# CREATE USER 'haproxy@192.99.247.117';
 # FLUSH PRIVILEGES;
 
-# Erro...
-#root@elefante-borneu-yul-01:/etc# mysql -u root -p
-#Enter password: 
-# (...)
-#MariaDB [(none)]> USE mysql;
-#Reading table information for completion of table and column names
-#You can turn off this feature to get a quicker startup with -A
-#
-#Database changed
-#MariaDB [mysql]> INSERT INTO user (Host,User) values ('192.99.247.117','haproxy');
-#ERROR 1364 (HY000): Field 'ssl_cipher' doesn't have a default value
+## AVISO: neste momento os servidores ainda NÃO estão em cluster. Por isso
+##        estamos tratando cada um individualmente.
+
+vim /etc/mysql/my.cnf
+# Edite 'bind-address = 0.0.0.0' em vez de 127.0.0.1. Não é o ideal, ainda mais
+# que o firewall não esta ativado, porém é aceitavel neste momento

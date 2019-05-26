@@ -104,8 +104,8 @@ sudo apt install language-pack-pt language-pack-pt-base
 
 sudo update-locale LANG=pt_PT.utf8
 
-### Traceroute e afins _________________________________________________________
-sudo apt install traceroute
+##### Rede [nmap, traceroute, dig (dnsutils)....] ______________________________
+sudo apt install -y traceroute nmap dnsutils
 
 ### Criar Swap & ajusta Swappiness______________________________________________
 # Se o sistema operacional ficar sem memória ram suficiênte, ele pode ter falha
@@ -988,6 +988,8 @@ sudo apt install r-base
 #        abstração dessa complexidade para os usuarios                         #
 #------------------------------------------------------------------------------#
 
+##### HAProxy __________________________________________________________________
+
 sudo apt install haproxy
 
 vim /etc/default/haproxy
@@ -1002,6 +1004,20 @@ sudo systemctl reload nginx
 
 sudo certbot --nginx -d haproxy.abp.etica.ai
 
+##### MariaDB (apenas cliente) _________________________________________________
+### O objetivo aqui é ter do lado do cliente os pacotes mínimos para contectar
+### ao cluster Elevante Bornéu
+# @see elefante-borneu-yul-01.sh (arquivo de configuração dos Elevante Bornéu)
+
+sudo apt-get install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository 'deb [arch=amd64] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main'
+
+# Em Águia Pescadora devemos instalar APENAS os cliente de MariaDB/MySQL
+sudo apt install mariadb-client
+
+## Teste se o usuario do haproxy consegue acessar
+mysql -h elefante-borneu-yul-01.etica.ai -u haproxy
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 6.0: GERENCIAMENTO DE PROCESSOS                                        #

@@ -175,3 +175,21 @@ sudo add-apt-repository 'deb [arch=amd64] http://nyc2.mirrors.digitalocean.com/m
 
 # Instala o MariaDB ja com galera
 sudo apt install mariadb-server mariadb-client galera-3
+
+# Execute o comando padrão de deixar mais seguro as opcoes padroes
+mysql_secure_installation
+
+# Entre como super usuario no console do mysql
+mysql -u root -p
+
+## Execute os seguintes comandos. O user é o que o HAProxy usara para testar
+## se o servidor parece estar ok. E o IP é de onde ele fara isso
+# CREATE USER 'haproxy@192.99.247.117';
+# FLUSH PRIVILEGES;
+
+## AVISO: neste momento os servidores ainda NÃO estão em cluster. Por isso
+##        estamos tratando cada um individualmente.
+
+vim /etc/mysql/my.cnf
+# Edite 'bind-address = 0.0.0.0' em vez de 127.0.0.1. Não é o ideal, ainda mais
+# que o firewall não esta ativado, porém é aceitavel neste momento
