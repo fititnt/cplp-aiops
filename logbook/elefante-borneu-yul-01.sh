@@ -1,6 +1,6 @@
 echo "Este diário de bordo foi feito para ser visualizado, nao executado assim!"
 exit
-######################### Diario de bordo: database-03 #########################
+############### Diario de bordo: elefante-borneu-yul-01.etica.ai ###############
 # VPS (KVM), 1 vCPU, 2GB RAM, 20GB SSD, Ubuntu Server 18.04 64bit, OVH, Canada
 #
 # Datacenter: OVH, Canada
@@ -10,8 +10,8 @@ exit
 # RAM: 2 GB
 # Disk: 20 GB
 #
-# IPv4: 149.56.130.178
-# IPv6: 2607:5300:0201:3100:0000:0000:0000:6df7
+# IPv4: 149.56.130.19
+# IPv6: 2607:5300:0201:3100:0000:0000:0000:2f58
 ################################################################################
 
 #------------------------------------------------------------------------------#
@@ -20,7 +20,7 @@ exit
 #------------------------------------------------------------------------------#
 
 ### Primeiro login______________________________________________________________
-ssh root@149.56.130.178
+ssh root@149.56.130.19
 
 ### Atualizar o sistema operacional_____________________________________________
 sudo apt update -y
@@ -28,12 +28,12 @@ sudo apt upgrade -y
 sudo apt autoremove -y
 
 ### Define um hostname personalizado____________________________________________
-sudo hostnamectl set-hostname database-03
+sudo hostnamectl set-hostname elefante-borneu-yul-01
 
 # Edite /etc/hosts e adicione o hostname também apontando para 127.0.0.1
 sudo vi /etc/hosts
 ## Adicione
-# 127.0.0.1 database-03.domain-later.com  database-03
+# 127.0.0.1 elefante-borneu-yul-01.etica.ai  elefante-borneu-yul-01
 
 ### Define horário padrão de sistema_____________________________________________
 sudo timedatectl set-timezone UTC

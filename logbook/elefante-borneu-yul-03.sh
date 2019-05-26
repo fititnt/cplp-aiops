@@ -1,6 +1,6 @@
 echo "Este diário de bordo foi feito para ser visualizado, nao executado assim!"
 exit
-######################### Diario de bordo: database-02 #########################
+############### Diario de bordo: elefante-borneu-yul-03.etica.ai ###############
 # VPS (KVM), 1 vCPU, 2GB RAM, 20GB SSD, Ubuntu Server 18.04 64bit, OVH, Canada
 #
 # Datacenter: OVH, Canada
@@ -10,8 +10,8 @@ exit
 # RAM: 2 GB
 # Disk: 20 GB
 #
-# IPv4: 149.56.130.66
-# IPv6: 2607:5300:0201:3100:0000:0000:0000:6dd8
+# IPv4: 149.56.130.178
+# IPv6: 2607:5300:0201:3100:0000:0000:0000:6df7
 ################################################################################
 
 #------------------------------------------------------------------------------#
@@ -20,32 +20,20 @@ exit
 #------------------------------------------------------------------------------#
 
 ### Primeiro login______________________________________________________________
-# Você, seja por usuario + senha, ou por Chave SSH, normlamente terá que acessar
-# diretamente como root. Excessões a esta regra (como VMs na AWS) geralmente
-# implicam em logar em um usuario não-root e executar como sudo. Mas nesta da
-# é por root mesmo nesse momento.
-ssh root@149.56.130.66
+ssh root@149.56.130.178
 
 ### Atualizar o sistema operacional_____________________________________________
-# O sistema operacional (neste caso, Ubuntu) normalmente não vai estar 100%
-# atualizado. Os comandos abaixo são uma boa prática pra fazer imediatamente
 sudo apt update -y
 sudo apt upgrade -y
 sudo apt autoremove -y
 
 ### Define um hostname personalizado____________________________________________
-sudo hostnamectl set-hostname database-02
+sudo hostnamectl set-hostname elefante-borneu-yul-03
 
 # Edite /etc/hosts e adicione o hostname também apontando para 127.0.0.1
 sudo vi /etc/hosts
 ## Adicione
-# 127.0.0.1 database-02.domain-later.com  database-02
-
-
-# Edite /etc/hosts e adicione o hostname também apontando para 127.0.0.1
-sudo vi /etc/hosts
-## Adicione
-# 127.0.0.1 database-01.domain-later.com  database-01
+# 127.0.0.1 elefante-borneu-yul-03.etica.ai  elefante-borneu-yul-03
 
 ### Define horário padrão de sistema_____________________________________________
 sudo timedatectl set-timezone UTC
