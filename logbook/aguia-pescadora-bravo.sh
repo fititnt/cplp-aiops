@@ -473,6 +473,33 @@ sudo certbot --nginx -d jefferson091.apb.etica.ai
 sudo chown jefferson091:jefferson091 -R /home2/jefferson091
 
 
+### compilebot -------------------------------------------------------------
+# Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
+# poderão acessar esta conta
+sudo useradd -r -s /bin/false compilebot
+
+mkdir -p /home2/compilebot/web/api
+
+cp /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/compilebot.conf
+
+sudo vim /etc/php/7.2/fpm/pool.d/compilebot.conf
+#...
+compilebot.api.apb.etica.ai
+sudo systemctl reload php7.2-fpm
+
+sudo vim /etc/nginx/sites-available/compilebot.api.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/compilebot.api.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d compilebot.api.apb.etica.ai
+
+sudo -u compilebot echo "compilebot <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/compilebot/web/api/index.php <br><?php phpinfo(); ?>" > /home2/compilebot/web/api/index.php
+
+sudo chown compilebot:compilebot -R /home2/compilebot
+
 ### usuariodeteste -------------------------------------------------------------
 # Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
 # poderão acessar esta conta
