@@ -205,24 +205,46 @@ sudo systemctl stop mysql
 ## @see https://mariadb.com/kb/en/library/getting-started-with-mariadb-galera-cluster/#systemd-and-bootstrapping
 ## @see http://man7.org/linux/man-pages/man1/galera_new_cluster.1.html
 
-## NOTA IMPORTANTE: isto será feito apenas no elefante-borneu-yul-01.etica.ai
+# Sobre os arquivos de configuração ____________________________________________
+# A documentação não foi feita passo a passo, segundo as documentações oficiais
+# em mariadb.com e galeracluster.com é possível saber as variáveis mínimas que
+# devem ser alteradas para que o MariaDB opere cluster. Note que os arquivos
+# de configurações não explicitam qual dos nós será o primário, pois TODOS
+# são nós primários. A única diferença é o comando usado para criar um cluster
+# a primeira vez ou (em caso de falha crítica) reinicializar um cluster a
+# partir do nó mais avançado.
+#
+# Estando os arquivos de configuração OK, exceto se houver problemas com
+# firewall, o tempo entre inicializar o primeiro nó e adicionar os demais é
+# baixo
+
+# Cria o primeiro nó (cluster novo) ____________________________________________
+# Como você não está recuperando de um cluster que falou (ou foi acidental ou
+# propositalmente desligado todos os nós ao mesmo tempo) escolha uma das três
+# instâncias para ser a criadora inicial. Todas as demais herdarão todos os
+# bancos de dados InnoDB desta (e o que quer que tinha nelas antes,
+# será destruído).
+#
+# No Cluster Elevante Bornéu a escolha foi elefante-borneu-yul-01
 
 ### ALERTA: NÃO EXECUTE ESTE COMANDO NOS DEMAIS NÓS! ISTO OCORRE APENAS UMA VEZ
 ###         DURANTE A CRIAÇÃO DE UM CLUSTER DO ZERO!
-sudo galera_new_cluster
+#
+#    sudo galera_new_cluster
+#
 
-# Nos demais nós, execute
-## sudo systemctl start mysql
+### Adiciona demias nós (cluster novo) _________________________________________
+### Nos demais nós DEPOIS de um cluster já ter sido iniciado, os inicie
+### como se fossem um MariaDB (MySQL) como qualquer outro:
+#
+#    sudo systemctl start mysql
+#
+### Note: a partir de agora, desde que o cluster inteiro não tenha caído, os
+### passos de inicializar, parar e reiniciar são como um MariaDB comum, com a
+### vantagem de que os clientes finais (que acessam via o HAProxy) não saberão
+### se algum servidor ficou fora do ar. É lindo!
 
-# sudo systemctl start mysql --wsrep-new-cluster
-## resposta: systemctl: unrecognized option '--wsrep-new-cluster'
-# sudo /usr/bin/mysqld_bootstrap
-## resposta: sudo: /usr/bin/mysqld_bootstrap: command not found
-## O comando acima falha
-
-## @TODO rever configuração em YUL-01, o cluster ainda não está ok para inicializar.
-#        Vide http://galeracluster.com/documentation-webpages/configuration.html
-#        (fititnt, 2019-05-26 20:08 BRT)
+# @TODO: documentar o dia a dia no gerenciamento de um cluster (fititnt, 2019-05-27 20:19 BRT)
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 3: RE-INICIALIZAÇÃO DE CLUSTER EXISTENTE                               #
@@ -241,7 +263,7 @@ systemctl stop mariadb #pede gentilmente pras porcarias terminarem
 killall -u mysql -9 # mata porcarias que não tenham morrido
 
 # Escolher uma nova máquina para ser a DONOR/PRIMARY e rodar nessa máquina o seguinte comando. Esse comando já inicia o MariaDB, não precisa usar o systemctl.
-galera_new_cluster
+sudo galera_new_cluster
 
 #Ligar as outras máquinas, uma por vez, só partindo pra próxima após ter CERTEZA que essa ligou corretamente, executando esse comando nas outras máquinas.
 systemctl start mariadb

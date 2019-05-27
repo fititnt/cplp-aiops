@@ -208,12 +208,46 @@ sudo systemctl stop mysql
 #        faz com frequência. (fititnt, 2019-05-26 19:18 BRT)                   #
 #------------------------------------------------------------------------------#
 ## @see http://galeracluster.com/documentation-webpages/startingcluster.html#starting-the-first-cluster-node
+## @see https://mariadb.com/kb/en/library/getting-started-with-mariadb-galera-cluster/#systemd-and-bootstrapping
+## @see http://man7.org/linux/man-pages/man1/galera_new_cluster.1.html
 
-## NOTA IMPORTANTE: isto será feito apenas no elefante-borneu-yul-01.etica.ai
+# Sobre os arquivos de configuração ____________________________________________
+# A documentação não foi feita passo a passo, segundo as documentações oficiais
+# em mariadb.com e galeracluster.com é possível saber as variáveis mínimas que
+# devem ser alteradas para que o MariaDB opere cluster. Note que os arquivos
+# de configurações não explicitam qual dos nós será o primário, pois TODOS
+# são nós primários. A única diferença é o comando usado para criar um cluster
+# a primeira vez ou (em caso de falha crítica) reinicializar um cluster a
+# partir do nó mais avançado.
+#
+# Estando os arquivos de configuração OK, exceto se houver problemas com
+# firewall, o tempo entre inicializar o primeiro nó e adicionar os demais é
+# baixo
 
-## @TODO rever configuração em YUL-01, o cluster ainda não está ok para inicializar.
-#        Vide http://galeracluster.com/documentation-webpages/configuration.html
-#        (fititnt, 2019-05-26 20:08 BRT)
+# Cria o primeiro nó (cluster novo) ____________________________________________
+# Como você não está recuperando de um cluster que falou (ou foi acidental ou
+# propositalmente desligado todos os nós ao mesmo tempo) escolha uma das três
+# instâncias para ser a criadora inicial. Todas as demais herdarão todos os
+# bancos de dados InnoDB desta (e o que quer que tinha nelas antes,
+# será destruído).
+#
+# No Cluster Elevante Bornéu a escolha foi elefante-borneu-yul-01
 
-# O comando a seguir mantem YUL-02 e YUL-03 desligadas até o cluster estar iniciado
-sudo systemctl stop mysql
+### ALERTA: NÃO EXECUTE ESTE COMANDO NOS DEMAIS NÓS! ISTO OCORRE APENAS UMA VEZ
+###         DURANTE A CRIAÇÃO DE UM CLUSTER DO ZERO!
+#
+#    sudo galera_new_cluster
+#
+
+### Adiciona demias nós (cluster novo) _________________________________________
+### Nos demais nós DEPOIS de um cluster já ter sido iniciado, os inicie
+### como se fossem um MariaDB (MySQL) como qualquer outro:
+#
+#    sudo systemctl start mysql
+#
+### Note: a partir de agora, desde que o cluster inteiro não tenha caído, os
+### passos de inicializar, parar e reiniciar são como um MariaDB comum, com a
+### vantagem de que os clientes finais (que acessam via o HAProxy) não saberão
+### se algum servidor ficou fora do ar. É lindo!
+
+# @TODO: documentar o dia a dia no gerenciamento de um cluster (fititnt, 2019-05-27 20:19 BRT)
