@@ -224,6 +224,54 @@ sudo galera_new_cluster
 #        Vide http://galeracluster.com/documentation-webpages/configuration.html
 #        (fititnt, 2019-05-26 20:08 BRT)
 
+#------------------------------------------------------------------------------#
+# SEÇÃO 3: RE-INICIALIZAÇÃO DE CLUSTER EXISTENTE                               #
+# TL;DR: Um cluster que já existe por algum motivo foi ficou completamente     #
+#        desligado.
+#------------------------------------------------------------------------------#
 
-## @todo Rocha deve migrar parte do conteudo de https://docs.google.com/document/d/1ZQsLgTPJUKQsqyoWbhAOYOXVaKWvo7oAhi91BbBVy9E/edit
-#        para estes diarios de bordo (fititnt, 2019-05-26 19:38 BRT)
+# @TODO melhorar descrição destes comandos (fititnt, 2019-05-27 19:13 BRT)
+
+## Processo de restaurar o cluster (reinício seguro)
+
+#Desligar o mariadb em TODAS as máquinas, executando isso em cada uma:
+systemctl stop mariadb #pede gentilmente pras porcarias terminarem
+
+# [esperar uns 20 segundos APÓS o comando retornar]
+killall -u mysql -9 # mata porcarias que não tenham morrido
+
+# Escolher uma nova máquina para ser a DONOR/PRIMARY e rodar nessa máquina o seguinte comando. Esse comando já inicia o MariaDB, não precisa usar o systemctl.
+galera_new_cluster
+
+#Ligar as outras máquinas, uma por vez, só partindo pra próxima após ter CERTEZA que essa ligou corretamente, executando esse comando nas outras máquinas.
+systemctl start mariadb
+
+# Dá pra acompanhar em tempo real o início do MariaDB com o seguinte comando (use um novo terminal na mesma máquina)::
+journalctl -u mariadb.service -f
+
+# Se quiser rolar para logs mais antigos, retire o -f (não é atualizado em tempo real):
+journalctl -u mariadb.service
+
+# A máquina vai ter iniciado e sincronizado corretamente quando a seguinte mensagem aparecer no log:
+## WSREP: Synchronized with group, ready for connections
+
+# Possíveis problemas que podem acontecer:
+# Timeout do systemd: algumas vezes o rsync demora muito tempo. Não faço ideia do porque. Pare TODAS as máquinas e reinicie o procedimento desde o começo.
+
+#Coisas interessantes para verificar DENTRO do mysql:
+#    Host sendo usado:
+#        > show variables like 'hostname';
+#    Número de conexões ATIVAS no momento:
+#        > show status like 'Threads_connected';
+#    Número de queries RODANDO no momento:
+#        > show status like 'Threads_running';
+#    QUAIS queries estão rodando no momento:
+#        > show processlist;
+#    Estatísticas sobre conexões:
+#        > show status like ‘Conn%’;
+#    Número de nodos no cluster:
+#        > show status like 'wsrep_cluster_size';
+#    Estado do nodo ATUAL em relação ao cluster:
+#        > show status like 'wsrep_local_state_comment';
+#    Estado do protocolo de replicação:
+#        > show status like 'wsrep_evs_state';
