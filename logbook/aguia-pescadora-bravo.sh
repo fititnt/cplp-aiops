@@ -472,6 +472,40 @@ sudo certbot --nginx -d jefferson091.apb.etica.ai
 
 sudo chown jefferson091:jefferson091 -R /home2/jefferson091
 
+### rodriguesjeff ---------------------------------------------------------------
+sudo adduser rodriguesjeff
+sudo passwd -e rodriguesjeff
+
+sudo chsh -s /usr/bin/fish rodriguesjeff
+
+# Aviso: descrição da razão desses passos esta em usuariodeteste
+sudo mkdir /home2/rodriguesjeff
+sudo chown rodriguesjeff:rodriguesjeff /home2/rodriguesjeff
+sudo chmod 751 /home2/rodriguesjeff
+
+sudo usermod -a -G www-data rodriguesjeff
+
+## Dominios customizados de rodriguesjeff (já adicionados na CloudFlare)
+curl http://rodriguesjeff.apb.etica.ai
+curl http://rodriguesjeff.lb-ap.etica.ai
+
+sudo -u rodriguesjeff mkdir /home2/rodriguesjeff/web
+sudo -u rodriguesjeff mkdir /home2/rodriguesjeff/web/public_html
+
+sudo -u rodriguesjeff echo "rodriguesjeff <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/rodriguesjeff/web/public_html/index.html" > /home2/rodriguesjeff/web/public_html/index.html
+
+sudo cp /etc/nginx/sites-available/EXEMPLO-USUARIO.abp.etica.ai.conf /etc/nginx/sites-available/rodriguesjeff.apb.etica.ai.conf
+
+sudo vim /etc/nginx/sites-available/rodriguesjeff.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/rodriguesjeff.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d rodriguesjeff.apb.etica.ai
+
+sudo chown rodriguesjeff:rodriguesjeff -R /home2/rodriguesjeff
 
 ### compilebot -------------------------------------------------------------
 # Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
@@ -597,6 +631,17 @@ mosh NomeUsuario@apb.etica.ai
 
 ## Comando para trocar sua senha de usuario a qualquer momento:
 passwd
+
+### Seus sites
+# Nota: estes domínios são padrões criados para dar um início rápido. Porém
+#       nos fortemente recomendamos você poder usar seus próprios domínios
+#       customizados, de modo que possa usá-los até mesmo fora de nossos
+#       servidores comunitários
+#
+# - http://NomeUsuario.apb.etica.ai (HTTP, principal, apontado para Bravo)
+# - https://NomeUsuario.apb.etica.ai (HTTPS, principal, apontado para Bravo)
+# - http://NomeUsuario.lb-ap.etica.ai (HTTP, principal, balanceador de carga)
+#     - Veja: https://github.com/fititnt/cplp-aiops/issues/40
 
 ############################ GUIA RÁPIDO AO USUÁRIO ############################
 ##### Programas úteis para usar ________________________________________________
