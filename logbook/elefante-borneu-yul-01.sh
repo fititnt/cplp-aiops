@@ -299,9 +299,10 @@ journalctl -u mariadb.service
 #        > show status like 'wsrep_evs_state';
 
 #------------------------------------------------------------------------------#
-# SEÇÃO MONGODB 1.0: INSTALAÇÃO E CONFIGURAÇÃO INICIAL                         #
+# SEÇÃO MONGODB: 1. INSTALAÇÃO E CONFIGURAÇÃO INICIAL                          #
 # TL;DR: ...                                                                   #
 #------------------------------------------------------------------------------#
+# @see https://github.com/fititnt/cplp-aiops/issues/48
 
 # @see https://www.mongodb.com/
 # @see https://www.hostinger.com.br/tutoriais/instalar-mongodb-ubuntu
@@ -326,3 +327,37 @@ sudo apt install mongodb-org
 
 sudo systemctl start mongod
 sudo systemctl enable mongod
+
+
+#------------------------------------------------------------------------------#
+# SEÇÃO REDIS: 1. INSTALAÇÃO E CONFIGURAÇÃO INICIAL                            #
+# TL;DR: ...                                                                   #
+#------------------------------------------------------------------------------#
+# @see https://github.com/fititnt/cplp-aiops/issues/51
+
+# @see https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
+sudo apt update
+sudo apt install redis-server
+
+sudo vim /etc/redis/redis.conf
+# Altere
+#    supervised no
+# Para:
+#    supervised systemd
+
+sudo systemctl restart redis.service
+sudo systemctl enable redis.service
+
+sudo systemctl status redis
+
+### Testar Redis (simples, sem ser cluster) ____________________________________
+# Por padrão, redis-cli tentará conectar na instância instalada localmente
+
+redis-cli
+ping
+# Resposta deve ser: PONG
+set test "It's working!"
+get test
+# Resposta deve ser "It's working!"
+
+exit
