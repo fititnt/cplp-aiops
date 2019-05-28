@@ -1294,3 +1294,14 @@ sudo systemctl start grafana-server
 sudo systemctl status grafana-server
 
 sudo systemctl enable grafana-server.service
+
+sudo cp /etc/nginx/sites-available/EXEMPLO-PROXY.abp.etica.ai.conf /etc/nginx/sites-available/grafana.apb.etica.ai.conf
+
+sudo vim /etc/nginx/sites-available/grafana.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/grafana.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d grafana.apb.etica.ai
