@@ -140,6 +140,8 @@ sudo apt install -y traceroute nmap dnsutils
 # TL;DR:                                                                       #
 #------------------------------------------------------------------------------#
 
+##### /etc/hosts _______________________________________________________________
+
 sudo vi /etc/hosts
 ## Adicione ao final do arquivo:
 ## Cluster, demais nos
@@ -153,6 +155,51 @@ sudo vi /etc/hosts
 # causar uma lentidão absurda em certos casos. E vale a pena não correr riscos
 # (fititnt, 2019-05-26 14:35 BRT)
 
+##### Firewall, configuração ___________________________________________________
+# Nota 1: idealmente deveríamos ter uma rede privada, mas não temos dinheiro para
+#         isso neste projeto comunitário.
+# Nota 2: idealmente deveríamos ter um VPN. Isso pode ser configurado no futuro.
+#
+# Nota 3: caso fique preso do lado de fora (ex.: bloqueou a porta do SSH)
+#         deve-se acessar via KVM.
+
+# Checa status do firewall
+sudo ufw status verbose
+
+# sudo ufw allow 22 # Use isso temporariamente, depois vamos ter IPs especiais
+# sudo ufw enable
+
+#### Coneção liberada entre todas as portas dos nós do mesmo datacenter --------
+# Estas configurações permitem todas as coneções entre os nós do cluster.
+# Os demais itens são para acessos de outras máquinas
+sudo ufw allow from 149.56.130.19
+sudo ufw allow from 149.56.130.66
+sudo ufw allow from 149.56.130.178
+
+#### SSH/mosh ------------------------------------------------------------------
+# TODO: temporario, remover isto e restringir IPs (fititnt, 2019-05-28 16:32 BRT)
+sudo ufw allow OpenSSH
+sudo ufw allow mosh
+
+#### MariaDB/MySQL -------------------------------------------------------------
+
+sudo ufw allow from 104.167.109.226 to any port 3306 comment "MySQL, aguia-pescadora-alpha.etica.ai"
+sudo ufw allow from 192.99.247.117 to any port 3306 comment "MySQL, aguia-pescadora-bravo.etica.ai"
+
+##### Firewall, ativação _______________________________________________________
+sudo ufw enable
+
+##### Firewall, correção _______________________________________________________
+
+#### Opção de remoção via regra ------------------------------------------------
+ufw delete (...regra...)
+
+#### Opção de remoção numero da regra ------------------------------------------
+# Exibe as regras com numeros
+sudo ufw status numbered
+
+# Delete a regra via o numero dela (obtido com comando anterior)
+sudo ufw delete XXXX
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 2: INSTALAÇÃO E CONFIGURAÇÃO DO MARIADB + GALERA CLUSTER               #

@@ -10,11 +10,11 @@ exit
 #
 # Sobre como fazer login no servidor
 #   Por terminal de comando:
-#     ssh seuusuario@aguia-pescadora.etica.ai
-#     mosh seuusuario@aguia-pescadora.etica.ai
+#     ssh seuusuario@aguia-pescadora-alpha.etica.ai
+#     mosh seuusuario@aguia-pescadora-alpha.etica.ai
 #
 #   Por programa gráfico:
-#     Servidor: aguia-pescadora.etica.ai
+#     Servidor: aguia-pescadora-alpha.etica.ai
 #     Usuário: seuusuario
 #     Porta: 22
 #     Protocolo: "SSH", ou "SCP". Talvez "SFTP" (Aviso: não temos "FTP" aqui!)
