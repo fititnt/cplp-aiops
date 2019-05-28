@@ -187,6 +187,23 @@ sudo ufw allow mosh comment "Mosh, *, [TODO: restringir SSH no Cluster Elefante 
 sudo ufw allow from 104.167.109.226 to any port 3306 comment "MariaDB, aguia-pescadora-alpha.etica.ai"
 sudo ufw allow from 192.99.247.117 to any port 3306 comment "MariaDB, aguia-pescadora-bravo.etica.ai"
 
+#### MongoDB -------------------------------------------------------------------
+## Sites de aplicação tem direito de acessar as porta específicas do MongoDB
+# @see https://docs.mongodb.com/manual/reference/default-mongodb-port/
+# @see https://docs.mongodb.com/manual/administration/security-checklist/
+# @see https://docs.mongodb.com/manual/security/
+
+sudo ufw allow from 104.167.109.226 to any port 27017 comment "MongoDB, aguia-pescadora-alpha.etica.ai"
+sudo ufw allow from 192.99.247.117 to any port 27017 comment "MongoDB, aguia-pescadora-bravo.etica.ai"
+
+#### Redis -------------------------------------------------------------------
+## Sites de aplicação tem direito de acessar as porta específicas do Redis
+# @see https://redis.io/topics/security
+# @see http://antirez.com/news/96 (Leia isso)
+
+sudo ufw allow from 104.167.109.226 to any port 6379 comment "Redis, aguia-pescadora-alpha.etica.ai"
+sudo ufw allow from 192.99.247.117 to any port 6379 comment "Redis, aguia-pescadora-bravo.etica.ai"
+
 ##### Firewall, ativação _______________________________________________________
 sudo ufw enable
 
@@ -358,11 +375,12 @@ journalctl -u mariadb.service
 # @see https://docs.mongodb.com/manual/core/replica-set-high-availability/
 # @see https://computingforgeeks.com/how-to-setup-mongodb-replication-on-ubuntu-18-04-lts/
 # @see https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/
-
 # @see https://medium.com/@vvangemert/mongodb-cluster-haproxy-and-the-failover-issue-285c1523628f
-
-# Adicionar links no github:
 # @see https://www.mongodb.com/blog/post/active-active-application-architectures-with-mongodb
+
+# TODO: adicionar no issue do GitHub:
+# @see https://docs.mongodb.com/manual/administration/security-checklist/
+# @see https://docs.mongodb.com/manual/security/
 
 ## Configurar pacotes
 # @see https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#install-mongodb-community-edition-using-deb-packages
@@ -372,16 +390,15 @@ sudo apt update
 
 sudo apt install mongodb-org
 
-
 sudo systemctl start mongod
 sudo systemctl enable mongod
-
 
 #------------------------------------------------------------------------------#
 # SEÇÃO REDIS: 1. INSTALAÇÃO E CONFIGURAÇÃO INICIAL                            #
 # TL;DR: ...                                                                   #
 #------------------------------------------------------------------------------#
 # @see https://github.com/fititnt/cplp-aiops/issues/51
+# @see https://redis.io/topics/quickstart
 
 # @see https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
 sudo apt update

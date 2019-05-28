@@ -1077,6 +1077,16 @@ sudo systemctl reload nginx
 
 sudo certbot --nginx -d haproxy.abp.etica.ai
 
+##### HAProxy, como testar atualizacoes ANTES de implementar -------------------
+
+# Use o comando a seguir para testar se o arquivo /etc/haproxy/haproxy.cfg
+# poderá impedir que dar reload cause falha critica
+sudo haproxy -f /etc/haproxy/haproxy.cfg -c
+#sudo service haproxy configtest
+
+# Então aplique usando reload (melhor do que usar sudo systemctl restart haproxy)
+sudo systemctl reload haproxy
+
 ##### MariaDB (apenas cliente) _________________________________________________
 ### O objetivo aqui é ter do lado do cliente os pacotes mínimos para contectar
 ### ao cluster Elevante Bornéu
