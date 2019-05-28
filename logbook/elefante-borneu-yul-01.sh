@@ -297,3 +297,32 @@ journalctl -u mariadb.service
 #        > show status like 'wsrep_local_state_comment';
 #    Estado do protocolo de replicação:
 #        > show status like 'wsrep_evs_state';
+
+#------------------------------------------------------------------------------#
+# SEÇÃO MONGODB 1.0: INSTALAÇÃO E CONFIGURAÇÃO INICIAL                         #
+# TL;DR: ...                                                                   #
+#------------------------------------------------------------------------------#
+
+# @see https://www.mongodb.com/
+# @see https://www.hostinger.com.br/tutoriais/instalar-mongodb-ubuntu
+# @see https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-18-04
+# @see https://docs.mongodb.com/manual/core/replica-set-high-availability/
+# @see https://computingforgeeks.com/how-to-setup-mongodb-replication-on-ubuntu-18-04-lts/
+# @see https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/
+
+# @see https://medium.com/@vvangemert/mongodb-cluster-haproxy-and-the-failover-issue-285c1523628f
+
+# Adicionar links no github:
+# @see https://www.mongodb.com/blog/post/active-active-application-architectures-with-mongodb
+
+## Configurar pacotes
+# @see https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#install-mongodb-community-edition-using-deb-packages
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+sudo apt update
+
+sudo apt install mongodb-org
+
+
+sudo systemctl start mongod
+sudo systemctl enable mongod

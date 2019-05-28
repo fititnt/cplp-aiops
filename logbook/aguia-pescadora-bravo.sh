@@ -513,6 +513,7 @@ sudo chown rodriguesjeff:rodriguesjeff -R /home2/rodriguesjeff
 sudo useradd -r -s /bin/false compilebot
 
 mkdir -p /home2/compilebot/web/api
+mkdir /home2/compilebot/log
 
 cp /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/compilebot.conf
 
