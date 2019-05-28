@@ -1272,7 +1272,25 @@ vnstat -l
 
 
 #------------------------------------------------------------------------------#
-# temp...
-# O que estiver a partir daqui são comandos que foram realizadas e ainda não
-# foram propriamente documentados (fititnt, 2019-05-19 05:04 BRT)
+# SEÇÃO: OUTROS                                                                #
+# TL;DR: Itens ainda não formalmente documentados e/ou em período de teste     #
+#------------------------------------------------------------------------------#
+
+### Fish ("the friendly interactive shel" ______________________________________
+# ...
 apt-get install fish
+
+### Grafana ____________________________________________________________________
+# @see https://github.com/fititnt/cplp-aiops/issues/50
+
+# @see https://grafana.com/docs/installation/debian/#apt-repository
+curl https://packages.grafana.com/gpg.key | sudo apt-key add -
+sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+sudo apt-get update
+sudo apt-get install grafana
+
+sudo systemctl daemon-reload
+sudo systemctl start grafana-server
+sudo systemctl status grafana-server
+
+sudo systemctl enable grafana-server.service
