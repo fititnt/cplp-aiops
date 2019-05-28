@@ -137,7 +137,9 @@ sudo apt install -y traceroute nmap dnsutils
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 1: PREPARAÇÃO DOS SERVIDORES PARA OPERAREM EM CLUSTER                  #
-# TL;DR:                                                                       #
+# TL;DR:  explicitamente define IP fixo de hostname e domínios completos       #
+#         para os demais clusters (questão de performance e, em casos bem      #
+#         especificos, de segurança) bem como reune as regras do firewall      #
 #------------------------------------------------------------------------------#
 
 ##### /etc/hosts _______________________________________________________________
@@ -164,27 +166,26 @@ sudo vi /etc/hosts
 #         deve-se acessar via KVM.
 
 # Checa status do firewall
+sudo ufw status
 sudo ufw status verbose
-
-# sudo ufw allow 22 # Use isso temporariamente, depois vamos ter IPs especiais
-# sudo ufw enable
+sudo ufw status numbered
 
 #### Coneção liberada entre todas as portas dos nós do mesmo datacenter --------
 # Estas configurações permitem todas as coneções entre os nós do cluster.
 # Os demais itens são para acessos de outras máquinas
-sudo ufw allow from 149.56.130.19
-sudo ufw allow from 149.56.130.66
-sudo ufw allow from 149.56.130.178
+sudo ufw allow from 149.56.130.19 comment "*, elefante-borneu-yul-01.etica.ai"
+sudo ufw allow from 149.56.130.66 comment "*, elefante-borneu-yul-02.etica.ai"
+sudo ufw allow from 149.56.130.178 comment "*, elefante-borneu-yul-03.etica.ai"
 
 #### SSH/mosh ------------------------------------------------------------------
 # TODO: temporario, remover isto e restringir IPs (fititnt, 2019-05-28 16:32 BRT)
-sudo ufw allow OpenSSH
-sudo ufw allow mosh
+sudo ufw allow ssh comment "SSH, *, [TODO: restringir SSH no Cluster Elefante Borneu]"
+sudo ufw allow mosh comment "Mosh, *, [TODO: restringir SSH no Cluster Elefante Borneu]"
 
 #### MariaDB/MySQL -------------------------------------------------------------
-
-sudo ufw allow from 104.167.109.226 to any port 3306 comment "MySQL, aguia-pescadora-alpha.etica.ai"
-sudo ufw allow from 192.99.247.117 to any port 3306 comment "MySQL, aguia-pescadora-bravo.etica.ai"
+# Sites de aplicação tem direito de acessar as porta específicas do MariaDB
+sudo ufw allow from 104.167.109.226 to any port 3306 comment "MariaDB, aguia-pescadora-alpha.etica.ai"
+sudo ufw allow from 192.99.247.117 to any port 3306 comment "MariaDB, aguia-pescadora-bravo.etica.ai"
 
 ##### Firewall, ativação _______________________________________________________
 sudo ufw enable
