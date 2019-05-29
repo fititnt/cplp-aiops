@@ -507,19 +507,41 @@ sudo certbot --nginx -d rodriguesjeff.apb.etica.ai
 
 sudo chown rodriguesjeff:rodriguesjeff -R /home2/rodriguesjeff
 
-### compilebot -------------------------------------------------------------
+### dreamfactory (Usuario não humano) -------------------------------------------
+# @see https://github.com/fititnt/cplp-aiops/issues/52
+#
+# DOMINIO: dreamfactory.apb.etica.ai
+#
+sudo useradd -r -s /bin/false dreamfactory
+
+sudo mkdir -p /home2/dreamfactory/web/dreamfactory
+sudo mkdir /home2/dreamfactory/log
+
+sudo cp /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/dreamfactory.conf
+
+sudo vim /etc/php/7.2/fpm/pool.d/dreamfactory.conf
+
+# Error logs
+tail -f /home2/dreamfactory/log/fpm-php.dreamfactory.log
+
+sudo chown dreamfactory:dreamfactory -R /home2/dreamfactory
+
+### compilebot (Usuario não humano) --------------------------------------------
 # Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
 # poderão acessar esta conta
+#
+# DOMINIO: compilebot.api.apb.etica.ai
+#
 sudo useradd -r -s /bin/false compilebot
 
-mkdir -p /home2/compilebot/web/api
-mkdir /home2/compilebot/log
+sudo mkdir -p /home2/compilebot/web/api
+sudo mkdir /home2/compilebot/log
 
 cp /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/compilebot.conf
 
 sudo vim /etc/php/7.2/fpm/pool.d/compilebot.conf
 #...
-compilebot.api.apb.etica.ai
+# compilebot.api.apb.etica.ai
 sudo systemctl reload php7.2-fpm
 
 sudo vim /etc/nginx/sites-available/compilebot.api.apb.etica.ai.conf
