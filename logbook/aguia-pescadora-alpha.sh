@@ -336,6 +336,91 @@ sudo apt-get install zangband
 ###
 ##### Jogos de terminal, fim
 
+#------------------------------------------------------------------------------#
+# SEÇÃO 4.5: AMBIENTES DE DESENVOLVIMENTO: ACESSO A BANDOS DE DADOS EXTERNOS   #
+#                                                                              #
+# TL;DR: Alguns bancos de dados permitem instalar pacotes para gerenciamento   #
+#        por linha de comando sem precisar instalar o próprio banco de dados   #
+#------------------------------------------------------------------------------#
+
+##### MariaDB (apenas cliente) _________________________________________________
+### O objetivo aqui é ter do lado do cliente os pacotes mínimos para contectar
+### ao cluster Elevante Bornéu
+# @see elefante-borneu-yul-01.sh (arquivo de configuração dos Elevante Bornéu)
+
+sudo apt-get install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository 'deb [arch=amd64] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main'
+
+# Em Águia Pescadora devemos instalar APENAS os cliente de MariaDB/MySQL
+sudo apt install mariadb-client
+
+## Teste se o usuario do haproxy consegue acessar
+mysql -h elefante-borneu-yul-01.etica.ai -u haproxy
+
+##### MongoDB lado do cliente (mongodb-org-shell, mongodb-org-tools) ___________
+# AVISO: instale APENAS 'mongodb-org-shell' e 'mongodb-org-tools'. Não é
+#        necessário instalar 'mongodb-org-server' ou o 'mongodb-org'
+
+## Configurar pacotes
+# @see https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#install-mongodb-community-edition-using-deb-packages
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+sudo apt update
+
+sudo apt install mongodb-org-shell mongodb-org-tools
+
+##### Redis lado do cliente (redis-tools) ______________________________________
+sudo apt install redis-tools
+
+#### Testar com redis-cli
+redis-cli
+ping
+# Resposta deve ser: PONG
+set test "It's working!"
+get test
+# Resposta deve ser "It's working!"
+
+# Nota: pode testar também especificando o host (util para testar o HAProxy)
+# redis-cli -h elefante-borneu-yul-01.etica.ai
+
+#------------------------------------------------------------------------------#
+# SEÇÃO 5.0: BALANCEAMENTO DE CARGA PARA SERVIÇOS EXTERNOS COM HAPROXY         #
+#                                                                              #
+# TL;DR: alguns serviços importantes não são instalados nesta máquina, mas em  #
+#        algum servidor externo. Estratégias com uso de HAProxy podem permitir #
+#        abstração dessa complexidade para os usuarios                         #
+#------------------------------------------------------------------------------#
+
+##### HAProxy __________________________________________________________________
+
+sudo apt install haproxy
+
+vim /etc/haproxy/haproxy.cfg
+# Fazer ajustes...
+
+vim /etc/nginx/sites-available/haproxy.apa.etica.ai.conf
+# Adicione todas as customizacoes no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/haproxy.apa.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d haproxy.apa.etica.ai
+
+##### HAProxy, como testar atualizacoes ANTES de implementar -------------------
+
+# Use o comando a seguir para testar se o arquivo /etc/haproxy/haproxy.cfg
+# poderá impedir que dar reload cause falha critica
+sudo haproxy -f /etc/haproxy/haproxy.cfg -c
+#sudo service haproxy configtest
+
+# Então aplique usando reload (melhor do que usar sudo systemctl restart haproxy)
+sudo systemctl reload haproxy
+
+## Teste se o usuario do haproxy consegue acessar
+mysql -h elefante-borneu-yul-01.etica.ai -u haproxy
+
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: OUTROS                                                                #

@@ -247,9 +247,15 @@ mysql_secure_installation
 # Entre como super usuario no console do mysql
 mysql -u root -p
 
+## @TODO usuário (ainda que sem acesso especial) haproxy foi liberado para todos
+##       os hosts em que o firewall não protege. Não é algo crítico, porém
+##       deve ser revisado pelo menos por restrição de DNS reverso ou IP
+##       explícito. Uma opção adicional seria criar um usuário de checagem para
+##       cada load balancer (fititnt, 2019-05-28 21:47)
+
 ## Execute os seguintes comandos. O user é o que o HAProxy usara para testar
 ## se o servidor parece estar ok. E o IP é de onde ele fara isso
-# CREATE USER 'haproxy@192.99.247.117';
+# CREATE USER 'haproxy@%';
 # FLUSH PRIVILEGES;
 
 ## AVISO: neste momento os servidores ainda NÃO estão em cluster. Por isso

@@ -241,9 +241,15 @@ mysql_secure_installation
 # Entre como super usuario no console do mysql
 mysql -u root -p
 
+## @TODO usuário (ainda que sem acesso especial) haproxy foi liberado para todos
+##       os hosts em que o firewall não protege. Não é algo crítico, porém
+##       deve ser revisado pelo menos por restrição de DNS reverso ou IP
+##       explícito. Uma opção adicional seria criar um usuário de checagem para
+##       cada load balancer (fititnt, 2019-05-28 21:47)
+
 ## Execute os seguintes comandos. O user é o que o HAProxy usara para testar
 ## se o servidor parece estar ok. E o IP é de onde ele fara isso
-# CREATE USER 'haproxy@192.99.247.117';
+# CREATE USER 'haproxy@%';
 # FLUSH PRIVILEGES;
 
 ## AVISO: neste momento os servidores ainda NÃO estão em cluster. Por isso
@@ -394,6 +400,14 @@ sudo systemctl start mongod
 sudo systemctl enable mongod
 
 #------------------------------------------------------------------------------#
+# SEÇÃO MONGODB: 1. INICIALIZAÇÃO DE CLUSTER MONGODB                           #
+# TL;DR:                                                                       #
+#------------------------------------------------------------------------------#
+# @see https://medium.com/@rossbulat/deploy-a-3-node-mongodb-3-6-replica-set-with-x-509-authentication-self-signed-certificates-d539fda94db4
+# @see https://www.alibabacloud.com/blog/high-availability-mongodb-cluster-configuration-solutions_490866
+
+
+#------------------------------------------------------------------------------#
 # SEÇÃO REDIS: 1. INSTALAÇÃO E CONFIGURAÇÃO INICIAL                            #
 # TL;DR: Explica como instalar um Redis simples, sem modo cluster habilitado   #
 #------------------------------------------------------------------------------#
@@ -427,7 +441,7 @@ get test
 exit
 
 #------------------------------------------------------------------------------#
-# SEÇÃO REDIS: 1. INICIALIZAÇÃO DE CLUSTER REDIS                               #
+# SEÇÃO REDIS: 2. INICIALIZAÇÃO DE CLUSTER REDIS                               #
 # TL;DR:                                                                       #
 #------------------------------------------------------------------------------#
 # @see https://redis.io/topics/cluster-tutorial

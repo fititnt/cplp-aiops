@@ -1087,6 +1087,9 @@ sudo apt update
 
 sudo apt install mongodb-org-shell mongodb-org-tools
 
+# Teste conexcao
+mongo --host elefante-borneu-yul-01.etica.ai:27017
+
 ##### Redis lado do cliente (redis-tools) ______________________________________
 sudo apt install redis-tools
 
@@ -1113,7 +1116,7 @@ get test
 
 sudo apt install haproxy
 
-vim /etc/default/haproxy
+vim /etc/haproxy/haproxy.cfg
 # Fazer ajustes...
 
 vim /etc/nginx/sites-available/haproxy.abp.etica.ai.conf
@@ -1124,6 +1127,9 @@ sudo nginx -t
 sudo systemctl reload nginx
 
 sudo certbot --nginx -d haproxy.abp.etica.ai
+
+# TODO: dominio haproxy.abp.etica.ai esta errado, deveria ser haproxy.apb.etica.ai
+#       Corrigir em revisão futura (fititnt, 2019-05-28 21:54 BRT)
 
 ##### HAProxy, como testar atualizacoes ANTES de implementar -------------------
 
