@@ -395,7 +395,7 @@ sudo systemctl enable mongod
 
 #------------------------------------------------------------------------------#
 # SEÇÃO REDIS: 1. INSTALAÇÃO E CONFIGURAÇÃO INICIAL                            #
-# TL;DR: ...                                                                   #
+# TL;DR: Explica como instalar um Redis simples, sem modo cluster habilitado   #
 #------------------------------------------------------------------------------#
 # @see https://github.com/fititnt/cplp-aiops/issues/51
 # @see https://redis.io/topics/quickstart
@@ -411,7 +411,7 @@ sudo vim /etc/redis/redis.conf
 #    supervised systemd
 
 sudo systemctl restart redis.service
-sudo systemctl enable redis.service
+#sudo systemctl enable redis #Bug: Failed to enable unit: Refusing to operate on linked unit file redis.service
 
 sudo systemctl status redis
 
@@ -424,5 +424,17 @@ ping
 set test "It's working!"
 get test
 # Resposta deve ser "It's working!"
-
 exit
+
+#------------------------------------------------------------------------------#
+# SEÇÃO REDIS: 1. INICIALIZAÇÃO DE CLUSTER REDIS                               #
+# TL;DR:                                                                       #
+#------------------------------------------------------------------------------#
+# @see https://redis.io/topics/cluster-tutorial
+
+# TODO: ler com calma o https://redis.io/topics/cluster-tutorial. Porém
+#       comparado a um banco de dados SQL tradicional mesmo se bem configurado
+#       existem casos em que Redis não tem consitência nos writes. Ou seja, nós
+#       não temos como prometer algo que nem os desenvolvedores garantem. Por
+#       isso podemos deixar ajutes de fato no Redis apenas quando houver uso
+#       em alguma aplicação de usuário (fititnt, 2019-05-28 20:51)
