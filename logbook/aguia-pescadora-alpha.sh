@@ -34,7 +34,18 @@ exit
 #
 #------------------------------------------------------------------------------#
 
-#### Preparação Inicial:
+#------------------------------------------------------------------------------#
+# SEÇÃO 0.1: Configuração inicial                                              #
+# TL;DR: Isso é feito ao receber uma VPS do zero                               #
+#------------------------------------------------------------------------------#
+
+### Primeiro login______________________________________________________________
+# Você, seja por usuario + senha, ou por Chave SSH, normlamente terá que acessar
+# diretamente como root. Excessões a esta regra (como VMs na AWS) geralmente
+# implicam em logar em um usuario não-root e executar como sudo. Mas nesta da
+# é por root mesmo nesse momento.
+ssh root@104.167.109.226
+
 
 # Aviso: a recomendação a seguir sobre 'Swap + /boot' é extremanente especifica
 # para uso na CloudAtCost. Outros provedores de VPSs tipicamente não requerem.
@@ -199,29 +210,6 @@ vim /usr/local/bin/ajuda
 ##
 ####
 ##### Customização de motd (Mensagem do dia), fim
-
-##### Acesso HTTP e HTTPS, início
-####
-##
-#
-### NGinx
-## @see https://www.digitalocean.com/community/tutorials/como-instalar-o-nginx-no-ubuntu-16-04-pt
-sudo apt install nginx
-# sudo ufw allow 'Nginx Full' # Firewall desabilitado especialmente neste servidor
-
-### Como Proteger o Nginx com o Let's Encrypt no Ubuntu 18.04:
-## @see https://www.digitalocean.com/community/tutorials/como-proteger-o-nginx-com-o-let-s-encrypt-no-ubuntu-18-04-pt
-sudo add-apt-repository ppa:certbot/certbot
-sudo apt-get update
-sudo apt-get install python-certbot-nginx
-
-# Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
-sudo certbot --nginx -d aguia-pescadora.etica.ai  -d www.aguia-pescadora.etica.ai
-
-#
-##
-####
-##### Acesso HTTP e HTTPS, Fim
 
 ##### Ambientes de desenvolvimento / Linguagens de programação, inicio
 
@@ -420,6 +408,59 @@ sudo systemctl reload haproxy
 
 ## Teste se o usuario do haproxy consegue acessar
 mysql -h elefante-borneu-yul-01.etica.ai -u haproxy
+
+#------------------------------------------------------------------------------#
+# SEÇÃO: HTTP/HTTPS PADRÃO                                                     #
+# TL;DR: Documenta o uso de NGinx e afins como proxy reverso a aplicações      #
+#        internas. Os colaboradores podem solicitar endereços customizados     #
+#        (como domínios de todo gratuitos no freenom.com) que incluimos também #
+#        nas configurações do servidor                                         #
+#------------------------------------------------------------------------------#
+
+##### Sites Habilitados neste servidor _________________________________________
+# Cada usuário, mesmo sem acesso sudo (super usuário) pode chamar aplicações
+# em portas acima da 1024, como em http://apb.etica.ai:3000. A lista a seguir
+# são ou padrão de sistema, ou que usuários pediram para rotear via HTTP e HTTPS
+# para uma de suas aplicações internas.
+#
+# - http://aguia-pescadora-alpha.etica.ai
+# - https://aguia-pescadora-alpha.etica.ai
+# - http://apa.etica.ai
+# - https://apa.etica.ai
+
+##### NGinx ____________________________________________________________________
+## @see http://nginx.org/
+## @see https://www.digitalocean.com/community/tutorials/como-instalar-o-nginx-no-ubuntu-16-04-pt
+sudo apt install nginx
+# sudo ufw allow 'Nginx Full' # Firewall desabilitado especialmente neste servidor
+
+### Como Proteger o Nginx com o Let's Encrypt no Ubuntu 18.04:
+## @see https://www.digitalocean.com/community/tutorials/como-proteger-o-nginx-com-o-let-s-encrypt-no-ubuntu-18-04-pt
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install python-certbot-nginx
+
+sudo vim /etc/nginx/sites-available/aguia-pescadora-alpha.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/aguia-pescadora-alpha.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+# Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
+sudo certbot --nginx -d aguia-pescadora-alpha.etica.ai -d apa.etica.ai
+
+
+### Userdir
+# Userdir não implementado em Alpha
+
+
+# PROTIP: acompanhe os arquivos a seguir para debugar
+#             tail -f /var/log/nginx/access.log
+#             tail -f /var/log/nginx/error.log
+#         Em geral o principal motivo de erro serão permissões de arquivo e de
+#         diretório até o respectivo arquivo
+
 
 
 #------------------------------------------------------------------------------#
