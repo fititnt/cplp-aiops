@@ -514,8 +514,20 @@ sudo chown rodriguesjeff:rodriguesjeff -R /home2/rodriguesjeff
 #
 sudo useradd -r -s /bin/false dreamfactory
 
+# Cria o home do usuario (usuario sem home pode ter algumas dificuldades ao usar alguns pacotes, como composer)
+sudo mkhomedir_helper dreamfactory
+
+# Permite logar como usuario dreamfactory. (move o shell diferente de /bin/false)
+# Isso pode ser útil em configurações mais complexas) porém pode ser revertido
+# mais tarde com 'sudo chsh -s /bin/false dreamfactory' se esta conta não pode
+# mais logar no site
+sudo chsh -s /usr/bin/fish dreamfactory
+
 sudo mkdir -p /home2/dreamfactory/web/dreamfactory
 sudo mkdir /home2/dreamfactory/log
+
+# Prepara o /home2/dreamfactory/.local/bin para instalar binarios
+sudo -u dreamfactory mkdir -p /home2/dreamfactory/.local/bin
 
 # Adiciona o usuario ao grupo www-data. Isso pode ser necessario em alguns casos
 sudo usermod -a -G www-data dreamfactory
@@ -533,17 +545,62 @@ sudo ln -s /etc/nginx/sites-available/dreamfactory.apb.etica.ai.conf /etc/nginx/
 sudo nginx -t
 sudo systemctl reload nginx
 
-# Cria uma página de teste
-## sudo -u dreamfactory echo "dreamfactory <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/dreamfactory/web/dreamfactory/index.php <br><?php phpinfo(); ?>" > /home2/dreamfactory/web/dreamfactory/index.php
+# Cria uma página de teste (use para testar o PHP)
 echo "dreamfactory <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/dreamfactory/web/dreamfactory/index.php <br><?php phpinfo(); ?>" | sudo -u dreamfactory tee /home2/dreamfactory/web/dreamfactory/index.php
 
+# Move o diretório de teste para outra pasta. Pode-se voltar atras para testar o PHP info depois
+sudo -u dreamfactory mv /home2/dreamfactory/web/dreamfactory/ /home2/dreamfactory/web/dreamfactory-phpinfo
+
+# Nota: agora vamos logar como usuario. Ele vai usar um composer próprio
+sudo su
+su - dreamfactory
+
+cd /home2/dreamfactory/
+
+# Instala composer 
+# @see https://getcomposer.org/download/
+
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php composer-setup.php --install-dir=bin
+
+
+
+php -r "unlink('composer-setup.php');"
+
+
+## Seguimos agora o passo a passo da wiki oficial
+# @see http://wiki.dreamfactory.com/DreamFactory/Installation
+
+
+
+
+git clone https://github.com/dreamfactorysoftware/dreamfactory.git /home2/dreamfactory/web/dreamfactory/
+cd /home2/dreamfactory/web/dreamfactory/
+
+## Nota: vamos criar
+
+sudo -u dreamfactory composer install --no-dev
+
+# php-mongodb
+
 sudo certbot --nginx -d dreamfactory.apb.etica.ai
+
+
+## Atalhos úteis nesta conta
 
 # Error logs
 tail -f /home2/dreamfactory/log/fpm-php.dreamfactory.log
 
 # Corrige as permissões para serem exclusivas deste usuário
 sudo chown dreamfactory:dreamfactory -R /home2/dreamfactory
+
+# Desativa logar diretamente nesta conta (dai requer sudo para usá-la)
+sudo chsh -s /bin/false dreamfactory
+
+# Reativa logar diretamente nesta conta
+sudo chsh -s /usr/bin/fish dreamfactory
 
 ### compilebot (Usuario não humano) --------------------------------------------
 # Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
@@ -552,6 +609,9 @@ sudo chown dreamfactory:dreamfactory -R /home2/dreamfactory
 # DOMINIO: compilebot.api.apb.etica.ai
 #
 sudo useradd -r -s /bin/false compilebot
+
+# Cria o home do usuario (usuario sem home pode ter algumas dificuldades ao usar alguns pacotes, como composer)
+sudo mkhomedir_helper compilebot
 
 sudo mkdir -p /home2/compilebot/web/api
 sudo mkdir /home2/compilebot/log
