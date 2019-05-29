@@ -517,13 +517,32 @@ sudo useradd -r -s /bin/false dreamfactory
 sudo mkdir -p /home2/dreamfactory/web/dreamfactory
 sudo mkdir /home2/dreamfactory/log
 
-sudo cp /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/dreamfactory.conf
+# Adiciona o usuario ao grupo www-data. Isso pode ser necessario em alguns casos
+sudo usermod -a -G www-data dreamfactory
 
+# Cria worker PHP-FPM exclusivo baseado no www.conf
+sudo cp /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/dreamfactory.conf
 sudo vim /etc/php/7.2/fpm/pool.d/dreamfactory.conf
+sudo systemctl reload php7.2-fpm
+
+# Prepara o NGinx
+sudo cp /etc/nginx/sites-available/EXEMPLO-PROXY.abp.etica.ai.conf /etc/nginx/sites-available/dreamfactory.apb.etica.ai.conf
+sudo vim/etc/nginx/sites-available/dreamfactory.apb.etica.ai.conf
+
+sudo ln -s /etc/nginx/sites-available/dreamfactory.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+# Cria uma página de teste
+## sudo -u dreamfactory echo "dreamfactory <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/dreamfactory/web/dreamfactory/index.php <br><?php phpinfo(); ?>" > /home2/dreamfactory/web/dreamfactory/index.php
+echo "dreamfactory <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/dreamfactory/web/dreamfactory/index.php <br><?php phpinfo(); ?>" | sudo -u dreamfactory tee /home2/dreamfactory/web/dreamfactory/index.php
+
+sudo certbot --nginx -d dreamfactory.apb.etica.ai
 
 # Error logs
 tail -f /home2/dreamfactory/log/fpm-php.dreamfactory.log
 
+# Corrige as permissões para serem exclusivas deste usuário
 sudo chown dreamfactory:dreamfactory -R /home2/dreamfactory
 
 ### compilebot (Usuario não humano) --------------------------------------------
