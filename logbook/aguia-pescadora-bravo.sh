@@ -512,25 +512,23 @@ sudo chown rodriguesjeff:rodriguesjeff -R /home2/rodriguesjeff
 #
 # DOMINIO: dreamfactory.apb.etica.ai
 #
-sudo useradd -r -s /bin/false dreamfactory
+sudo useradd -s /usr/bin/fish dreamfactory
 
-# Cria o home do usuario (usuario sem home pode ter algumas dificuldades ao usar alguns pacotes, como composer)
-sudo mkhomedir_helper dreamfactory
+sudo mkdir /home2/dreamfactory/
+sudo chown dreamfactory:dreamfactory /home2/dreamfactory
+sudo chmod 751 -R /home2/dreamfactory
 
-# Permite logar como usuario dreamfactory. (move o shell diferente de /bin/false)
-# Isso pode ser útil em configurações mais complexas) porém pode ser revertido
-# mais tarde com 'sudo chsh -s /bin/false dreamfactory' se esta conta não pode
-# mais logar no site
-sudo chsh -s /usr/bin/fish dreamfactory
+# Prepara o /home2/User/bin para instalar binarios instalados em /home2/User/bin
+# Esse caminho é adicionado or padrão ao bash no Ubuntu 18
+sudo -u dreamfactory mkdir -p /home2/dreamfactory/bin
+sudo -u dreamfactory ln -s /home2/dreamfactory/bin /home/dreamfactory/bin
 
-sudo mkdir -p /home2/dreamfactory/web/dreamfactory
-sudo mkdir /home2/dreamfactory/log
+# Prepara caminhos extras no path do usuario
+sudo su dreamfactory
 
-# Prepara o /home2/dreamfactory/.local/bin para instalar binarios
-sudo -u dreamfactory mkdir -p /home2/dreamfactory/.local/bin
-
-# Adiciona o usuario ao grupo www-data. Isso pode ser necessario em alguns casos
-sudo usermod -a -G www-data dreamfactory
+# Cria outros diretórios que serão usados por este usuario imediatamente
+sudo -u dreamfactory  mkdir -p /home2/dreamfactory/web/dreamfactory
+sudo -u dreamfactory  mkdir /home2/dreamfactory/log
 
 # Cria worker PHP-FPM exclusivo baseado no www.conf
 sudo cp /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/dreamfactory.conf
@@ -551,23 +549,22 @@ echo "dreamfactory <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.
 # Move o diretório de teste para outra pasta. Pode-se voltar atras para testar o PHP info depois
 sudo -u dreamfactory mv /home2/dreamfactory/web/dreamfactory/ /home2/dreamfactory/web/dreamfactory-phpinfo
 
-# Nota: agora vamos logar como usuario. Ele vai usar um composer próprio
+# NOTA: agora vamos logar como usuario. Ele vai usar um composer próprio e
+#       algumas customizações são muito específicas
 sudo su
 su - dreamfactory
 
 cd /home2/dreamfactory/
 
-# Instala composer 
-# @see https://getcomposer.org/download/
-
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-php composer-setup.php
-php composer-setup.php --install-dir=bin
-
-
-
-php -r "unlink('composer-setup.php');"
+# NOTA: temporariamente usando composer global. Será necessario documentar como
+#       um usuário local pode sobrescrever todos os binários, e deixar de forma
+#       intuitiva (fititnt, 2019-05-29 23:48 BRT)
+## Instala composer
+## @see https://getcomposer.org/download/
+### php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+### php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+### php composer-setup.php --install-dir=bin --filename=composer
+### php -r "unlink('composer-setup.php');"
 
 
 ## Seguimos agora o passo a passo da wiki oficial
@@ -1082,7 +1079,7 @@ sudo apt install php-cli php-common
 # @TODO adicionar multiplas versões de PHP, não apenas a 7.2
 #       (fititnt, 2019-05-18 21:22 BRT)
 
-## PHP 7.2, para web
+## PHP 7.2, para web -----------------------------------------------------------
 # @see https://github.com/fititnt/cplp-aiops/issues/7
 sudo apt install php-fpm
 
@@ -1101,6 +1098,17 @@ sudo chown www-data:www-data /var/log/fpm-php.www.log
 sudo tail -f /var/log/fpm-php.www.log
 sudo tail -f /etc/nginx/error.log
 sudo tail -f /etc/nginx/access.log
+
+## Composer --------------------------------------------------------------------
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+sudo rm composer-setup.php
+
+# @TODO: implementar alguma forma de auto update no binario do composer padrão
+#        de sistema (mesmo que os usuários possam sobrescrever)
+#        (fititnt, 2019-05-29 23:46 BRT)
 
 ##### Python ___________________________________________________________________
 # @see https://www.python.org/
