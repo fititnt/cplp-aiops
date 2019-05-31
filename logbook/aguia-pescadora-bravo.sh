@@ -543,6 +543,8 @@ sudo ln -s /etc/nginx/sites-available/dreamfactory.apb.etica.ai.conf /etc/nginx/
 sudo nginx -t
 sudo systemctl reload nginx
 
+sudo certbot --nginx -d dreamfactory.apb.etica.ai
+
 # Cria uma página de teste (use para testar o PHP)
 echo "dreamfactory <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/dreamfactory/web/dreamfactory/index.php <br><?php phpinfo(); ?>" | sudo -u dreamfactory tee /home2/dreamfactory/web/dreamfactory/index.php
 
@@ -570,20 +572,23 @@ cd /home2/dreamfactory/
 ## Seguimos agora o passo a passo da wiki oficial
 # @see http://wiki.dreamfactory.com/DreamFactory/Installation
 
-
-
+# sudo apt install php-mongodb (Instala php-mongo 1.3.4, porém o dreamfactory requer ext-mongodb ^1.5.0)
+# Precisamos instalar versão de PECL
+sudo apt install php-dev php-pear
+sudo pecl install mongodb
+sudo sh -c 'echo "extension=mongodb.so" > /etc/php/7.2/mods-available/mongodb.ini'
+sudo phpenmod mongodb
 
 git clone https://github.com/dreamfactorysoftware/dreamfactory.git /home2/dreamfactory/web/dreamfactory/
 cd /home2/dreamfactory/web/dreamfactory/
+composer install --no-dev
 
-## Nota: vamos criar
-
-sudo -u dreamfactory composer install --no-dev
-
-# php-mongodb
-
-sudo certbot --nginx -d dreamfactory.apb.etica.ai
-
+## Preparar banco de dados em Elefante Borneu
+# mysql -u root -p
+# CREATE DATABASE dreamfactory;
+# GRANT ALL PRIVILEGES ON dreamfactory.* to 'dreamfactoryadmin'@'localhost' IDENTIFIED BY 'YOUR_PASSWORD_HERE';
+# FLUSH PRIVILEGES;
+# quit
 
 ## Atalhos úteis nesta conta
 
