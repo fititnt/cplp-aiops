@@ -587,9 +587,15 @@ composer install --no-dev
 ## Preparar banco de dados em Elefante Borneu
 # mysql -u root -p
 # CREATE DATABASE dreamfactory;
-# GRANT ALL PRIVILEGES ON dreamfactory.* to 'dreamfactoryadmin'@'localhost' IDENTIFIED BY 'YOUR_PASSWORD_HERE';
+# GRANT ALL PRIVILEGES ON dreamfactory.* to 'dreamfactoryadmin'@'%' IDENTIFIED BY 'YOUR_PASSWORD_HERE';
 # FLUSH PRIVILEGES;
 # quit
+
+php artisan df:env
+php artisan df:setup
+
+sudo chown -R dreamfactory:dreamfactory /home2/dreamfactory/web/dreamfactory/storage/ /home2/dreamfactory/web/dreamfactory/bootstrap/cache/
+sudo chmod -R 2775 /home2/dreamfactory/web/dreamfactory/storage/ /home2/dreamfactory/web/dreamfactory/bootstrap/cache/
 
 ## Atalhos úteis nesta conta
 
@@ -635,7 +641,7 @@ sudo systemctl reload nginx
 
 sudo certbot --nginx -d compilebot.api.apb.etica.ai
 
-sudo -u compilebot echo "compilebot <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/compilebot/web/api/index.php <br><?php phpinfo(); ?>" > /home2/compilebot/web/api/index.php
+sudo -u compilebot echo "compilebot <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/compilebot/web/api/index.php <br><?php echo 'whoiam:' . exec('whoami'); phpinfo(); ?>" > /home2/compilebot/web/api/index.php
 
 sudo chown compilebot:compilebot -R /home2/compilebot
 
@@ -660,7 +666,7 @@ sudo -u usuariodeteste mkdir /home2/usuariodeteste/web/public_api
 sudo -u usuariodeteste mkdir /home2/usuariodeteste/web/php
 
 sudo -u usuariodeteste echo "usuariodeteste <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/usuariodeteste/web/public_html/index.html" > /home2/usuariodeteste/web/public_html/index.html
-sudo -u usuariodeteste echo "usuariodeteste <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/usuariodeteste/web/php/index.php <br><?php phpinfo(); ?>" > /home2/usuariodeteste/web/php/index.php
+sudo -u usuariodeteste echo "usuariodeteste <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/usuariodeteste/web/php/index.php <br><?php echo 'whoiam:' . exec('whoami'); phpinfo(); ?>" > /home2/usuariodeteste/web/php/index.php
 
 sudo vim /etc/nginx/sites-available/usuariodeteste.apb.etica.ai.conf
 # Adicione todas as customizacoes deste usuario no arquivo acima...
@@ -1234,17 +1240,14 @@ sudo apt install haproxy
 vim /etc/haproxy/haproxy.cfg
 # Fazer ajustes...
 
-vim /etc/nginx/sites-available/haproxy.abp.etica.ai.conf
+vim /etc/nginx/sites-available/haproxy.apb.etica.ai.conf
 # Adicione todas as customizacoes no arquivo acima...
 
-sudo ln -s /etc/nginx/sites-available/haproxy.abp.etica.ai.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/haproxy.apb.etica.ai.conf /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 
-sudo certbot --nginx -d haproxy.abp.etica.ai
-
-# TODO: dominio haproxy.abp.etica.ai esta errado, deveria ser haproxy.apb.etica.ai
-#       Corrigir em revisão futura (fititnt, 2019-05-28 21:54 BRT)
+sudo certbot --nginx -d haproxy.apb.etica.ai
 
 ##### HAProxy, como testar atualizacoes ANTES de implementar -------------------
 

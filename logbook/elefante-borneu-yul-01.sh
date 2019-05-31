@@ -317,10 +317,19 @@ sudo systemctl stop mysql
 
 # @TODO: documentar o dia a dia no gerenciamento de um cluster (fititnt, 2019-05-27 20:19 BRT)
 
+### PHPMyAdmin (configurar armazenamento, opcional) ____________________________
+# Aplicavel em: caso use PHPMyAdmin como interface para acessar o cluster
+#
+# Mensagem de erro no rodapé do PHPMyAdmin: "A configuração de armazenamento phpMyAdmin não está completamente configurada, algumas funcionalidades adicionais foram desactivadas. Saiba porquê."
+#
+# Resposta: clique no botão, e deixe criar as tabelas. Elas são replicadas
+#           nos demais nós do Cluster. Isto é necessário apenas primeira vez.
+#           pode ser feito pelo próprio PHPMyAdmin
+
 #------------------------------------------------------------------------------#
 # SEÇÃO 3: RE-INICIALIZAÇÃO DE CLUSTER EXISTENTE                               #
 # TL;DR: Um cluster que já existe por algum motivo foi ficou completamente     #
-#        desligado.
+#        desligado.                                                            #
 #------------------------------------------------------------------------------#
 
 # @TODO melhorar descrição destes comandos (fititnt, 2019-05-27 19:13 BRT)
@@ -368,6 +377,28 @@ journalctl -u mariadb.service
 #        > show status like 'wsrep_local_state_comment';
 #    Estado do protocolo de replicação:
 #        > show status like 'wsrep_evs_state';
+
+#------------------------------------------------------------------------------#
+# SEÇÃO 3: TAREFAS DO DIA A DIA EM MARIADB / GALERA CLUSTER                    #
+# TL;DR:                                                                       #
+#------------------------------------------------------------------------------#
+
+## IMPORTANTE: comandos DDL (CREATE, USER, GRANT) são replicados no cluster
+##             porém comandos que exitam as tabelas mysam não são. Ou seja
+##             UPDATE/INSERT direto na tabela de sistema mysql precisa ser feito
+##             em TODOS os nós.
+
+#### Trocar senha de usuário comum _____________________________________________
+# @see http://galeracluster.com/documentation-webpages/userchanges.html
+
+# Execute os comandos EM TODOS OS NÓS (não pode ser apenas um deles)
+# SET PASSWORD FOR 'username'@'%' = PASSWORD('newpassword');
+# FLUSH PRIVILEGES;
+
+#### Alterar permissões de usuario já existente ________________________________
+# Nota: este comando pode ser em qualquer nó. Ele passa para os demais
+
+# GRANT ALL ON databasename.* TO 'username'@'%';
 
 #------------------------------------------------------------------------------#
 # SEÇÃO MONGODB: 1. INSTALAÇÃO E CONFIGURAÇÃO INICIAL                          #
