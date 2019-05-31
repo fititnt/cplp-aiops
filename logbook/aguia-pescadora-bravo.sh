@@ -1293,6 +1293,12 @@ sudo systemctl reload nginx
 
 sudo certbot --nginx -d phpmyadmin.apb.etica.ai
 
+## Hotfix erro "Warning in ./libraries/sql.lib.php#613 count(): Parameter must be an array or an object that implements Countable"
+# @see https://stackoverflow.com/questions/48001569/phpmyadmin-count-parameter-must-be-an-array-or-an-object-that-implements-co/50536059#50536059
+# Caso tenha esse erro execute uma vez logo após instalação:
+sudo sed -i "s/|\s*\((count(\$analyzed_sql_results\['select_expr'\]\)/| (\1)/g" /usr/share/phpmyadmin/libraries/sql.lib.php
+
+
 # TODO: por alguma proteção, mesmo que simples, para evitar bruteforce de bots
 #       em https://phpmyadmin.apb.etica.ai/ (fititnt, 2019-05-21 00:23 BRT)
 
