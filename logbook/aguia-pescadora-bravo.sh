@@ -1259,6 +1259,33 @@ sudo systemctl reload haproxy
 mysql -h elefante-borneu-yul-01.etica.ai -u haproxy
 
 #------------------------------------------------------------------------------#
+# SEÇÃO 5.5: FERRAMENTAS PARA GERENCIAMENTO ADMINISTRATIVO DE DADOS            #
+#                                                                              #
+# TL;DR: PHPMyAdmin, etc                                                       #
+#------------------------------------------------------------------------------#
+
+#### PHPMyAdmin ________________________________________________________________
+### @see https://github.com/fititnt/cplp-aiops/issues/53
+
+## Vamos usar o que vem por padrão no Ubuntu 18.04
+# @see https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-18-04
+# @see https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
+
+sudo apt install phpmyadmin
+
+sudo cp /etc/nginx/sites-available/EXEMPLO-PROXY.abp.etica.ai.conf /etc/nginx/sites-available/phpmyadmin.apb.etica.ai.conf
+
+sudo vim /etc/nginx/sites-available/phpmyadmin.apb.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/phpmyadmin.apb.etica.ai.conf /etc/nginx/sites-enabled/
+#sudo nginx -t
+#sudo systemctl reload nginx
+
+#sudo certbot --nginx -d phpmyadmin.apb.etica.ai
+
+
+#------------------------------------------------------------------------------#
 # SEÇÃO 6.0: GERENCIAMENTO DE PROCESSOS                                        #
 #                                                                              #
 # TL;DR: caso alguns usuários queiram que algo rode ao reiniciar o sistema ou  #
