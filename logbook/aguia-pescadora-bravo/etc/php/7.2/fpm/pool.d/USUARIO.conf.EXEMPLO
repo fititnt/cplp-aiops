@@ -1,0 +1,21 @@
+[USUARIO]
+
+; Use ";" para comentarios
+; Se usar "#" causa erro de sintaxe
+
+user = USUARIO
+group = USUARIO
+
+listen = /run/php/php7.2-fpm-USUARIO.sock
+
+listen.owner = USUARIO
+listen.group = www-data
+
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 1
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+
+php_flag[display_errors] = on
+php_admin_value[error_log] = /home2/USUARIO/log/fpm-php.USUARIO.log

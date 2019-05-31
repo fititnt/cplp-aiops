@@ -533,6 +533,7 @@ sudo -u dreamfactory  mkdir /home2/dreamfactory/log
 # Cria worker PHP-FPM exclusivo baseado no www.conf
 sudo cp /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/dreamfactory.conf
 sudo vim /etc/php/7.2/fpm/pool.d/dreamfactory.conf
+sudo php-fpm7.2 --test # Valide se configurações são validas (sim, esse nome)
 sudo systemctl reload php7.2-fpm
 
 # Prepara o NGinx
@@ -621,8 +622,8 @@ sudo mkdir /home2/compilebot/log
 cp /etc/php/7.2/fpm/pool.d/www.conf /etc/php/7.2/fpm/pool.d/compilebot.conf
 
 sudo vim /etc/php/7.2/fpm/pool.d/compilebot.conf
-#...
-# compilebot.api.apb.etica.ai
+
+sudo php-fpm7.2 --test # Valide se configurações são validas (sim, esse nome)
 sudo systemctl reload php7.2-fpm
 
 sudo vim /etc/nginx/sites-available/compilebot.api.apb.etica.ai.conf
@@ -1262,6 +1263,8 @@ mysql -h elefante-borneu-yul-01.etica.ai -u haproxy
 # SEÇÃO 5.5: FERRAMENTAS PARA GERENCIAMENTO ADMINISTRATIVO DE DADOS            #
 #                                                                              #
 # TL;DR: PHPMyAdmin, etc                                                       #
+#                                                                              #
+# URLS: - https://phpmyadmin.apb.etica.ai/                                     #
 #------------------------------------------------------------------------------#
 
 #### PHPMyAdmin ________________________________________________________________
@@ -1273,17 +1276,25 @@ mysql -h elefante-borneu-yul-01.etica.ai -u haproxy
 
 sudo apt install phpmyadmin
 
-sudo cp /etc/nginx/sites-available/EXEMPLO-PROXY.abp.etica.ai.conf /etc/nginx/sites-available/phpmyadmin.apb.etica.ai.conf
+sudo cp /etc/php/7.2/fpm/pool.d/USUARIO.conf.EXEMPLO /etc/php/7.2/fpm/pool.d/phpmyadmin.conf
+sudo vim /etc/php/7.2/fpm/pool.d/phpmyadmin.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
 
+sudo php-fpm7.2 --test # Valide se configurações são validas (sim, esse nome)
+sudo systemctl reload php7.2-fpm
+
+sudo cp /etc/nginx/sites-available/EXEMPLO-PROXY.abp.etica.ai.conf /etc/nginx/sites-available/phpmyadmin.apb.etica.ai.conf
 sudo vim /etc/nginx/sites-available/phpmyadmin.apb.etica.ai.conf
 # Adicione todas as customizacoes deste usuario no arquivo acima...
 
 sudo ln -s /etc/nginx/sites-available/phpmyadmin.apb.etica.ai.conf /etc/nginx/sites-enabled/
-#sudo nginx -t
-#sudo systemctl reload nginx
+sudo nginx -t  # Valide se configurações NGinx são validas (sim, esse nome)
+sudo systemctl reload nginx
 
-#sudo certbot --nginx -d phpmyadmin.apb.etica.ai
+sudo certbot --nginx -d phpmyadmin.apb.etica.ai
 
+# TODO: por alguma proteção, mesmo que simples, para evitar bruteforce de bots
+#       em https://phpmyadmin.apb.etica.ai/ (fititnt, 2019-05-21 00:23 BRT)
 
 #------------------------------------------------------------------------------#
 # SEÇÃO 6.0: GERENCIAMENTO DE PROCESSOS                                        #
