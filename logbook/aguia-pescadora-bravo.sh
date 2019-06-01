@@ -642,8 +642,21 @@ sudo systemctl reload nginx
 sudo certbot --nginx -d compilebot.api.apb.etica.ai
 
 sudo -u compilebot echo "compilebot <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/compilebot/web/api/index.php <br><?php echo 'whoiam:' . exec('whoami'); phpinfo(); ?>" > /home2/compilebot/web/api/index.php
-
 sudo chown compilebot:compilebot -R /home2/compilebot
+
+#### botpress ------------------------------------------------------------------
+# ISSUE: Botpress #55 https://github.com/fititnt/cplp-aiops/issues/54
+# ISSUE: Chatbots / Chatops (discussão geral) #54 https://github.com/fititnt/cplp-aiops/issues/54
+
+sudo adduser botpress
+sudo chsh -s /usr/bin/fish botpress
+
+# Apaga senha do usuario (gerencie usando sudo)
+sudo passwd -d botpress
+
+sudo mkdir /home2/botpress/
+sudo chown botpress:botpress /home2/botpress
+sudo chmod 751 -R /home2/botpress
 
 ### usuariodeteste -------------------------------------------------------------
 # Usuario sem senha, criado para permitir testes. Usuarios com poder de sudo
