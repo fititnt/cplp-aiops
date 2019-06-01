@@ -54,6 +54,11 @@ exit
 ################################################################################
 
 #------------------------------------------------------------------------------#
+sudo netstat -ntulp # Portas usadas
+sudo lsof -i -P -n | grep LISTEN  # Portas usadas (processo & usuário)
+#------------------------------------------------------------------------------#
+
+#------------------------------------------------------------------------------#
 # SEÇÃO 0.1: Configuração inicial                                              #
 # TL;DR: Isso é feito ao receber uma VPS do zero                               #
 #------------------------------------------------------------------------------#
@@ -348,11 +353,6 @@ sudo adduser fcomarcosmabreu
 sudo passwd -e fcomarcosmabreu
 
 ### fititnt --------------------------------------------------------------------
-sudo adduser fititnt
-sudo passwd -e fititnt
-sudo chsh -s /usr/bin/fish fititnt
-sudo usermod -aG sudo fititnt
-
 ## Dominios customizados de fititnt (já adicionados na CloudFlare)
 curl http://fititnt.apb.etica.ai
 curl http://fititnt.lb-ap.etica.ai
@@ -360,6 +360,19 @@ curl http://php.fititnt.apb.etica.ai
 curl http://php.fititnt.lb-ap.etica.ai
 curl http://go.fititnt.apb.etica.ai
 curl http://go.fititnt.lb-ap.etica.ai
+curl http://js.fititnt.apb.etica.ai
+curl http://js.fititnt.lb-ap.etica.ai
+## Portas (Nota: apenas portas de aplicações 'mais permanentes')
+# - 0.0.0.0:62000
+# - 127.0.0.1:62001
+#------------------------------------------------------------------------------#
+sudo adduser fititnt
+sudo passwd -e fititnt
+sudo chsh -s /usr/bin/fish fititnt
+sudo usermod -aG sudo fititnt
+
+## Portas usadas
+sudo lsof -i -P -n | grep LISTEN | grep fititnt
 
 # Aviso: descrição da razão dessaes passos esta em usuariodeteste
 sudo mkdir /home2/fititnt
@@ -372,9 +385,13 @@ sudo -u fititnt mkdir /home2/fititnt/web
 sudo -u fititnt mkdir /home2/fititnt/web/public_html
 sudo -u fititnt mkdir /home2/fititnt/web/public_api
 sudo -u fititnt mkdir /home2/fititnt/web/php
+sudo -u fititnt mkdir /home2/fititnt/web/js
 
 sudo -u fititnt echo "fititnt <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/fititnt/web/public_html/index.html" > /home2/fititnt/web/public_html/index.html
 sudo -u fititnt echo "fititnt <br>Servidor comunitario: http://aguia-pescadora-bravo.etica.ai <br>Arquivo: /home2/fititnt/web/php/index.php <br><?php phpinfo(); ?>" > /home2/fititnt/web/php/index.php
+
+sudo -u fititnt vim /home2/fititnt/web/js/app.js
+# Adicione conteudo de https://nodejs.org/en/docs/guides/getting-started-guide/
 
 sudo cp /etc/nginx/sites-available/EXEMPLO-USUARIO.abp.etica.ai.conf /etc/nginx/sites-available/fititnt.apb.etica.ai.conf
 
@@ -647,6 +664,9 @@ sudo chown compilebot:compilebot -R /home2/compilebot
 #### botpress ------------------------------------------------------------------
 # ISSUE: Botpress #55 https://github.com/fititnt/cplp-aiops/issues/54
 # ISSUE: Chatbots / Chatops (discussão geral) #54 https://github.com/fititnt/cplp-aiops/issues/54
+# DOMINIOS:
+#           - botpress.apb.etica.ai
+#           - botpress.lb-ap.etica.ai
 
 sudo adduser botpress
 sudo chsh -s /usr/bin/fish botpress
@@ -704,6 +724,8 @@ curl http://go.usuariodeteste.apb.etica.ai
 curl http://go.usuariodeteste.lb-ap.etica.ai
 curl http://python.usuariodeteste.apb.etica.ai
 curl http://python.usuariodeteste.lb-ap.etica.ai
+curl http://js.usuariodeteste.apb.etica.ai
+curl http://js.usuariodeteste.lb-ap.etica.ai
 
 ## Certificado HTTPS para usuariodeteste
 # Linha de comando para obter certificados. Automaticamente já edita configurações do NGinx
@@ -1484,6 +1506,28 @@ sudo systemctl reload nginx
 #             tail -f /var/log/nginx/error.log
 #         Em geral o principal motivo de erro serão permissões de arquivo e de
 #         diretório até o respectivo arquivo
+
+### Portas internas ____________________________________________________________
+# Subdomínios padronizados com HTTP/HTTPS para portas comuns
+# ISSUE: https://github.com/fititnt/cplp-aiops/issues/57
+
+vim /etc/nginx/sites-available/PORTAS-INTERNAS.apb.etica.ai.conf
+# Adicione as configurações desejadas neste servidor no arquivo acima...
+sudo ln -s /etc/nginx/sites-available/PORTAS-INTERNAS.apb.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx \
+  -d 2000.apb.etica.ai \
+  -d 3000.apb.etica.ai \
+  -d 4000.apb.etica.ai \
+  -d 5000.apb.etica.ai \
+  -d 6000.apb.etica.ai \
+  -d 7000.apb.etica.ai \
+  -d 8000.apb.etica.ai \
+  -d 8080.apb.etica.ai \
+  -d 8888.apb.etica.ai \
+  -d 9000.apb.etica.ai
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: ADMINISTRAÇÃO DO DIA A DIA                                            #
