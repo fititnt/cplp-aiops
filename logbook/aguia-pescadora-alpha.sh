@@ -454,6 +454,28 @@ sudo certbot --nginx -d aguia-pescadora-alpha.etica.ai -d apa.etica.ai
 ### Userdir
 # Userdir não implementado em Alpha
 
+### Portas internas ____________________________________________________________
+# Subdomínios padronizados com HTTP/HTTPS para portas comuns
+# ISSUE: https://github.com/fititnt/cplp-aiops/issues/57
+
+vim /etc/nginx/sites-available/PORTAS-INTERNAS.apa.etica.ai.conf
+# Adicione as configurações desejadas neste servidor no arquivo acima...
+sudo ln -s /etc/nginx/sites-available/PORTAS-INTERNAS.apa.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx \
+  -d 2000.apa.etica.ai \
+  -d 3000.apa.etica.ai \
+  -d 4000.apa.etica.ai \
+  -d 5000.apa.etica.ai \
+  -d 6000.apa.etica.ai \
+  -d 7000.apa.etica.ai \
+  -d 8000.apa.etica.ai \
+  -d 8080.apa.etica.ai \
+  -d 8888.apa.etica.ai \
+  -d 9000.apa.etica.ai
+
 
 # PROTIP: acompanhe os arquivos a seguir para debugar
 #             tail -f /var/log/nginx/access.log
