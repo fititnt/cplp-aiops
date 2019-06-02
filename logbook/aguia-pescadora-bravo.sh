@@ -73,7 +73,7 @@ ssh root@192.99.247.117
 ### Atualizar o sistema operacional_____________________________________________
 # O sistema operacional (neste caso, Ubuntu) normalmente não vai estar 100%
 # atualizado. Os comandos abaixo são uma boa prática pra fazer imediatamente
-sudo apt update -y
+sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove -y
 
@@ -108,9 +108,6 @@ sudo timedatectl set-timezone UTC
 sudo apt install language-pack-pt language-pack-pt-base
 
 sudo update-locale LANG=pt_PT.utf8
-
-##### Rede [nmap, traceroute, dig (dnsutils)....] ______________________________
-sudo apt install -y traceroute nmap dnsutils
 
 ### Criar Swap & ajusta Swappiness______________________________________________
 # Se o sistema operacional ficar sem memória ram suficiênte, ele pode ter falha
@@ -209,6 +206,9 @@ sudo repquota -s /
 #       limite abaixo do soft limit
 #   - Hard limit: se passar desse limite, o S.O. impede de escrever em disco
 #   - Período de tolerância: tempo entre o soft limit se tornar hard limit
+
+##### Rede [nmap, traceroute, dig (dnsutils)....] ______________________________
+sudo apt install -y traceroute nmap dnsutils
 
 ##### VNstat [configuração inicial] ____________________________________________
 # VNstat é uma ferramenta super eficiente que permite monitorar uso de rede
