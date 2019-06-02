@@ -134,6 +134,9 @@ vim /etc/sysctl.conf
 # @see https://github.com/tsuru/tsuru
 # @see https://tsuru-client.readthedocs.io
 
+# Esta sessão é totalmente como usuário root
+sudo su
+sudo cd ~
 
 ### Tsuru client (requisito para instalar o tsuru) _____________________________
 # A instação do Tsuru em https://docs.tsuru.io/stable/installing/using-tsuru-installer.html
@@ -145,9 +148,15 @@ vim /etc/sysctl.conf
 # desatualziados o suficiente em relação a opção oferecida em https://github.com/tsuru/tsuru-client/releases
 # (ultima: 1.7.0-rc2 de 2019-02-22, ou a 1.6.0 de 2018-07-19).
 
+mkdir /root/tsuru-setup
+cd /root/tsuru-setup
+
 wget https://github.com/tsuru/tsuru-client/releases/download/1.6.0/tsuru_1.6.0_linux_amd64.tar.gz
 tar -vzxf tsuru_1.6.0_linux_amd64.tar.gz
-sudo mv tsuru /usr/local/bin
+mv tsuru /usr/local/bin
+
+cd /root/tsuru-setup
+rm tsuru_1.6.0_linux_amd64.tar.gz
 
 # TODO: considerar adicionar bash-completion além de apenas o bash
 #      (fititnt, 2019-06-02 03:18 BRT)
@@ -156,3 +165,15 @@ cat misc/bash-completion
 #  ~/.bash_aliases do usuário que usaria o tsuru
 touch ~/.bash_aliases
 cat misc/bash-completion >> ~/.bash_aliases
+
+### Cria arquivos de especificação do tsuru ____________________________________
+sudo tsuru install-config-init
+# O comando acima criará arquivos padrões no diretório atual
+
+vim /root/tsuru-setup/install-compose.yml
+vim /root/tsuru-setup/install-config.yml
+
+### Continuar...
+# @see https://docs.tsuru.io/stable/installing/using-tsuru-installer.html#installing-on-already-provisioned-or-physical-hosts
+# @see https://docs.docker.com/machine/overview/
+# @see https://dev.to/zac_siegel/using-docker-machine-to-provision-a-remote-docker-host-1267

@@ -1,0 +1,64 @@
+driver:
+  name: virtualbox
+docker-flags:
+- experimental
+components:
+  install-dashboard: true
+  tsuru-image: tsuru/api:v1
+  tsuru:
+    config:
+      auth:
+        hash-cost: 4
+        token-expire-days: 2
+        user-registration: true
+      database:
+        name: tsuru
+        url: $MONGODB_ADDR:$MONGODB_PORT
+      docker:
+        auto-scale:
+          enabled: true
+          run-interval: $DOCKER_AUTOSCALE_RUN_INTERVAL
+        bs:
+          socket: /var/run/docker.sock
+        cluster:
+          mongo-database: cluster
+          mongo-url: $MONGODB_ADDR:$MONGODB_PORT
+          storage: mongodb
+        collection: docker
+        deploy-cmd: /var/lib/tsuru/deploy
+        registry: $REGISTRY_ADDR:$REGISTRY_PORT
+        repository-namespace: tsuru
+        router: hipache
+        run-cmd:
+          bin: /var/lib/tsuru/start
+          port: "8888"
+        tls:
+          root-path: /certs
+      host: $TSURU_ADDR:8080
+      listen: 0.0.0.0:8080
+      log:
+        disable-syslog: true
+        use-stderr: true
+      provisioner: docker
+      queue:
+        mongo-database: queuedb
+        mongo-url: $MONGODB_ADDR:$MONGODB_PORT
+      quota:
+        apps-per-user: 2
+        units-per-app: 4
+      repo-manager: none
+      routers:
+        hipache:
+          domain: $HIPACHE_DOMAIN
+          redis-server: $REDIS_ADDR:$REDIS_PORT
+          type: hipache
+      tls:
+        cert-file: /certs/cert.pem
+        key-file: /certs/key.pem
+      use-tls: false
+name: tsuru
+hosts:
+  apps:
+    size: 1
+  core:
+    size: 1
