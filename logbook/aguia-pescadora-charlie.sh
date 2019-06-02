@@ -126,3 +126,33 @@ cat /proc/sys/vm/vfs_cache_pressure
 
 vim /etc/sysctl.conf
 # Adciona 'vm.vfs_cache_pressure=50' (sem aspas) no final do arquivo
+
+#------------------------------------------------------------------------------#
+# SEÇÃO TSURU / CONFIGURAÇÃO INICIAL                                           #
+# TL;DR: Isso é feito ao receber uma VPS do zero                               #
+#------------------------------------------------------------------------------#
+# @see https://github.com/tsuru/tsuru
+# @see https://tsuru-client.readthedocs.io
+
+
+### Tsuru client (requisito para instalar o tsuru) _____________________________
+# A instação do Tsuru em https://docs.tsuru.io/stable/installing/using-tsuru-installer.html
+# explica que a instalação dele é feita usando o tsuru-client
+#
+# tsuru-client em https://tsuru-client.readthedocs.org recomenda que, em Ubuntu,
+# use o 'ppa:tsuru/ppa'. Porém esse PPA não só não tem pacote para o Ubuntu 18.04 LTS
+# como os pacotes para o Ubuntu 16.04 (tsuru version 1.1.1) parecem
+# desatualziados o suficiente em relação a opção oferecida em https://github.com/tsuru/tsuru-client/releases
+# (ultima: 1.7.0-rc2 de 2019-02-22, ou a 1.6.0 de 2018-07-19).
+
+wget https://github.com/tsuru/tsuru-client/releases/download/1.6.0/tsuru_1.6.0_linux_amd64.tar.gz
+tar -vzxf tsuru_1.6.0_linux_amd64.tar.gz
+sudo mv tsuru /usr/local/bin
+
+# TODO: considerar adicionar bash-completion além de apenas o bash
+#      (fititnt, 2019-06-02 03:18 BRT)
+cat misc/bash-completion
+# Copie o conteúdo do arquivo acima para o .bashrc ou (Ubuntu 18.04) no
+#  ~/.bash_aliases do usuário que usaria o tsuru
+touch ~/.bash_aliases
+cat misc/bash-completion >> ~/.bash_aliases
