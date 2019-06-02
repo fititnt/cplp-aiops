@@ -186,6 +186,7 @@ sudo ufw allow mosh comment "Mosh, *, [TODO: restringir SSH no Cluster Elefante 
 # Sites de aplicação tem direito de acessar as porta específicas do MariaDB
 sudo ufw allow from 104.167.109.226 to any port 3306 comment "MariaDB, aguia-pescadora-alpha.etica.ai"
 sudo ufw allow from 192.99.247.117 to any port 3306 comment "MariaDB, aguia-pescadora-bravo.etica.ai"
+sudo ufw allow from 192.99.69.2 to any port 3306 comment "MariaDB, aguia-pescadora-charlie.etica.ai"
 
 #### MongoDB -------------------------------------------------------------------
 ## Sites de aplicação tem direito de acessar as porta específicas do MongoDB
@@ -195,6 +196,7 @@ sudo ufw allow from 192.99.247.117 to any port 3306 comment "MariaDB, aguia-pesc
 
 sudo ufw allow from 104.167.109.226 to any port 27017 comment "MongoDB, aguia-pescadora-alpha.etica.ai"
 sudo ufw allow from 192.99.247.117 to any port 27017 comment "MongoDB, aguia-pescadora-bravo.etica.ai"
+sudo ufw allow from 192.99.69.2 to any port 27017 comment "MongoDB, aguia-pescadora-charlie.etica.ai"
 
 #### Redis -------------------------------------------------------------------
 ## Sites de aplicação tem direito de acessar as porta específicas do Redis
@@ -203,6 +205,7 @@ sudo ufw allow from 192.99.247.117 to any port 27017 comment "MongoDB, aguia-pes
 
 sudo ufw allow from 104.167.109.226 to any port 6379 comment "Redis, aguia-pescadora-alpha.etica.ai"
 sudo ufw allow from 192.99.247.117 to any port 6379 comment "Redis, aguia-pescadora-bravo.etica.ai"
+sudo ufw allow from 192.99.69.2 to any port 6379 comment "Redis, aguia-pescadora-charlie.etica.ai"
 
 ##### Firewall, ativação _______________________________________________________
 sudo ufw enable
