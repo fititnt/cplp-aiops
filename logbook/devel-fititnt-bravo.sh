@@ -49,7 +49,7 @@ exit
 #        documentações oficiais serão mencionados.                             #
 #------------------------------------------------------------------------------#
 
-#### Instalar Docker ___________________________________________________________
+#### DOCKER: Instalar Docker Engine ____________________________________________
 # @see https://docs.docker.com/install/linux/docker-ce/ubuntu/
 
 # Siga a documentação em https://docs.docker.com/install/linux/docker-ce/ubuntu/.
@@ -62,7 +62,7 @@ exit
 # Ao final, você deve ter algo como isto aqui
 docker -v # Docker version 18.09.6, build 481bc77
 
-#### Instalar Docker Machine ___________________________________________________
+#### DOCKER: Instalar Docker Machine ___________________________________________
 # @see https://docs.docker.com/machine/install-machine/
 # @see https://github.com/docker/machine/releases/
 
@@ -79,7 +79,7 @@ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machi
 # Execute o comando a seguir para ver se tem está com docker-machine operacional
 docker-machine -v  # docker-machine version 0.16.1, build cce350d7
 
-#### Remover versões antigas do Tsuru client ___________________________________
+#### TSURU: Remover versões antigas do Tsuru client ____________________________
 
 # Em fititnt-bravo já estava instalado uma versão antiga de tsuru-client (e que
 # provavelmente era gerenciada pelo 'ppa:tsuru/ppa') Isto aqui remove esta
@@ -87,7 +87,7 @@ docker-machine -v  # docker-machine version 0.16.1, build cce350d7
 # instaladas manualmente)
 sudo apt purge tsuru-client
 
-### Tsuru client (requisito para instalar o tsuru) _____________________________
+#### TSURU: Instalar Tsuru client (requisito para instalar o tsuru em A.P. Charlie)
 # A instação do Tsuru em https://docs.tsuru.io/stable/installing/using-tsuru-installer.html
 # explica que a instalação dele é feita usando o tsuru-client
 #
@@ -106,7 +106,7 @@ sudo mv tsuru /usr/local/bin
 cd /root/tsuru-setup
 rm tsuru_1.6.0_linux_amd64.tar.gz
 
-### Tsuru client, autocomplete (OPCIONAL) ______________________________________
+#### TSURU: Autocomplete de Tsuru client (OPCIONAL) ____________________________
 
 # TODO: considerar adicionar bash-completion além de apenas o bash
 #      (fititnt, 2019-06-02 03:18 BRT)
@@ -120,3 +120,53 @@ cat misc/bash-completion >> ~/.bash_aliases
 vim ~/.zshrc
 # Nota: não precisa fazer isso se você não tem instalado zsh ou se não quer que
 #       zsh de autocomplete
+
+#### TSURU: Criar arquivos padrões para iniciar Tsuru remotamente ______________
+
+mkdir ~/tmp/tsuru
+cd ~/tmp/tsuru
+
+tsuru install-config-init
+
+# O comando acima criará arquivos padrões no diretório atual
+vim ~/tmp/tsuru/install-compose.yml
+vim ~/tmp/tsuru/install-config.yml
+
+# NOTA: as configurações dos arquivos estão em
+#       (repositorio)/logbook/aguia-pescadora-charlie/__external-configs/tsuru-setup
+
+#### TSURU: Customizações pré-instalação de aguia-pescadora-charlie.etica.ai ___
+# @see https://docs.tsuru.io/1.6/installing/using-tsuru-installer.html
+
+tsuru install-create -c install-config.yml -e install-compose.yml
+
+# NOTA: eu não tenho certeza de como instala. Vai ser tentativa e erro
+#       (fititnt, 2019-06-02 23:07 BRT)
+
+#### CHAVE SSH: cria uma chave SSH sem password ________________________________
+# @see https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+# @see https://docs.tsuru.io/1.6/installing/using-tsuru-installer.html#
+
+# A documentação do TSURU (ao menos para provedores de IaaS sem driver dedicado
+# no docker-machine) que já exista um par de chave SSH que NÃO requer senha
+# e que já esteja previamente autorizado para se conectar na máquina remota.
+# Neste passo vamos criar uma em devel-fititnt-bravo
+
+ssh-keygen -t rsa -b 4096 -C "aguia-pescadora-tsuru.no-reply@etica.ai" -f ~/.ssh/id_rsa-aguia-pescadora-tsuru
+
+# Private key: ~/.ssh/id_rsa-aguia-pescadora-tsuru
+# Public key: ~/.ssh/id_rsa-aguia-pescadora-tsuru.pub
+
+#### CHAVE SSH: adiciona em aguia-pescadora.etica.ai ___________________________
+
+cat ~/.ssh/id_rsa-aguia-pescadora-tsuru.pub
+# Copie o conteúdo, logue em charlie
+ssh root@aguia-pescadora-charlie.etica.ai
+
+# cole o conteúdo ao final da ~/.ssh/authorized_keys
+vim ~/.ssh/authorized_keys
+exit
+
+# Teste se a chave está funcionando. O Seguinte comando deve funcionar
+# SEM pedir senha (nem de servidor remoto, nem de chave SSH)
+ssh -i ~/.ssh/id_rsa-aguia-pescadora-tsuru root@aguia-pescadora-charlie.etica.ai
