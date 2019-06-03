@@ -200,21 +200,33 @@ sudo apt install gandalf-server
 # Ajuda sobre como criar usuarios
 tsuru help user-create
 
-# Lista usuarios criados
-tsuru user-list
-
 # Cria admins (isso pede senhas, criar temporária para os demais)
 tsuru user-create rocha@ieee.org
 tsuru user-create felipecchaves@gmail.com
+tsuru user-create kayenga@outlook.pt
+
+# Lista usuarios criados
+tsuru user-list
 
 tsuru team-create administracao
 tsuru team-create padrao
+
+# Lista times
+tsuru team-list
 
 # Lista todas as permissões
 tsuru permission-list
 
 tsuru role-assign AllowAll rocha@ieee.org
 tsuru role-assign AllowAll felipecchaves@gmail.com
+tsuru role-assign AllowAll kayenga@outlook.pt
+
+# Lista pools
+tsuru pool-list
+# theonepool
+
+# Libera geral para poder usar a theonepool (só temos ela)
+tsuru pool-constraint-set theonepool team "*"
 
 #------------------------------------------------------------------------------#
 # SEÇÃO: POR CATALOGAR...                                                      #
@@ -228,4 +240,17 @@ tsuru platform-add php
 # mkdir -p ~/tmp/tsuru/ola-mundo
 # cd ~/tmp/tsuru/ola-mundo
 # echo "<?php phpinfo(); ?>" > index.php
-# tsuru app-create ola-mundo-php php
+# tsuru app-create ola-mundo-php php # Error: You must provide a team to execute this action.
+# tsuru help app-create
+# tsuru app-create ola-mundo-php php --team padrao
+# tsuru app-info --app ola-mundo-php
+# tsuru app-deploy -a ola-mundo-php .
+# Veja http://ola-mundo-php.192.99.69.2.nip.io/
+# :D
+
+# TODO: considerar demonstração com chatbot como o
+#       https://pypi.org/project/chatbotAI/ (fititnt, 2019-06-03 06:18 BRT)
+
+
+# TODO: considerar uso de APIs como
+#       https://blog.rapidapi.com/top-search-apis/ (fititnt, 2019-06-03 06:24 BRT)
