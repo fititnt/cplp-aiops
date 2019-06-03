@@ -143,6 +143,14 @@ tsuru install-create -c install-config.yml -e install-compose.yml
 # NOTA: eu não tenho certeza de como instala. Vai ser tentativa e erro
 #       (fititnt, 2019-06-02 23:07 BRT)
 
+# Crie um terceiro arquivo, vide https://docs.tsuru.io/1.6/installing/using-tsuru-installer.html
+vim ~/tmp/tsuru/config.yml
+
+# NOTA: o arquivo acima está em
+#       (repositorio)/logbook/aguia-pescadora-charlie/__external-configs/tsuru-setup/config.yml
+#       A chave SSH criada nele é adicionada no próximo passo, porém a privada,
+#       por razões de segurança, não é adicionada ao repositório
+
 #### CHAVE SSH: cria uma chave SSH sem password ________________________________
 # @see https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 # @see https://docs.tsuru.io/1.6/installing/using-tsuru-installer.html#
@@ -170,3 +178,32 @@ exit
 # Teste se a chave está funcionando. O Seguinte comando deve funcionar
 # SEM pedir senha (nem de servidor remoto, nem de chave SSH)
 ssh -i ~/.ssh/id_rsa-aguia-pescadora-tsuru root@aguia-pescadora-charlie.etica.ai
+
+#### TSURU: edições prévias em config.yml e segunda tentativa _________________
+# (A primeira tentativa foi usando 'tsuru install-create -c install-config.yml
+# -e install-compose.yml', mas abortei enquanto ele parecia estar criando
+# localmente e usando Virtualbox)
+
+# Usando como base o 'Installing on already provisioned (or physical) hosts' de
+# https://docs.tsuru.io/1.6/installing/using-tsuru-installer.html#installing-on-already-provisioned-or-physical-hosts
+# criamos o config.yml
+vim ~/tmp/tsuru/config.yml
+# O conteúdo do arquivo acima está commitado em
+# (repositorio)/logbook/aguia-pescadora-charlie/__external-configs/tsuru-setup/config.yml
+
+# NOTA: o campo
+#  generic-ssh-key: ["~/.ssh/id_rsa-aguia-pescadora-tsuru"]
+#  deu erro se especificar caminho ~/.ssh, usando caminho absoluto
+#  generic-ssh-key: ["/home/fititnt/.ssh/id_rsa-aguia-pescadora-tsuru"]
+
+# NOTA: não estou 100% de como instala o tsuru no mesmo nó dos apps, porém
+#       poderia ser uma boa ideia ele ficar em outra máquina (como a Bravo)
+#       (fititnt, 2019-06-03 00:21 BRT)
+
+# E então, tentamos executar usando as configurações
+tsuru install-create -c config.yml
+
+# CARALHO, funcionou com menos erros do que eu imaginava, veja em
+# https://github.com/fititnt/cplp-aiops/issues/59
+# O log de execução e alguns printscreens da primeira tentativa
+# (e sim, a senha de admin foi trocada antes de divulgar publicamente)

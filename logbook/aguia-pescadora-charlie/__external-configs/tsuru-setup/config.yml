@@ -1,0 +1,20 @@
+name: 'aguia-pescadora'
+hosts:
+    core:
+        size: 1
+        driver:
+            options:
+                generic-ip-address: ["192.99.69.2"]
+                generic-ssh-key: ["/home/fititnt/.ssh/id_rsa-aguia-pescadora-tsuru"]
+    apps:
+        size: 1
+        dedicated: false
+        driver:
+            options:
+                generic-ip-address: ["192.99.69.2"]
+                generic-ssh-key: ["/home/fititnt/.ssh/id_rsa-aguia-pescadora-tsuru"]
+driver:
+    name: generic
+    options:
+        generic-ssh-port: 22
+        generic-ssh-user: root
