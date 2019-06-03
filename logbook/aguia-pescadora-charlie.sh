@@ -190,3 +190,42 @@ sudo apt install gandalf-server
 # Podemos considerar instalar do código fonte, porém nesse momento vou ver
 # outras ações, como configurar o Tsuru melhor antes de usar o Gandalf
 # (fititnt, 2019-06-03 03:20 BRT)
+
+#------------------------------------------------------------------------------#
+# SEÇÃO TSURU: USUÁRIOS INICIAIS                                               #
+#                                                                              #
+# TL;DR:  Cria os usuários, grupos e permissões iniciais                       #
+#------------------------------------------------------------------------------#
+# @see https://tsuru-client.readthedocs.io/en/latest/reference.html
+# Ajuda sobre como criar usuarios
+tsuru help user-create
+
+# Lista usuarios criados
+tsuru user-list
+
+# Cria admins (isso pede senhas, criar temporária para os demais)
+tsuru user-create rocha@ieee.org
+tsuru user-create felipecchaves@gmail.com
+
+tsuru team-create administracao
+tsuru team-create padrao
+
+# Lista todas as permissões
+tsuru permission-list
+
+tsuru role-assign AllowAll rocha@ieee.org
+tsuru role-assign AllowAll felipecchaves@gmail.com
+
+#------------------------------------------------------------------------------#
+# SEÇÃO: POR CATALOGAR...                                                      #
+#                                                                              #
+#------------------------------------------------------------------------------#
+
+## Prepara plataforma PHP
+tsuru platform-add php
+
+## Isso em devel-fititnt-bravo
+# mkdir -p ~/tmp/tsuru/ola-mundo
+# cd ~/tmp/tsuru/ola-mundo
+# echo "<?php phpinfo(); ?>" > index.php
+# tsuru app-create ola-mundo-php php
