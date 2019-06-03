@@ -151,3 +151,42 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC7erwMfyTSO7xn8axjAp2NTbBHjDVdu+6J17
 #------------------------------------------------------------------------------#
 # @see https://docs.tsuru.io/stable/installing/gandalf.html
 # @see https://docs.tsuru.io/stable/managing/repositories.html
+
+curl -s https://packagecloud.io/install/repositories/tsuru/stable/script.deb.sh | sudo bash
+sudo apt install gandalf-server
+
+# NOTA: Que estranho. O Gandalf tem um repositório dedicado no packagecloud.io
+#       porém a documentação oficial do Tsuru para Ubuntu ainda recomenda
+#       aquele PPA super desatualizado. Se for isso mesmo vale a pena avisar
+#       o uptstream (fititnt, 2019-06-03 02:40 BRT)
+
+apt policy tsuru-client
+#tsuru-client:
+#  Installed: (none)
+#  Candidate: 1.6.0
+#  Version table:
+#     1.6.0 500
+#        500 https://packagecloud.io/tsuru/stable/ubuntu bionic/main amd64 Packages
+#     1.5.1 500
+#        500 https://packagecloud.io/tsuru/stable/ubuntu bionic/main amd64 Packages
+
+# NOTA: Yep. E a versão é exatamente a que foi instalada manualmente.
+#       Provavelmente devo remover a versão manual de fititnt-bravo e de
+#       aguia-pescadora-charlie.etica.ai (fititnt, 2019-06-03 02:45 BRT)
+
+## Instala o Galdalf (conforme https://docs.tsuru.io/stable/installing/gandalf.html)
+sudo apt install gandalf-server
+# Reading package lists... Done
+# Building dependency tree
+# Reading state information... Done
+# E: Unable to locate package gandalf-server
+
+# NOTA: O Tsuru 1.6.0 está disponível no Ubunu 18.04, mas não o Gandalf. Tem que
+#       considerar reportar mais de um repositório
+#       (fititnt, 2019-06-03 02:58 BRT)
+
+# NOTA: reportado em https://github.com/tsuru/gandalf/issues/216
+
+# Podemos considerar instalar do código fonte, porém nesse momento vou ver
+# outras ações, como configurar o Tsuru melhor antes de usar o Gandalf
+# (fititnt, 2019-06-03 03:20 BRT)
