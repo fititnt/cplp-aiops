@@ -128,52 +128,26 @@ vim /etc/sysctl.conf
 # Adciona 'vm.vfs_cache_pressure=50' (sem aspas) no final do arquivo
 
 #------------------------------------------------------------------------------#
-# SEÇÃO TSURU / CONFIGURAÇÃO INICIAL                                           #
-# TL;DR: Isso é feito ao receber uma VPS do zero                               #
+# SEÇÃO TSURU: ADIÇÃO DA CHAVE SSH PARA SER CONFIGURADO REMOTAMENTE            #
+#                                                                              #
+# AVISO: veja devel-fititnt-bravo.sh para saber como a chave foi criada        #
 #------------------------------------------------------------------------------#
-# @see https://github.com/tsuru/tsuru
-# @see https://tsuru-client.readthedocs.io
 
-# Esta sessão é totalmente como usuário root
-sudo su
-sudo cd ~
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC7erwMfyTSO7xn8axjAp2NTbBHjDVdu+6J17ZjX3Rs55dy3Vsqmq4kBIq3qxShabfY6h5nW3ccc86hGy8coXjPCblyloAKlG0RKkRo7/sGjsl3jv8i0gZVLU/H8pjaLLGhRWca2ToJAPJTlnFk/VrCMvH6PCHca7X70j88uE6UR5W1nax94kzcyOf/65mQDx7dHYVVyBL+Rgn0CHS4Di8Z0PSbwn1dVA0S4JW1z1DZ/5AYdhOBCfPkDvj4trTr9lmJIn/6KnOX+MIMzViHtxZw3dg8VHcZxd2PeiJ/THZZ3Z34Bv60jEwyjZMNKB6fqz4mAGkHH8bAXMS4m6gZXw6TaPZk84x3t9rJnzWhPaUYOkPL9dgcZ8m+FmeUxKkJgdo10AqZAMVdboYEKhL4Uv9JvZrt/VdkM6C2FqIDEddm6TWnqZiteeLtCl0EU5PMxsfQUncHkRihya6R1Brysu5lvTGEvW1qoobONowT3ED2F5aDTPlyscTr4ogKXAJda+jI5oIGxkf2QaKzhdJlt76KktQRVlOQVYJeKcVOB853IVMSJvIpP09YReaibrxdSYeazu+SswqNK7ux7S3Xb82PtSu7jtJtiiCdU6zfCLkWPAmoqP8N3m1q2lw4VvXxvLeUp79n3cv+kabG0UpE2csyJArSX/eyUF7+6F9QWQo4ow== aguia-pescadora-tsuru.no-reply@etica.ai" >> ~/.ssh/authorized_keys
 
-### Tsuru client (requisito para instalar o tsuru) _____________________________
-# A instação do Tsuru em https://docs.tsuru.io/stable/installing/using-tsuru-installer.html
-# explica que a instalação dele é feita usando o tsuru-client
-#
-# tsuru-client em https://tsuru-client.readthedocs.org recomenda que, em Ubuntu,
-# use o 'ppa:tsuru/ppa'. Porém esse PPA não só não tem pacote para o Ubuntu 18.04 LTS
-# como os pacotes para o Ubuntu 16.04 (tsuru version 1.1.1) parecem
-# desatualziados o suficiente em relação a opção oferecida em https://github.com/tsuru/tsuru-client/releases
-# (ultima: 1.7.0-rc2 de 2019-02-22, ou a 1.6.0 de 2018-07-19).
+#------------------------------------------------------------------------------#
+# SEÇÃO TSURU: CONFIGURAÇÃO INICIAL                                            #
+#                                                                              #
+# AVISO: veja devel-fititnt-bravo.sh                                           #
+#------------------------------------------------------------------------------#
 
-mkdir /root/tsuru-setup
-cd /root/tsuru-setup
+# Veja devel-fititnt-bravo.sh.
 
-wget https://github.com/tsuru/tsuru-client/releases/download/1.6.0/tsuru_1.6.0_linux_amd64.tar.gz
-tar -vzxf tsuru_1.6.0_linux_amd64.tar.gz
-mv tsuru /usr/local/bin
-
-cd /root/tsuru-setup
-rm tsuru_1.6.0_linux_amd64.tar.gz
-
-# TODO: considerar adicionar bash-completion além de apenas o bash
-#      (fititnt, 2019-06-02 03:18 BRT)
-cat misc/bash-completion
-# Copie o conteúdo do arquivo acima para o .bashrc ou (Ubuntu 18.04) no
-#  ~/.bash_aliases do usuário que usaria o tsuru
-touch ~/.bash_aliases
-cat misc/bash-completion >> ~/.bash_aliases
-
-### Cria arquivos de especificação do tsuru ____________________________________
-sudo tsuru install-config-init
-# O comando acima criará arquivos padrões no diretório atual
-
-vim /root/tsuru-setup/install-compose.yml
-vim /root/tsuru-setup/install-config.yml
-
-### Continuar...
-# @see https://docs.tsuru.io/stable/installing/using-tsuru-installer.html#installing-on-already-provisioned-or-physical-hosts
-# @see https://docs.docker.com/machine/overview/
-# @see https://dev.to/zac_siegel/using-docker-machine-to-provision-a-remote-docker-host-1267
+#------------------------------------------------------------------------------#
+# SEÇÃO TSURU: CONFIGURAÇÃO DO GANDALF                                         #
+#                                                                              #
+# ISSUES: - Deploy de apps usando `git push` (discussão geral) #60             #
+#             - https://github.com/fititnt/cplp-aiops/issues/60                #
+#------------------------------------------------------------------------------#
+# @see https://docs.tsuru.io/stable/installing/gandalf.html
+# @see https://docs.tsuru.io/stable/managing/repositories.html
