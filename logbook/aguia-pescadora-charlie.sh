@@ -229,12 +229,43 @@ tsuru pool-list
 tsuru pool-constraint-set theonepool team "*"
 
 #------------------------------------------------------------------------------#
+# SEÇÃO TSURU: PLATAFORMAS                                                     #
+#------------------------------------------------------------------------------#
+# @see Lista de plataformas padrões do Tsuru: https://github.com/tsuru/platforms
+# @see Exemplos de uso destas: https://github.com/tsuru/platforms/tree/master/examples
+
+## Prepara plataforma Cordova
+tsuru platform-add cordova
+
+## Prepara plataforma Elixir
+tsuru platform-add elixir
+
+## Prepara plataforma Go
+tsuru platform-add go
+
+## Prepara plataforma Java
+tsuru platform-add java
+
+## Prepara plataforma NodeJS
+tsuru platform-add nodejs
+
+## Prepara plataforma PHP
+tsuru platform-add php
+
+## Prepara plataforma Python
+tsuru platform-add python
+
+## Prepara plataforma Ruby
+tsuru platform-add ruby
+
+## Prepara plataforma static
+tsuru platform-add static
+
+#------------------------------------------------------------------------------#
 # SEÇÃO: POR CATALOGAR...                                                      #
 #                                                                              #
 #------------------------------------------------------------------------------#
 
-## Prepara plataforma PHP
-tsuru platform-add php
 
 ## Isso em devel-fititnt-bravo
 # mkdir -p ~/tmp/tsuru/ola-mundo
@@ -254,3 +285,4 @@ tsuru platform-add php
 
 # TODO: considerar uso de APIs como
 #       https://blog.rapidapi.com/top-search-apis/ (fititnt, 2019-06-03 06:24 BRT)
+
