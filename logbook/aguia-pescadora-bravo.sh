@@ -1416,11 +1416,30 @@ sudo systemctl reload nginx
 sudo certbot --nginx -d supervisor.apb.etica.ai
 
 #------------------------------------------------------------------------------#
+# SEÇÃO: ROTAS PARA AGUIA PESCADORA CHARLIE                                    #
+# TL;DR: Algumas aplicações estão em aguia-pescadora-charlie.etica.ai. E neste #
+#        momento vamos fazer a terminação HTTPS aqui mesmo                     #
+#------------------------------------------------------------------------------#
+
+#------------------------------------------------------------------------------#
 # SEÇÃO: AJUDA AO USUARIO                                                      #
 # TL;DR: Lista como é documentado ao usuario final o que este servidor         #
 #        oferece. Em geral é uma forma de documentar as IDEs e todos os        #
 #        interpretadores/compiladores de linguagens de programação             #
 #------------------------------------------------------------------------------#
+
+
+sudo cp /etc/nginx/sites-available/EXEMPLO-PROXY.abp.etica.ai.conf /etc/nginx/sites-available/api.cplpaiopsbot.etica.ai.conf
+
+sudo vim /etc/nginx/sites-available/api.cplpaiopsbot.etica.ai.conf
+# Adicione todas as customizacoes deste usuario no arquivo acima...
+
+sudo ln -s /etc/nginx/sites-available/api.cplpaiopsbot.etica.ai.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot --nginx -d api.cplpaiopsbot.etica.ai
+
 
 ##### ansi2html ________________________________________________________________
 # Esse script converte uma saída de terminal para HTML. É usado para dar a
