@@ -204,6 +204,7 @@ tsuru help user-create
 tsuru user-create rocha@ieee.org
 tsuru user-create felipecchaves@gmail.com
 tsuru user-create kayenga@outlook.pt
+tsuru user-create cdiego@criacorpo.com.br
 
 tsuru user-create testing-no-reply@etica.ai # Usuario (idealmente) temporario
                                             # com permissão total. Demais
@@ -228,6 +229,7 @@ tsuru permission-list
 tsuru role-assign AllowAll rocha@ieee.org
 tsuru role-assign AllowAll felipecchaves@gmail.com
 tsuru role-assign AllowAll kayenga@outlook.pt
+tsuru role-assign AllowAll cdiego@criacorpo.com.br
 tsuru role-assign AllowAll testing-no-reply@etica.ai
 
 # Lista pools
