@@ -13,6 +13,38 @@ Download: 97.58 Mbit/s
 Testing upload speed......................................................................................................
 Upload: 4.04 Mbit/s
 
+root@aguia-pescadora-bravo:~# speedtest-cli --server 18527
+Retrieving speedtest.net configuration...
+Testing from OVH Hosting (192.99.247.117)...
+Retrieving speedtest.net server list...
+Retrieving information for the selected server...
+Hosted by Claro (Porto Alegre) [8697.78 km]: 243.114 ms
+Testing download speed...............................................................................
+.Download: 77.89 Mbit/s
+Testing upload speed......................................................................................................
+Upload: 3.86 Mbit/s
+root@aguia-pescadora-bravo:~# speedtest-cli --server 14143
+Retrieving speedtest.net configuration...
+Testing from OVH Hosting (192.99.247.117)...
+Retrieving speedtest.net server list...
+Retrieving information for the selected server...
+Hosted by NET Virtua (Porto Alegre) [8697.78 km]: 226.735 ms
+Testing download speed................................................................................
+Download: 57.47 Mbit/s
+Testing upload speed......................................................................................................
+Upload: 3.70 Mbit/s
+
+root@aguia-pescadora-bravo:~# speedtest-cli --server 24108
+Retrieving speedtest.net configuration...
+Testing from OVH Hosting (192.99.247.117)...
+Retrieving speedtest.net server list...
+Retrieving information for the selected server...
+Hosted by Unitel AO (Luanda) [10461.19 km]: 342.184 ms
+Testing download speed................................................................................
+Download: 54.98 Mbit/s
+Testing upload speed......................................................................................................
+Upload: 3.73 Mbit/s
+
 #### sysbench (Banchmark geral)
 
 ### sysbench cpu run
@@ -49,6 +81,39 @@ Latency (ms):
 Threads fairness:
     events (avg/stddev):           9560.0000/0.00
     execution time (avg/stddev):   9.9973/0.00
+
+root@aguia-pescadora-bravo:~# sysbench --threads=2 cpu run
+sysbench 1.0.17 (using bundled LuaJIT 2.1.0-beta2)
+
+Running the test with following options:
+Number of threads: 2
+Initializing random number generator from current time
+
+
+Prime numbers limit: 10000
+
+Initializing worker threads...
+
+Threads started!
+
+CPU speed:
+    events per second:  1281.75
+
+General statistics:
+    total time:                          10.0009s
+    total number of events:              12822
+
+Latency (ms):
+         min:                                    1.19
+         avg:                                    1.56
+         max:                                   38.74
+         95th percentile:                        1.73
+         sum:                                19946.85
+
+Threads fairness:
+    events (avg/stddev):           6411.0000/37.00
+    execution time (avg/stddev):   9.9734/0.01
+
 
 ### sysbench memory run
 
