@@ -1595,3 +1595,32 @@ sudo nginx -t
 sudo systemctl reload nginx
 
 sudo certbot --nginx -d grafana.apb.etica.ai
+
+
+#------------------------------------------------------------------------------#
+# SEÇÃO: BACKUP                                                                #
+#------------------------------------------------------------------------------#
+# @see https://github.com/fititnt/cplp-aiops/issues/5#issuecomment-501605356
+# Conforme descrito no issue 5 (cplp-aiops/issues/5) vamos preparar um backup
+# de tudo que esta VM tem para caso os usuários não tenham algo e queiram
+# recuperar depois
+
+sudo mkdir /backup
+tar -cvpzf backup.tar.gz --exclude=/backup.tar.gz --one-file-system / 
+
+## Backup FULL (completo do sistema operaconal)
+# https://help.ubuntu.com/community/BackupYourSystem/TAR
+cd /
+tar -cvpzf aguia-pescadora-bravo_2019-06-13-FULL.tar.gz --exclude=/aguia-pescadora-bravo_2019-06-13-FULL.tar.gz --exclude=/swapfile --one-file-system /
+
+# root@aguia-pescadora-bravo:/# ls -lha /aguia-pescadora-bravo_2019-06-13-FULL.tar.gz 
+# -rw-r--r-- 1 root root 2,2G jun 13 09:04 /aguia-pescadora-bravo_2019-06-13-FULL.tar.gz
+
+## Backup completo será movido para Delta para caso usuários não tenham feito
+## uma cópia de seus dados, mas precise delas no futuro
+## Neste momento não vamos usar backup encriptado, pois ainda não há dados sensiveis
+scp aguia-pescadora-bravo_2019-06-13-FULL.tar.gz ssh root@aguia-pescadora-delta.etica.ai:/backups
+
+# root@aguia-pescadora-bravo:/# scp aguia-pescadora-bravo_2019-06-13-FULL.tar.gz ssh root@aguia-pescadora-delta.etica.ai:/backups
+# (...)
+# aguia-pescadora-bravo_2019-06-13-FULL.tar.gz         100% 2247MB  10.7MB/s   03:30

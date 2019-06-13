@@ -82,3 +82,7 @@ sudo timedatectl set-timezone UTC
 sudo apt install language-pack-pt language-pack-pt-base
 
 ## TODO: setup swap from 2GB (defalt from Contabo) to 16GB (fititnt, 2019-06-12 08:55 BRT)
+
+
+### Não documentado ____________________________________________________________
+sudo mkdir /backups
