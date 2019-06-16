@@ -2,9 +2,9 @@ echo "Este diário de bordo foi feito para ser visualizado, nao executado assim!
 exit
 
 #################### Diario de bordo: aguia-pescadora-bravo ####################
-# VPS (KVM), 2 vCPUs, 8GB RAM, 80GB SSD, Ubuntu Server 18.04 64bit, CloudAtCost (Canada)
+# VPS (KVM), 2 vCPUs, 8GB RAM, 80GB SSD, Ubuntu Server 18.04 64bit, OVH (Canada)
 #
-# Datacenter: CloudAtCost, Canada
+# Datacenter: OVH, Canada
 # Type: Virtual Machine, KVM
 # OS: Ubuntu Server 18.04 LTS 64bit
 # CPU: 2vCPUs
@@ -34,8 +34,8 @@ exit
 # Login:
 #   ssh user@aguia-pescadora-bravo.etica.ai
 #   mosh user@aguia-pescadora-bravo.etica.ai
-#   ssh user@abp.etica.ai
-#   mosh user@abp.etica.ai
+#   ssh user@apb.etica.ai
+#   mosh user@apb.etica.ai
 #
 # -----------------------------------------------------------------------------#
 # LICENSE: Public Domain

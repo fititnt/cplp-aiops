@@ -34,8 +34,6 @@ exit
 # Login:
 #   ssh user@aguia-pescadora-charlie.etica.ai
 #   mosh user@aguia-pescadora-charlie.etica.ai
-#   ssh user@abp.etica.ai
-#   mosh user@abp.etica.ai
 #
 # -----------------------------------------------------------------------------#
 # LICENSE: Public Domain

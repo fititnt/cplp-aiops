@@ -1,7 +1,7 @@
 echo "Este diário de bordo foi feito para ser visualizado, nao executado assim!"
 exit
 ######################  Diario de bordo: aguia-pescadora #######################
-# 2 vCPUs, 1,5GB RAM, 30GB SSD (CloudAtCost)
+# 2 vCPUs, 1,5GB RAM, 30GB SSD (CloudAtCost), Canadá
 # Ubuntu 16.04.2 LTS 64bit
 # aguia-pescadora.etica.ai (104.167.109.226)
 #
