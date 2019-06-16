@@ -42,10 +42,12 @@ exit
 #   related or neighboring rights to this work to Public Domain
 #
 # MAINTAINER: Emerson Rocha <rocha(at)ieee.org>
-#   Keep in mind that several people help with suggestions, bugfixes and
-#   inspiration and inspire without get names noted in places that software
+#   Keep in mind that several people help with suggestions, testing, bugfixes
+#   and inspiration without get names noted in places that most software
 #   developers look. I'm saying this in special for people who help over
-#   Facebook discussions. Even the ones without a personal computer yet.
+#   Facebook discussions. Even the ones without a personal computer yet and/or
+#   with limited access to internet.
+#
 # SECURITY:
 #   Reporting a Vulnerability:
 #   Send e-mail to Emerson Rocha: rocha(at)ieee.org.
