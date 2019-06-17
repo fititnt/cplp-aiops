@@ -14,12 +14,8 @@ exit
 # IPv4: 173.249.10.99
 # IPv6: 
 # Domain:
-#   Full: aguia-pescadora-delta.etica.ai
-#   Short: apd.etica.ai
-#
-# Login:
-#   ssh user@aguia-pescadora-delta.etica.ai
-#   ssh user@apd.etica.ai
+#   Full: aguia-pescadora-delta.etica.ai (TTL: 15 min)
+#   Short: apd.etica.ai (TTL: 15 min)
 #
 # -----------------------------------------------------------------------------#
 # LICENSE: Public Domain
@@ -83,6 +79,11 @@ sudo timedatectl set-timezone UTC
 #           dificuldades, e nosso foco aqui é facilitar para todo mundo
 sudo apt install language-pack-pt language-pack-pt-base
 
+## TODO: remover o language-pack-pt de Delta. Usuarios finais
+#        não irão acessar o host, e até mesmo administradores tenderão
+#        fortemente a apenas usar o Tsuru (fititnt, 2019-06-16 01:44 BRT)
+
+### Criar Swap & ajusta Swappiness______________________________________________
 ## TODO: setup swap from 2GB (defalt from Contabo) to 16GB (fititnt, 2019-06-12 08:55 BRT)
 
 
